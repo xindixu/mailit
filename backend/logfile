@@ -1,0 +1,12 @@
+2021-10-18 14:55:31.559 EDT [8036] LOG:  starting PostgreSQL 14.0 on x86_64-apple-darwin20.6.0, compiled by Apple clang version 13.0.0 (clang-1300.0.29.3), 64-bit
+2021-10-18 14:55:31.560 EDT [8036] LOG:  listening on IPv6 address "::1", port 5432
+2021-10-18 14:55:31.560 EDT [8036] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-10-18 14:55:31.561 EDT [8036] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2021-10-18 14:55:31.565 EDT [8037] LOG:  database system was shut down at 2021-10-18 14:55:27 EDT
+2021-10-18 14:55:31.568 EDT [8036] LOG:  database system is ready to accept connections
+2021-10-18 14:55:55.569 EDT [8598] FATAL:  database "backend_test" does not exist
+2021-10-18 14:56:12.756 EDT [8036] LOG:  received fast shutdown request
+2021-10-18 14:56:12.756 EDT [8036] LOG:  aborting any active transactions
+2021-10-18 14:56:12.757 EDT [8036] LOG:  background worker "logical replication launcher" (PID 8043) exited with exit code 1
+2021-10-18 14:56:12.757 EDT [8038] LOG:  shutting down
+2021-10-18 14:56:12.763 EDT [8036] LOG:  database system is shut down
