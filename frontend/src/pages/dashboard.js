@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
 const Dashboard = (props) => {
-  return <div>This is a dashboard</div>;
-};
+  return <div>This is a dashboard</div>
+}
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {}
 
-export default Dashboard;
+export default Dashboard

@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
 const Campaigns = (props) => {
-  return <div>Campaigns</div>;
-};
+  return <div>Campaigns</div>
+}
 
-Campaigns.propTypes = {};
+Campaigns.propTypes = {}
 
-export default Campaigns;
+export default Campaigns

@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
 const Templates = (props) => {
-  return <div>Template index</div>;
-};
+  return <div>Template index</div>
+}
 
-Templates.propTypes = {};
+Templates.propTypes = {}
 
-export default Templates;
+export default Templates
