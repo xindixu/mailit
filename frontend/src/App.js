@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Dashboard from "./pages/dashboard";
+import Campaigns from "./pages/campaigns";
+import Templates from "./pages/templates";
+
 import { List, Typography } from "antd";
 
 function App() {
@@ -17,8 +22,41 @@ function App() {
 
     return () => {};
   }, []);
+
   return (
     <div className="App">
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/campaign">Campaigns</Link>
+              </li>
+              <li>
+                <Link to="/template">Templates</Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+          <Switch>
+            <Route path="/campaign">
+              <Campaigns />
+            </Route>
+            <Route path="/template">
+              <Templates />
+            </Route>
+            <Route path="/">
+              <Dashboard />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+
       <List
         bordered
         dataSource={users}
