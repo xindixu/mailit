@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { List, Typography } from "antd";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -18,13 +19,17 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <ul>
-        {users.map(({ first_name: firstName, last_name: lastName }) => (
-          <li>
-            {firstName} {lastName}
-          </li>
-        ))}
-      </ul>
+      <List
+        bordered
+        dataSource={users}
+        renderItem={({ first_name: firstName, last_name: lastName }) => (
+          <List.Item>
+            <Typography.Text>
+              {firstName} {lastName}
+            </Typography.Text>
+          </List.Item>
+        )}
+      />
     </div>
   );
 }
