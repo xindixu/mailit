@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
 import PropTypes from "prop-types"
 import {
   List,
@@ -180,6 +181,12 @@ const Setting = () => {
 }
 
 const Campaigns = (props) => {
+  const history = useHistory()
+
+  const handleCreate = () => {
+    history.push("/dashboard")
+  }
+
   return (
     <div>
       <div style={mainStyle}>
@@ -188,7 +195,7 @@ const Campaigns = (props) => {
         <Setting />
       </div>
       <div style={bottomStyle}>
-        <Button type="primary" icon={<PlusSquareOutlined />} size="large">
+        <Button type="primary" icon={<PlusSquareOutlined />} onClick={handleCreate} size="large">
           Create Campaign
         </Button>
       </div>
