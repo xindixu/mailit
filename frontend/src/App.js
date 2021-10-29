@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { List, Typography } from "antd"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
@@ -54,7 +54,7 @@ function App() {
         </div>
       </Router>
 
-      <List
+      {/* <List
         bordered
         dataSource={users}
         renderItem={({ first_name: firstName, last_name: lastName }) => (
@@ -64,7 +64,7 @@ function App() {
             </Typography.Text>
           </List.Item>
         )}
-      />
+      /> */}
     </div>
   )
 }
