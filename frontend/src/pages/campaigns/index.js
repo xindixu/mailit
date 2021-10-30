@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import PropTypes from "prop-types"
+import moment from 'moment'
 import {
   List,
   Space,
@@ -143,16 +144,16 @@ const UploadCSV = () => {
   )
 }
 
-const Setting = () => {
-  const [value, setValue] = useState(null)
+const Setting = (props) => {
+  const {form} = props
 
-  const onTimeChange = (time) => {
-    setValue(time)
-  }
-
-  function onChange(date, dateString) {
-    console.log(date, dateString)
-  }
+  useEffect(() => {
+		form.setFieldsValue({
+			tag: "tag",
+      date: moment(),
+      time: moment()
+		})
+	}, [form])
 
   return (
     <div style={sectionStyle}>
@@ -161,17 +162,16 @@ const Setting = () => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 14 }}
           layout="horizontal"
-          initialValues={{ size: "default" }}
-          onValuesChange={onChange}
           size="default"
+          form={form}
         >
-          <Form.Item label="Date">
-            <DatePicker value={value} onChange={onChange} />
+          <Form.Item label="Date" name="date">
+            <DatePicker format="YYYY/MM/DD" />
           </Form.Item>
-          <Form.Item label="Time">
-            <TimePicker value={value} onChange={onTimeChange} />
+          <Form.Item label="Time" name="time">
+            <TimePicker format="HH:mm:ss" />
           </Form.Item>
-          <Form.Item label="Tag">
+          <Form.Item label="Tag" name="tag">
             <Input />
           </Form.Item>
         </Form>
@@ -182,9 +182,19 @@ const Setting = () => {
 
 const Campaigns = (props) => {
   const history = useHistory()
+  const [form] = Form.useForm()
 
   const handleCreate = () => {
     history.push("/dashboard")
+    form.validateFields()
+			.then((values) => {
+        // add select template before submit
+        values.addition = "addition"
+        console.log(values)
+				// Submit values
+				// submitValues(values);
+			})
+			.catch((errorInfo) => {})
   }
 
   return (
@@ -192,7 +202,7 @@ const Campaigns = (props) => {
       <div style={mainStyle}>
         <SelectTemplate />
         <UploadCSV />
-        <Setting />
+        <Setting form={form} />
       </div>
       <div style={bottomStyle}>
         <Button type="primary" icon={<PlusSquareOutlined />} onClick={handleCreate} size="large">
