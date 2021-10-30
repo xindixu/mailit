@@ -1,43 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
 import PropTypes from "prop-types"
-import moment from 'moment'
-import {
-  List,
-  Space,
-  Upload,
-  message,
-  TimePicker,
-  DatePicker,
-  Card,
-  Input,
-  Form,
-  Button,
-} from "antd"
-import {
-  MessageOutlined,
-  LikeOutlined,
-  StarOutlined,
-  InboxOutlined,
-  PlusSquareOutlined,
-} from "@ant-design/icons"
-
-const listData = []
-for (let i = 0; i < 10; i++) {
-  listData.push({
-    href: "https://ant.design",
-    title: `ant design part ${i}`,
-    content:
-      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-  })
-}
-
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-)
+import moment from "moment"
+import { useHistory } from "react-router-dom"
+import { Upload, message, Card, Input, Form, Button, Table } from "antd"
+import { InboxOutlined, PlusSquareOutlined } from "@ant-design/icons"
 
 const mainStyle = {
   width: "100%",
@@ -58,45 +24,45 @@ const bottomStyle = {
   margin: "auto",
 }
 
-// const titleStyle = {
-//   textAlign: "center",
-//   marginTop: "20px",
-//   marginBottom: "20px",
-// }
+const columns = [
+  {
+    title: "Template Name",
+    dataIndex: "template_name",
+  },
+]
+
+const data = []
+for (let i = 0; i < 20; i++) {
+  data.push({
+    key: i,
+    template_name: `Template ${i}`,
+  })
+}
 
 const SelectTemplate = () => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+
+  const onSelectChange = (selected) => {
+    setSelectedRowKeys(selected)
+  }
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    hideSelectAll: true,
+    type: "radio",
+    selections: [Table.SELECTION_INVERT, Table.SELECTION_NONE],
+  }
+
   return (
     <div style={sectionStyle}>
       <Card title="Choose A Template">
-        <List
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            onChange: (page) => {
-              console.log(page)
-            },
-            pageSize: 3,
-          }}
-          dataSource={listData}
-          renderItem={(item) => (
-            <List.Item
-              key={item.title}
-              actions={[
-                <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-              ]}
-              extra={
-                <img
-                  width={100}
-                  alt="logo"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                />
-              }
-            >
-              <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-            </List.Item>
-          )}
+        <Table
+          rowSelection={rowSelection}
+          pagination={false}
+          scroll={{ y: 400 }}
+          columns={columns}
+          dataSource={data}
         />
       </Card>
     </div>
@@ -125,35 +91,33 @@ const uploadProps = {
   },
 }
 
-const UploadCSV = () => {
-  return (
-    <div style={sectionStyle}>
-      <Card title="Upload CSV">
-        <Dragger {...uploadProps}>
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or
-            other band files
-          </p>
-        </Dragger>
-      </Card>
-    </div>
-  )
-}
+const UploadCSV = () => (
+  <div style={sectionStyle}>
+    <Card title="Upload CSV">
+      <Dragger {...uploadProps}>
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibit from uploading company data or
+          other band files
+        </p>
+      </Dragger>
+    </Card>
+  </div>
+)
 
 const Setting = (props) => {
-  const {form} = props
+  const { form } = props
 
   useEffect(() => {
-		form.setFieldsValue({
-			tag: "tag",
+    form.setFieldsValue({
+      tag: "tag",
       date: moment(),
-      time: moment()
-		})
-	}, [form])
+      time: moment(),
+    })
+  }, [form])
 
   return (
     <div style={sectionStyle}>
@@ -165,12 +129,6 @@ const Setting = (props) => {
           size="default"
           form={form}
         >
-          <Form.Item label="Date" name="date">
-            <DatePicker format="YYYY/MM/DD" />
-          </Form.Item>
-          <Form.Item label="Time" name="time">
-            <TimePicker format="HH:mm:ss" />
-          </Form.Item>
           <Form.Item label="Tag" name="tag">
             <Input />
           </Form.Item>
@@ -180,21 +138,23 @@ const Setting = (props) => {
   )
 }
 
-const Campaigns = (props) => {
-  const history = useHistory()
+const Campaigns = () => {
   const [form] = Form.useForm()
+  const history = useHistory()
 
   const handleCreate = () => {
     history.push("/dashboard")
-    form.validateFields()
-			.then((values) => {
+    form
+      .validateFields()
+      .then((values) => {
         // add select template before submit
         values.addition = "addition"
         console.log(values)
-				// Submit values
-				// submitValues(values);
-			})
-			.catch((errorInfo) => {})
+        // Submit values
+
+        // submitValues(values);
+      })
+      .catch((errorInfo) => {})
   }
 
   return (
