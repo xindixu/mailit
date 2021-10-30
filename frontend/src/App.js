@@ -1,42 +1,45 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import { Layout } from "antd"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import styled from "styled-components"
+import Navbar from "./components/navbar"
 import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/campaign">Campaigns</Link>
-              </li>
-              <li>
-                <Link to="/template">Templates</Link>
-              </li>
-            </ul>
-          </nav>
+const { Header, Footer, Content } = Layout
+import styleSettings from "./styles"
 
+const { spacerMd } = styleSettings
+
+const StyledContent = styled(Content)`
+  margin: ${spacerMd};
+  padding: ${spacerMd};
+  height: 100%;
+`
+const App = () => (
+  <Layout style={{ height: "100vh" }}>
+    <Router>
+      <Layout>
+        <Header>
+          <Navbar />
+        </Header>
+        <StyledContent>
           <Switch>
-            <Route path="/campaign">
+            <Route path="/campaigns">
               <Campaigns />
             </Route>
-            <Route path="/template">
+            <Route path="/templates">
               <Templates />
             </Route>
             <Route path="/">
               <Dashboard />
             </Route>
           </Switch>
-        </div>
-      </Router>
-    </div>
-  )
-}
+        </StyledContent>
+      </Layout>
+      <Footer style={{ textAlign: "center" }}>Mailit @ 2021</Footer>
+    </Router>
+  </Layout>
+)
 
 export default App
