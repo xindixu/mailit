@@ -54,7 +54,7 @@ function App() {
         </div>
       </Router>
 
-      <List
+      {/* <List
         bordered
         dataSource={users}
         renderItem={({ first_name: firstName, last_name: lastName }) => (
@@ -64,7 +64,7 @@ function App() {
             </Typography.Text>
           </List.Item>
         )}
-      />
+      /> */}
     </div>
   )
 }
