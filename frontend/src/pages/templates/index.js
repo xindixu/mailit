@@ -16,6 +16,7 @@ const Templates = (props) => {
   const save = useCallback(() => {
     setIsSaving(true)
 
+    // FIXME: send request to save the updates
     setTimeout(() => {
       setIsSaving(false)
       goBack()
@@ -23,21 +24,19 @@ const Templates = (props) => {
   }, [goBack])
 
   return (
-    <>
-      <Space direction="vertical">
-        <Editor />
-        <Row justify="end">
-          <Space>
-            <Button type="default" onClick={goBack}>
-              Cancel
-            </Button>
-            <Button type="primary" onClick={save} icon={<SaveOutlined />} loading={isSaving}>
-              Save
-            </Button>
-          </Space>
-        </Row>
-      </Space>
-    </>
+    <Space direction="vertical">
+      <Editor />
+      <Row justify="end">
+        <Space>
+          <Button type="default" onClick={goBack}>
+            Cancel
+          </Button>
+          <Button type="primary" onClick={save} icon={<SaveOutlined />} loading={isSaving}>
+            Save
+          </Button>
+        </Space>
+      </Row>
+    </Space>
   )
 }
 
