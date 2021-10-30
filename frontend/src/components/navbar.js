@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Menu, Space } from "antd"
+import { Avatar, Menu } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
@@ -8,7 +8,7 @@ import styleSettings from "../styles"
 
 const SIZE = 124
 
-const { spacerMd, spacerLg } = styleSettings
+const { spacerLg } = styleSettings
 
 const StyledMenu = styled(Menu)`
   padding: ${spacerLg} 0;

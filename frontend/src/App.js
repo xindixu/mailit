@@ -6,7 +6,7 @@ import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
 
-const { Header, Sider, Footer, Content } = Layout
+const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
 
 const { spacerMd } = styleSettings
