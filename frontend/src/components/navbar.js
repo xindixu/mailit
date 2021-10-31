@@ -10,10 +10,7 @@ const SIZE = 124
 
 const { spacerLg } = styleSettings
 
-const StyledMenu = styled(Menu)`
-  padding: ${spacerLg} 0;
-`
-const Container = styled.div`
+const AvatarWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -26,17 +23,21 @@ const Navbar = () => {
   const location = useLocation()
 
   return (
-    <StyledMenu
+    <Menu
       theme="dark"
       mode="vertical"
       defaultSelectedKeys={[getTextByLink(location.pathname)]}
       style={{
         height: "100%",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
       }}
     >
-      <Container>
+      <AvatarWrapper>
         <Avatar size={SIZE} icon={<UserOutlined />} />
-      </Container>
+      </AvatarWrapper>
 
       {routes.map(({ text, link }) => (
         <Menu.Item key={text}>
@@ -44,8 +45,10 @@ const Navbar = () => {
         </Menu.Item>
       ))}
 
-      <Menu.Item>Sign Out</Menu.Item>
-    </StyledMenu>
+      <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} disabled>
+        Sign Out
+      </Menu.Item>
+    </Menu>
   )
 }
 export default Navbar
