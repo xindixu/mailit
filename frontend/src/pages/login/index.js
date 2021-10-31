@@ -1,5 +1,5 @@
 import React from "react"
-import { Form, Input, Button, Checkbox } from "antd"
+import { Form, Input, Button, Checkbox, Typography } from "antd"
 import styled from "styled-components"
 
 const Main = styled.div`
@@ -9,6 +9,8 @@ const Main = styled.div`
 `
 
 const Login = () => {
+  const { Title } = Typography
+
   const onFinish = (values) => {
     console.log("Success:", values)
   }
@@ -19,6 +21,7 @@ const Login = () => {
 
   return (
     <Main>
+      <Title level={3}>Login</Title>
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -29,9 +32,9 @@ const Login = () => {
         autoComplete="off"
       >
         <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          label="email"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
         >
           <Input />
         </Form.Item>
@@ -50,7 +53,7 @@ const Login = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Login
           </Button>
         </Form.Item>
       </Form>
