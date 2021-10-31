@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import PropTypes from "prop-types"
+import { useWindowSize } from "react-use"
 import MDEditor from "@uiw/react-md-editor"
 
 const TEMPLATE = `
@@ -12,10 +12,12 @@ One common method that you might find helpful is the Pomodoro Method. You can us
 
 ![](https://communications.universitylife.columbia.edu/sites/default/files/civicrm/persist/contribute/images/uploads/static/POMODORO_GRAPHIC_2048x2048_10cc11c5bccfb8239585cd8d58ed7acb.jpg)
 `
-const HEIGHT = 1000
+const HEIGHT_OFFSET = 120
 const MarkdownEditor = () => {
+  const { height } = useWindowSize()
+
   const [content, setContent] = useState(TEMPLATE)
-  return <MDEditor value={content} onChange={setContent} height={HEIGHT} />
+  return <MDEditor value={content} onChange={setContent} height={height - HEIGHT_OFFSET} />
 }
 
 MarkdownEditor.propTypes = {}
