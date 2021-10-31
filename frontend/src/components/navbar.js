@@ -1,7 +1,7 @@
 import React from "react"
 import { Avatar, Menu } from "antd"
 import { UserOutlined } from "@ant-design/icons"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import styled from "styled-components"
 import routes from "../lib/routes"
 import styleSettings from "../styles"
@@ -19,27 +19,33 @@ const Container = styled.div`
   justify-content: center;
   margin-bottom: ${spacerLg};
 `
-const Navbar = () => (
-  <StyledMenu
-    theme="dark"
-    mode="vertical"
-    defaultSelectedKeys={["Dashboard"]}
-    style={{
-      height: "100%",
-    }}
-  >
-    <Container>
-      <Avatar size={SIZE} icon={<UserOutlined />} />
-    </Container>
 
-    {routes.map(({ text, link }) => (
-      <Menu.Item key={text}>
-        <Link to={link}>{text}</Link>
-      </Menu.Item>
-    ))}
+const getTextByLink = (link) => routes.find((route) => route.link === link)?.text
 
-    <Menu.Item>Sign Out</Menu.Item>
-  </StyledMenu>
-)
+const Navbar = () => {
+  const location = useLocation()
 
+  return (
+    <StyledMenu
+      theme="dark"
+      mode="vertical"
+      defaultSelectedKeys={[getTextByLink(location.pathname)]}
+      style={{
+        height: "100%",
+      }}
+    >
+      <Container>
+        <Avatar size={SIZE} icon={<UserOutlined />} />
+      </Container>
+
+      {routes.map(({ text, link }) => (
+        <Menu.Item key={text}>
+          <Link to={link}>{text}</Link>
+        </Menu.Item>
+      ))}
+
+      <Menu.Item>Sign Out</Menu.Item>
+    </StyledMenu>
+  )
+}
 export default Navbar
