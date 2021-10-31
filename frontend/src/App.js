@@ -3,6 +3,7 @@ import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
 import Login from "./pages/login"
+import Register from "./pages/register"
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
               <li>
                 <Link to="/login">Login</Link>
               </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
             </ul>
           </nav>
 
@@ -35,6 +39,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
             </Route>
             <Route path="/">
               <Dashboard />

@@ -1,5 +1,5 @@
 import React from "react"
-import { Form, Input, Button, Checkbox, Typography } from "antd"
+import { Form, Input, Button, Typography } from "antd"
 import styled from "styled-components"
 
 const Main = styled.div`
@@ -8,7 +8,7 @@ const Main = styled.div`
   padding-top: 30px;
 `
 
-const Login = () => {
+const Register = () => {
   const { Title } = Typography
 
   const onFinish = (values) => {
@@ -21,12 +21,11 @@ const Login = () => {
 
   return (
     <Main>
-      <Title level={3}>Login</Title>
+      <Title level={3}>Register</Title>
       <Form
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
@@ -40,6 +39,14 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item
+          label="username"
+          name="username"
+          rules={[{ required: true, message: "Please input your username!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           label="Password"
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
@@ -47,13 +54,9 @@ const Login = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Login
+            Register
           </Button>
         </Form.Item>
       </Form>
@@ -61,4 +64,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
