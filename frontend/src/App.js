@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
+import Login from "./pages/login"
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
               <li>
                 <Link to="/template">Templates</Link>
               </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
             </ul>
           </nav>
 
@@ -28,6 +32,9 @@ function App() {
             </Route>
             <Route path="/template">
               <Templates />
+            </Route>
+            <Route path="/login">
+              <Login />
             </Route>
             <Route path="/">
               <Dashboard />
