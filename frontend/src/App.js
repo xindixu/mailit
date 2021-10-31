@@ -6,9 +6,37 @@ import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
 import Login from "./pages/login"
+import Register from "./pages/register"
 
+<<<<<<< HEAD
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
+=======
+function App() {
+  return (
+    <div className="App">
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/campaign">Campaigns</Link>
+              </li>
+              <li>
+                <Link to="/template">Templates</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </ul>
+          </nav>
+>>>>>>> [front-end] add register page and fix login page
 
 const { spacerMd } = styleSettings
 
@@ -44,6 +72,9 @@ const App = () => (
             </Route>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
             </Route>
             <Route path="/">
               <Dashboard />
