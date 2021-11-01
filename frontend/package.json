@@ -19,6 +19,7 @@
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^8.0.0-rc.1",
     "autoprefixer": "^10.3.4",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
@@ -29,13 +30,15 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.3",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "selenium-webdriver": "^4.0.0"
   },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cucumber": "npx cucumber-js"
   },
   "eslintConfig": {
     "extends": [
