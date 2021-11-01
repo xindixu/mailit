@@ -28,5 +28,7 @@
 ## Testing
 ### User testing with cucumber.js
 We use cucumber.js to test our frontend
-1. Required packages: `@cucumber/cucumber`, `selenium-webdriver`. Install them with `yarn install`
-2. In your terminal, run `safaridriver --enable`. This will allow `selenium` to run cucumber tests on Safari
+1. Navigate to the /frontend folder
+2. Required packages: `@cucumber/cucumber`, `selenium-webdriver`. Install them with `yarn install`
+3. In your terminal, run `safaridriver --enable`. This will allow `selenium` to run cucumber tests on Safari
+4. Run `yarn run cucumber` to run cucumber tests
