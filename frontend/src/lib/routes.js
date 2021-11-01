@@ -12,4 +12,8 @@ const routes = [
     link: "/templates",
   },
 ]
+
+export const getTextByLink = (link) => routes.find((route) => route.link === link)?.text
+export const getLinkByText = (text) => routes.find((route) => route.text === text)?.link
+
 export default routes
