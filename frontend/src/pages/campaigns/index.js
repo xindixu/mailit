@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react"
-import PropTypes from "prop-types"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import { Upload, message, Card, Input, Form, Button, Table, Tag, Tooltip } from "antd"
-import { InboxOutlined, PlusSquareOutlined, PlusOutlined } from "@ant-design/icons"
+import { Card, Input, Form, Button, Tag, Tooltip } from "antd"
+import { PlusSquareOutlined, PlusOutlined } from "@ant-design/icons"
+import Csv from "../../components/csv"
+import Selection from "../../components/selection"
 
 const mainStyle = {
   width: "100%",
@@ -22,90 +23,6 @@ const bottomStyle = {
   verticalAlign: "middle",
   margin: "auto",
 }
-
-const columns = [
-  {
-    title: "Template Name",
-    dataIndex: "template_name",
-  },
-]
-
-const data = []
-for (let i = 0; i < 20; i++) {
-  data.push({
-    key: i,
-    template_name: `Template ${i}`,
-  })
-}
-
-const SelectTemplate = (props) => {
-  const { selectedRowKeys, setSelectedRowKeys } = props
-
-  const onSelectChange = (selected) => {
-    setSelectedRowKeys(selected)
-  }
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    hideSelectAll: true,
-    type: "radio",
-    selections: [Table.SELECTION_INVERT, Table.SELECTION_NONE],
-  }
-
-  return (
-    <div style={sectionStyle}>
-      <Card title="Choose A Template">
-        <Table
-          rowSelection={rowSelection}
-          pagination={false}
-          scroll={{ y: 400 }}
-          columns={columns}
-          dataSource={data}
-        />
-      </Card>
-    </div>
-  )
-}
-
-const { Dragger } = Upload
-
-const uploadProps = {
-  name: "file",
-  multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  onChange(info) {
-    const { status } = info.file
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList)
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`)
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`)
-    }
-  },
-  onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files)
-  },
-}
-
-const UploadCSV = () => (
-  <div style={sectionStyle}>
-    <Card title="Upload CSV">
-      <Dragger {...uploadProps}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-        <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibit from uploading company data or
-          other band files
-        </p>
-      </Dragger>
-    </Card>
-  </div>
-)
 
 const TagsFormItem = (props) => {
   const { onChange } = props
@@ -136,7 +53,7 @@ const TagsFormItem = (props) => {
   }
 
   const handleInputConfirm = () => {
-    if (inputValue && tags.indexOf(inputValue) === -1) {
+    if (inputValue && !tags.includes(inputValue)) {
       const ts = [...tags, inputValue]
       console.log(ts)
       setTags(ts)
@@ -216,6 +133,21 @@ const TagsFormItem = (props) => {
       )}
     </>
   )
+}
+
+const columns = [
+  {
+    title: "Template Name",
+    dataIndex: "template_name",
+  },
+]
+
+const data = []
+for (let i = 0; i < 20; i++) {
+  data.push({
+    key: i,
+    template_name: `Template ${i}`,
+  })
 }
 
 const Setting = (props) => {
@@ -298,7 +230,7 @@ const Campaigns = () => {
       .then((values) => {
         // add select template before submit
         values.addition = "addition"
-        values.selected = template[0]
+        values.selected_template = template[0]
         console.log(values)
         // Submit values
 
@@ -310,8 +242,19 @@ const Campaigns = () => {
   return (
     <div>
       <div style={mainStyle}>
-        <SelectTemplate selectedRowKeys={template} setSelectedRowKeys={setTemplate} />
-        <UploadCSV />
+        <div style={sectionStyle}>
+          <Card title="Choose A Template">
+            <Selection
+              selectedRowKeys={template}
+              setSelectedRowKeys={setTemplate}
+              columns={columns}
+              data={data}
+            />
+          </Card>
+        </div>
+        <div style={sectionStyle}>
+          <Csv />
+        </div>
         <Setting form={form} />
       </div>
       <div style={bottomStyle}>
@@ -322,7 +265,5 @@ const Campaigns = () => {
     </div>
   )
 }
-
-Campaigns.propTypes = {}
 
 export default Campaigns

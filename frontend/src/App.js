@@ -5,6 +5,8 @@ import Navbar from "./components/navbar"
 import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
+import Login from "./pages/login"
+import Register from "./pages/register"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
@@ -40,6 +42,12 @@ const App = () => (
             </Route>
             <Route path="/templates">
               <Templates />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
             </Route>
             <Route path="/">
               <Dashboard />
