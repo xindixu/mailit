@@ -1,9 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const Dashboard = (props) => {
-  return <div>This is a dashboard</div>
-}
+const Dashboard = () => (
+  <div>
+    <h2>Featured Templates</h2>
+    <h2>Campaigns</h2>
+  </div>
+)
 
 Dashboard.propTypes = {}
 
