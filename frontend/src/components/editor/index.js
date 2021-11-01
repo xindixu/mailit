@@ -7,7 +7,7 @@ const HEIGHT_OFFSET = 300
 const MarkdownEditor = ({ value, onChange }) => {
   const { height } = useWindowSize()
 
-  return <MDEditor value={value} onChange={onChange} height={height - HEIGHT_OFFSET} />
+  return <MDEditor value={value} onChange={onChange} height={height - HEIGHT_OFFSET} id="content" />
 }
 
 MarkdownEditor.propTypes = {

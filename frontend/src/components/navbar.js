@@ -3,7 +3,7 @@ import { Avatar, Menu } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import { Link, useLocation } from "react-router-dom"
 import styled from "styled-components"
-import routes from "../lib/routes"
+import routes, { getTextByLink } from "../lib/routes"
 import styleSettings from "../styles"
 
 const SIZE = 124
@@ -16,8 +16,6 @@ const AvatarWrapper = styled.div`
   justify-content: center;
   margin-bottom: ${spacerLg};
 `
-
-const getTextByLink = (link) => routes.find((route) => route.link === link)?.text
 
 const Navbar = () => {
   const location = useLocation()
