@@ -117,6 +117,7 @@ const TagsFormItem = (props) => {
       })}
       {inputVisible && (
         <Input
+          id="tag_input"
           type="text"
           size="small"
           className="tag-input"
@@ -127,7 +128,7 @@ const TagsFormItem = (props) => {
         />
       )}
       {!inputVisible && (
-        <Tag className="site-tag-plus" onClick={showInput}>
+        <Tag className="site-tag-plus" id="add_tag" onClick={showInput}>
           <PlusOutlined /> New Tag
         </Tag>
       )}
@@ -157,13 +158,13 @@ const Setting = (props) => {
     form.setFieldsValue({
       campaign_name: "",
       tag: [],
-      fitst_name1: "",
+      first_name1: "",
       last_name1: "",
       email1: "",
-      fitst_name2: "",
+      first_name2: "",
       last_name2: "",
       email2: "",
-      fitst_name3: "",
+      first_name3: "",
       last_name3: "",
       email3: "",
     })
@@ -185,7 +186,7 @@ const Setting = (props) => {
           <Form.Item label="Tags" name="tag">
             <TagsFormItem />
           </Form.Item>
-          <Form.Item label="First Name" name="fitst_name1">
+          <Form.Item label="First Name" name="first_name1">
             <Input />
           </Form.Item>
           <Form.Item label="Last Name" name="last_name1">
@@ -194,7 +195,7 @@ const Setting = (props) => {
           <Form.Item label="Email" name="email1">
             <Input />
           </Form.Item>
-          <Form.Item label="First Name" name="fitst_name2">
+          <Form.Item label="First Name" name="first_name2">
             <Input />
           </Form.Item>
           <Form.Item label="Last Name" name="last_name2">
@@ -203,7 +204,7 @@ const Setting = (props) => {
           <Form.Item label="Email" name="email2">
             <Input />
           </Form.Item>
-          <Form.Item label="First Name" name="fitst_name3">
+          <Form.Item label="First Name" name="first_name3">
             <Input />
           </Form.Item>
           <Form.Item label="Last Name" name="last_name3">
@@ -224,12 +225,11 @@ const Campaigns = () => {
   const [template, setTemplate] = useState([0])
 
   const handleCreate = () => {
-    history.push("/dashboard")
+    history.push("/")
     form
       .validateFields()
       .then((values) => {
         // add select template before submit
-        values.addition = "addition"
         values.selected_template = template[0]
         console.log(values)
         // Submit values
@@ -258,7 +258,13 @@ const Campaigns = () => {
         <Setting form={form} />
       </div>
       <div style={bottomStyle}>
-        <Button type="primary" icon={<PlusSquareOutlined />} onClick={handleCreate} size="large">
+        <Button
+          id="create_campaign"
+          type="primary"
+          icon={<PlusSquareOutlined />}
+          onClick={handleCreate}
+          size="large"
+        >
           Create Campaign
         </Button>
       </div>
