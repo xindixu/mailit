@@ -1,0 +1,424 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/models/campaign.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/models/template.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/models/user.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/controllers/api/v1/campaigns_controller.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          2,
+          2,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/serializers/campaign_serializer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/controllers/api/v1/templates_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          3,
+          3,
+          2,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          11,
+          null,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/serializers/template_serializer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/controllers/api/v1/users_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          2,
+          1,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          1,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          9,
+          null,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/serializers/user_serializer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/models/recipient.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/mailers/test_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/serializers/recipient_serializer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/controllers/pages_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/controllers/api/v1/recipients_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/channels/application_cable/connection.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/dave/Desktop/esaasdatabase/mailit/backend/app/channels/application_cable/channel.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1635889481
+  }
+}

@@ -10,9 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_11_02_182020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name"
+    t.string "tags", default: [], array: true
+    t.bigint "user_id"
+    t.bigint "template_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["template_id"], name: "index_campaigns_on_template_id"
+    t.index ["user_id"], name: "index_campaigns_on_user_id"
+  end
+
+  create_table "recipients", force: :cascade do |t|
+    t.string "email"
+    t.string "tags", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_recipients_on_user_id"
+  end
+
+  create_table "templates", force: :cascade do |t|
+    t.text "markdown"
+    t.string "collaborator_ids", default: [], array: true
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.index ["user_id"], name: "index_templates_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
+  end
 
 end
