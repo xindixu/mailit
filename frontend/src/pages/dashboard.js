@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Row, Table, Popconfirm, Space } from "antd"
+import { Card, Col, Row, Table, Space, message } from "antd"
 import { Link } from "react-router-dom"
 import apiFetch from "../lib/api-fetch"
 import TemplateIndex from "./templates"
@@ -26,6 +26,12 @@ const Dashboard = () => {
   const handleDeleteCampaign = (record) => {
     apiFetch({ route: `campaigns/${record.id}`, method: "delete" })
     setCampaigns(campaigns.filter((item) => item.id !== record.id))
+    message.success("Campaign deleted!", 5)
+  }
+
+  const handleSendEmail = (record) => {
+    apiFetch({ route: `campaigns/${record.id}/deliver`, method: "post" })
+    message.success("Email sent!", 5)
   }
 
   const campaignsTable = [
@@ -44,15 +50,20 @@ const Dashboard = () => {
       dataIndex: "operation",
       render: (text, record) => (
         <Space size="middle">
-          <Popconfirm
-            title="Sure to Send?"
-            onConfirm={() => apiFetch({ route: `campaigns/${record.id}/deliver`, method: "post" })}
+          <button
+            type="button"
+            id={`send email ${record.name}`}
+            onClick={() => handleSendEmail(record)}
           >
-            <a>Send</a>
-          </Popconfirm>
-          <Popconfirm title="Sure to Delete?" onConfirm={() => handleDeleteCampaign(record)}>
-            <a>Delete</a>
-          </Popconfirm>
+            Send
+          </button>
+          <button
+            type="button"
+            id={`delete email ${record.name}`}
+            onClick={() => handleDeleteCampaign(record)}
+          >
+            Delete
+          </button>
         </Space>
       ),
     },
