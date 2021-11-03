@@ -36,3 +36,16 @@ We use cucumber.js to test our frontend
 4. In your terminal, run `safaridriver --enable`. This will allow `selenium` to run cucumber tests on Safari
 5. Run `yarn run cucumber` to run cucumber tests
 6. Run `yarn run coverage` to generate cucumber coverage report
+
+
+## Deploy
+We choose to deploy the frontend and the backend separately
+### Deploy the backend
+1. `cd backend`
+2. `git push heroku main`
+3. `heroku run rake db:migrate`
+4. `heroku run rake db:seed`
+
+### Deploy the frontend
+1. `cd frontend`
+2. `git push heroku-frontend main`
