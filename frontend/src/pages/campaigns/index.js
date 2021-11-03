@@ -4,6 +4,7 @@ import { Card, Input, Form, Button, Tag, Tooltip } from "antd"
 import { PlusSquareOutlined, PlusOutlined } from "@ant-design/icons"
 import Csv from "../../components/csv"
 import Selection from "../../components/selection"
+import apiFetch from "../../lib/api-fetch"
 
 const mainStyle = {
   width: "100%",
@@ -136,28 +137,13 @@ const TagsFormItem = (props) => {
   )
 }
 
-const columns = [
-  {
-    title: "Template Name",
-    dataIndex: "template_name",
-  },
-]
-
-const data = []
-for (let i = 0; i < 20; i++) {
-  data.push({
-    key: i,
-    template_name: `Template ${i}`,
-  })
-}
-
 const Setting = (props) => {
   const { form } = props
 
   useEffect(() => {
     form.setFieldsValue({
       campaign_name: "",
-      tag: [],
+      tags: [],
       first_name1: "",
       last_name1: "",
       email1: "",
@@ -171,70 +157,101 @@ const Setting = (props) => {
   }, [form])
 
   return (
-    <div style={sectionStyle}>
-      <Card title="Setting">
-        <Form
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 14 }}
-          layout="horizontal"
-          size="default"
-          form={form}
-        >
-          <Form.Item label="Name" name="campaign_name">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Tags" name="tag">
-            <TagsFormItem />
-          </Form.Item>
-          <Form.Item label="First Name" name="first_name1">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Last Name" name="last_name1">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Email" name="email1">
-            <Input />
-          </Form.Item>
-          <Form.Item label="First Name" name="first_name2">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Last Name" name="last_name2">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Email" name="email2">
-            <Input />
-          </Form.Item>
-          <Form.Item label="First Name" name="first_name3">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Last Name" name="last_name3">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Email" name="email3">
-            <Input />
-          </Form.Item>
-        </Form>
-      </Card>
-    </div>
+    <Form
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 14 }}
+      layout="horizontal"
+      size="default"
+      form={form}
+    >
+      <Form.Item label="Name" name="campaign_name">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Tags" name="tags">
+        <TagsFormItem />
+      </Form.Item>
+      <Form.Item label="First Name" name="first_name1">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Last Name" name="last_name1">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Email" name="email1">
+        <Input />
+      </Form.Item>
+      <Form.Item label="First Name" name="first_name2">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Last Name" name="last_name2">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Email" name="email2">
+        <Input />
+      </Form.Item>
+      <Form.Item label="First Name" name="first_name3">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Last Name" name="last_name3">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Email" name="email3">
+        <Input />
+      </Form.Item>
+    </Form>
   )
 }
+
+const columns = [
+  {
+    title: "Template id",
+    dataIndex: "id",
+  },
+]
 
 const Campaigns = () => {
   const [form] = Form.useForm()
   const history = useHistory()
+  const [templates, setTemplates] = useState([])
   const [template, setTemplate] = useState([0])
+  const user_id = 1
+
+  useEffect(() => {
+    apiFetch({ route: "campaigns" }).then((res) => {
+      const ts = res.data
+      const data = []
+      for (let i = 0; i < ts.length; i++) {
+        data.push({
+          ...ts[i],
+          key: i,
+        })
+      }
+      setTemplates(data)
+    })
+  }, [])
 
   const handleCreate = () => {
-    history.push("/")
     form
       .validateFields()
       .then((values) => {
         // add select template before submit
-        values.selected_template = template[0]
-        console.log(values)
+        values.selected_template = templates[template[0]].id
         // Submit values
-
-        // submitValues(values);
+        const param = {
+          name: values.campaign_name,
+          user_id,
+          template_id: values.selected_template,
+          tags: values.tags,
+        }
+        apiFetch({ route: "campaigns", method: "post", params: param }).then((res) => {
+          console.log(res)
+        })
+        const recipient = {
+          email: values.email1,
+          tags: values.tags,
+          user_id,
+        }
+        apiFetch({ route: "recipients", method: "post", params: recipient })
+        history.push("/")
       })
       .catch((errorInfo) => {})
   }
@@ -248,14 +265,18 @@ const Campaigns = () => {
               selectedRowKeys={template}
               setSelectedRowKeys={setTemplate}
               columns={columns}
-              data={data}
+              data={templates}
             />
           </Card>
         </div>
         <div style={sectionStyle}>
           <Csv />
         </div>
-        <Setting form={form} />
+        <div style={sectionStyle}>
+          <Card title="Setting">
+            <Setting form={form} />
+          </Card>
+        </div>
       </div>
       <div style={bottomStyle}>
         <Button
