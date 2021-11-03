@@ -11,6 +11,8 @@
 3. Run `rake db:create` to create databases
 4. Run `bin/rails db:migrate` to sync up database
 5. Run `rails server` to start the Rails server. Backend application should be running at http://127.0.0.1:3000
+6. Seed your db: `rails db:seed`
+7. Reset your db: `rake db:drop db:create db:migrate`
 
 ### Setup client
 1. Create a terminal window, `cd frontend`
