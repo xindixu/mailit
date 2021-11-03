@@ -50,7 +50,6 @@ const Dashboard = () => {
       dataIndex: "operation",
       render: (text, record) => (
         <Space size="middle">
-<<<<<<< HEAD
           <Button
             type="primary"
             id={`send email ${record.name}`}
@@ -67,22 +66,6 @@ const Dashboard = () => {
           >
             Delete
           </Button>
-=======
-          <button
-            type="button"
-            id={`send email ${record.name}`}
-            onClick={() => handleSendEmail(record)}
-          >
-            Send
-          </button>
-          <button
-            type="button"
-            id={`delete email ${record.name}`}
-            onClick={() => handleDeleteCampaign(record)}
-          >
-            Delete
-          </button>
->>>>>>> [front-end] delete and send email cucumber test ready
         </Space>
       ),
     },
