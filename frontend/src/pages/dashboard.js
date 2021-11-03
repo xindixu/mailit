@@ -4,7 +4,7 @@ import apiFetch from "../lib/api-fetch"
 import TemplateIndex from "./templates"
 
 const getCampaignTableData = (data) =>
-  data.map(({ id, attributes: { name, tag, user_id: userId, template_id: templateId } }) => ({
+  data?.map(({ id, attributes: { name, tag, user_id: userId, template_id: templateId } }) => ({
     key: id,
     id,
     name,
