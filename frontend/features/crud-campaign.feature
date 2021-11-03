@@ -16,10 +16,10 @@ Feature: Create, send, delete campaign
 
     Scenario: Send a campaign
         Given user is on the Dashboard page
-        When user clicks the "send" button for campaign "campaign1"
+        When user clicks the "send" button for campaign "testcampaign"
         Then user should see "Email sent!"
     
     Scenario: delete a campaign
         Given user is on the Dashboard page
-        When user clicks the "delete" button for campaign "campaign1"
+        When user clicks the "delete" button for campaign "testcampaign"
         Then user should see "Campaign deleted!"

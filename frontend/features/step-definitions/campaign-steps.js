@@ -1,8 +1,54 @@
 const { expect } = require("chai")
-const { When, Then } = require("@cucumber/cucumber")
+const { When, Then, BeforeAll, AfterAll, Before, After } = require("@cucumber/cucumber")
 const { By } = require("selenium-webdriver")
 const { removeQuotations } = require("../support")
 const { driver } = require("./stepdefs")
+const { apiFetch } = require("../api-fetch")
+
+let id
+Before(async () => {
+  apiFetch({
+    route: "/campaigns",
+    method: "post",
+    params: {
+      name: "testcampaign",
+      tags: ["testcampaign"],
+      user_id: 1,
+      template_id: 1,
+    },
+  }).then(({ data }) => {
+    id = data.id
+  })
+})
+
+let rid
+Before(async () => {
+  apiFetch({
+    route: "/recipients",
+    method: "post",
+    params: {
+      "email": "qianjunc@gmail.com",
+      "tags": ["testcampaign"],
+      "user_id": 1
+    },
+  }).then(({ data }) => {
+    rid = data.id
+  })
+})
+
+After(async () => {
+  apiFetch({
+    route: `/campaigns/${id}`,
+    method: "delete",
+  })
+})
+
+After(async () => {
+  apiFetch({
+    route: `/recipients/${rid}`,
+    method: "delete",
+  })
+})
 
 Then(/user can see the Create Campaign button/, async () => {
   const button = await driver.findElement(By.id("create_campaign"))
