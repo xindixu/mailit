@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react"
-import { Spin } from "antd"
-import { useHistory, useParams } from "react-router-dom"
-import { isEmpty } from "lodash"
+import React, { useState, useCallback } from "react"
+import { useHistory } from "react-router-dom"
 import apiFetch from "../../lib/api-fetch"
 import TemplateForm from "./template-form"
 
 const TemplateNew = () => {
   const [isSaving, setIsSaving] = useState(false)
-  const [template, setTemplate] = useState({})
 
   const history = useHistory()
 
@@ -34,7 +31,13 @@ const TemplateNew = () => {
   )
 
   return (
-    <TemplateForm onFinish={onFinish} template={template} onCancel={goBack} isSaving={isSaving} />
+    <TemplateForm
+      isSaving={isSaving}
+      onCancel={goBack}
+      onFinish={onFinish}
+      saveText="Create"
+      template={{}}
+    />
   )
 }
 

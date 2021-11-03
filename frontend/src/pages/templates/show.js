@@ -43,7 +43,13 @@ const TemplateShow = () => {
   return isEmpty(template) ? (
     <Spin />
   ) : (
-    <TemplateForm onFinish={onFinish} template={template} onCancel={goBack} isSaving={isSaving} />
+    <TemplateForm
+      isSaving={isSaving}
+      onCancel={goBack}
+      onFinish={onFinish}
+      saveText="Update"
+      template={template}
+    />
   )
 }
 

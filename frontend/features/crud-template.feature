@@ -7,7 +7,7 @@ Feature: Template
         When user updates the template name to "Merry Christmas"
         Then user can see the template name to be "Merry Christmas"
         When user updates the template content to "Wish you a Merry Christmas"
-        When user clicks the "Update" button
+        When user clicks the "Create" button
         Then user should be on the Dashboard page
 
     Scenario: See a template
