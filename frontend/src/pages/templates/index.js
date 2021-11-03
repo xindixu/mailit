@@ -48,6 +48,7 @@ const TemplateIndex = () => {
                 onClick={() => {
                   showConfirm({ name, onOk: () => onDelete(id) })
                 }}
+                id={`delete template ${name}`}
               />
             </Card>
           </Col>
