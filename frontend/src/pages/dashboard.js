@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import PropTypes from "prop-types"
-import { Card, Table } from "antd"
+import { Card, Col, Row, Table } from "antd"
+import { Link } from "react-router-dom"
 import apiFetch from "../lib/api-fetch"
 
 const campaignsTable = [
@@ -26,6 +26,11 @@ const getCampaignTableData = (data) =>
     templateId,
   }))
 
+const gridStyle = {
+  width: "25%",
+  textAlign: "center",
+}
+
 const Dashboard = () => {
   const [templates, setTemplates] = useState([])
   const [campaigns, setCampaigns] = useState([])
@@ -42,15 +47,23 @@ const Dashboard = () => {
   return (
     <div>
       <h2>Featured Templates</h2>
-      {templates.map(({ id, attributes: { name } }) => (
-        <Card key={id}>{name} </Card>
-      ))}
+
+      <Card title="">
+        {templates.map(({ id, attributes: { name } }) => (
+          <Col span={8}>
+            <Link to={`/templates/${id}`}>
+              <Card.Grid key={id} style={gridStyle}>
+                {name}
+              </Card.Grid>
+            </Link>
+          </Col>
+        ))}
+      </Card>
+
       <h2>Campaigns</h2>
       <Table dataSource={getCampaignTableData(campaigns)} columns={campaignsTable} />
     </div>
   )
 }
-
-Dashboard.propTypes = {}
 
 export default Dashboard

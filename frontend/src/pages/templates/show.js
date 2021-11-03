@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from "react"
-import { Form, Space, Button, Input } from "antd"
+import React, { useState, useEffect, useCallback } from "react"
+import { Form, Space, Button, Input, Spin } from "antd"
 import { SaveOutlined } from "@ant-design/icons"
 import { useHistory, useParams } from "react-router-dom"
+import { isEmpty } from "lodash"
 import Editor from "../../components/editor"
+import apiFetch from "../../lib/api-fetch"
 
 const TEMPLATE = `
 Dear {{first_name}}:
@@ -17,8 +19,14 @@ One common method that you might find helpful is the Pomodoro Method. You can us
 
 const TemplateShow = () => {
   const [isSaving, setIsSaving] = useState(false)
-  // TODO: fetch template with id
+  const [template, setTemplate] = useState({})
   const { id } = useParams()
+
+  useEffect(() => {
+    apiFetch({ route: `templates/${id}` }).then(({ data }) => {
+      setTemplate({ ...data.attributes })
+    })
+  }, [id])
 
   const history = useHistory()
 
@@ -30,21 +38,24 @@ const TemplateShow = () => {
     (values) => {
       setIsSaving(true)
 
-      // FIXME: send request to save the updates
-      setTimeout(() => {
-        setIsSaving(false)
-        goBack()
-      }, 1000)
+      apiFetch({
+        route: `templates/${id}`,
+        method: "patch",
+        params: { ...values, user_id: 1, collaborator_ids: [1] },
+      }).then(({ status }) => {
+        if (status === 200) {
+          setIsSaving(false)
+          goBack()
+        }
+      })
     },
-    [goBack]
+    [goBack, id]
   )
 
-  return (
-    <Form
-      onFinish={onFinish}
-      layout="vertical"
-      initialValues={{ name: "Midterm", content: TEMPLATE }}
-    >
+  return isEmpty(template) ? (
+    <Spin />
+  ) : (
+    <Form onFinish={onFinish} layout="vertical" initialValues={template}>
       <Form.Item
         label="Name"
         name="name"
@@ -53,9 +64,9 @@ const TemplateShow = () => {
         <Input placeholder="Midterm template" />
       </Form.Item>
       <Form.Item
-        label="Content"
-        name="content"
-        rules={[{ required: true, message: "Please enter content!" }]}
+        label="Markdown"
+        name="markdown"
+        rules={[{ required: true, message: "Please enter markdown content!" }]}
       >
         <Editor />
       </Form.Item>
