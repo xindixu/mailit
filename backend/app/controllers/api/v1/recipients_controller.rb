@@ -18,7 +18,7 @@ class Api::V1::RecipientsController < ApplicationController
         if recipient_params['email'] == nil || recipient_params['user_id'] == nil
             render json:{status: 400 , error: "Bad Request"}
         elsif recipient.save
-            render json: {status: 200, message: "Success"}
+            render json: {status: 200, data: recipient.as_json }
         else
             render json: {status: 422, error: recipient.errors.messages }
         end
@@ -37,7 +37,7 @@ class Api::V1::RecipientsController < ApplicationController
 
     def destroy
         recipient = Recipient.find_by(id: params[:id])
-        if recipient == nill
+        if recipient == nil
             render json:{status: 400 , error: "Bad Request"}
         elsif recipient.destroy
             render json: {status: 200, message: "Success"}
