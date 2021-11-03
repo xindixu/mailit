@@ -35,3 +35,4 @@ We use cucumber.js to test our frontend
 3. Required packages: `@cucumber/cucumber`, `selenium-webdriver`. Install them with `yarn install`
 4. In your terminal, run `safaridriver --enable`. This will allow `selenium` to run cucumber tests on Safari
 5. Run `yarn run cucumber` to run cucumber tests
+6. Run `yarn run coverage` to generate cucumber coverage report

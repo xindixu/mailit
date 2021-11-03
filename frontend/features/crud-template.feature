@@ -27,4 +27,4 @@ Feature: Template
 
     Scenario: Delete a template
         Given user is on the TemplateIndex page
-        When user deletes "Happy New Year"
+        When user deletes "Merry Christmas"
