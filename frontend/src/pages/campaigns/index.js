@@ -150,9 +150,6 @@ const Setting = (props) => {
       first_name2: "",
       last_name2: "",
       email2: "",
-      first_name3: "",
-      last_name3: "",
-      email3: "",
     })
   }, [form])
 
@@ -186,15 +183,6 @@ const Setting = (props) => {
         <Input />
       </Form.Item>
       <Form.Item label="Email" name="email2">
-        <Input />
-      </Form.Item>
-      <Form.Item label="First Name" name="first_name3">
-        <Input />
-      </Form.Item>
-      <Form.Item label="Last Name" name="last_name3">
-        <Input />
-      </Form.Item>
-      <Form.Item label="Email" name="email3">
         <Input />
       </Form.Item>
     </Form>
@@ -245,8 +233,15 @@ const Campaigns = () => {
         apiFetch({ route: "campaigns", method: "post", params: param }).then((res) => {
           console.log(res)
         })
-        const recipient = {
+        // create recipient
+        let recipient = {
           email: values.email1,
+          tags: values.tags,
+          user_id,
+        }
+        apiFetch({ route: "recipients", method: "post", params: recipient })
+        recipient = {
+          email: values.email2,
           tags: values.tags,
           user_id,
         }
