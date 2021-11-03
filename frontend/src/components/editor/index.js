@@ -11,7 +11,7 @@ const MarkdownEditor = ({ value, onChange }) => {
 }
 
 MarkdownEditor.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 

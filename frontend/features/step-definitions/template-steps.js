@@ -11,16 +11,22 @@ Then(/user can see the template name and content/, async () => {
   const nameInput = await driver.findElement(By.id("name"))
   const contentInput = await driver.findElement(By.css("textarea"))
 
-  expect(await nameInput.getAttribute("value")).to.equal("Midterm")
-  expect(await contentInput.getText()).to.match(/^Dear {{first_name}}:/)
+  expect(await nameInput.getAttribute("value")).to.equal("Merry Christmas")
+  expect(await contentInput.getText()).to.match(/^Wish you a Merry Christmas/)
 })
 
 When("user updates the template name to {string}", async (value) => {
   await driver.wait(until.elementLocated(By.id("name")))
 
   const nameInput = await driver.findElement(By.id("name"))
-
   await nameInput.sendKeys(removeQuotations(value))
+})
+
+When("user updates the template content to {string}", async (value) => {
+  await driver.wait(until.elementLocated(By.css("textarea")))
+
+  const contentInput = await driver.findElement(By.css("textarea"))
+  await contentInput.sendKeys(removeQuotations(value))
 })
 
 Then("user can see the template name to be {string}", async (value) => {
@@ -28,8 +34,8 @@ Then("user can see the template name to be {string}", async (value) => {
   expect(await nameInput.getAttribute("value")).to.contain(removeQuotations(value))
 })
 
-When("user click the Update button", async () => {
-  const button = await driver.findElement(By.css("[type=submit]"))
+When("user clicks the {string} button", async (buttonText) => {
+  const button = await driver.findElement(By.xpath(`//*[text() = '${buttonText}']`))
   await button.click()
   await driver.sleep(3000)
 })

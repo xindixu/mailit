@@ -33,13 +33,14 @@ const TemplateIndex = () => {
   return (
     <>
       <h2>All Templates</h2>
+
       <Row gutter={16}>
         {templates.map(({ id, attributes: { name } }) => (
           <Col key={id} span={6}>
             <Card>
-              <Link to={`/templates/${id}`}>
-                <p>{name}</p>
-              </Link>
+              <p>
+                <Link to={`/templates/${id}`}>{name}</Link>
+              </p>
               <Button
                 shape="circle"
                 danger
@@ -52,6 +53,7 @@ const TemplateIndex = () => {
           </Col>
         ))}
       </Row>
+
       <Button type="primary">
         <Link to="/templates/new">Create A Template</Link>
       </Button>
