@@ -31,7 +31,7 @@ const TemplateIndex = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <h2>All Templates</h2>
       <Row gutter={16}>
         {templates.map(({ id, attributes: { name } }) => (
@@ -52,7 +52,10 @@ const TemplateIndex = () => {
           </Col>
         ))}
       </Row>
-    </div>
+      <Button type="primary">
+        <Link to="/templates/new">Create A Template</Link>
+      </Button>
+    </>
   )
 }
 
