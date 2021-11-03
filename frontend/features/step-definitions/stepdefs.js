@@ -23,6 +23,12 @@ Then(/user should be on the (\w+) page/, async (pageName) => {
   expect(await driver.getCurrentUrl()).to.equal(expectLink)
 })
 
+Then(/user should be on (\w+) like page/, async (pageName) => {
+  const regex = getLinkByText(pageName)
+
+  expect(await driver.getCurrentUrl()).to.match(regex)
+})
+
 module.exports = {
   driver,
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Row, Table } from "antd"
-import { Link } from "react-router-dom"
+import { Table } from "antd"
 import apiFetch from "../lib/api-fetch"
+import TemplateIndex from "./templates"
 
 const campaignsTable = [
   {
@@ -27,13 +27,9 @@ const getCampaignTableData = (data) =>
   }))
 
 const Dashboard = () => {
-  const [templates, setTemplates] = useState([])
   const [campaigns, setCampaigns] = useState([])
 
   useEffect(() => {
-    apiFetch({ route: "templates" }).then(({ data }) => {
-      setTemplates(data)
-    })
     apiFetch({ route: "campaigns" }).then(({ data }) => {
       setCampaigns(data)
     })
@@ -41,19 +37,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h2>Featured Templates</h2>
-
-      <Row gutter={16}>
-        {templates.map(({ id, attributes: { name } }) => (
-          <Col key={id} span={6}>
-            <Link to={`/templates/${id}`}>
-              <Card style={{}}>
-                <p>{name}</p>
-              </Card>
-            </Link>
-          </Col>
-        ))}
-      </Row>
+      <TemplateIndex />
 
       <h2>Campaigns</h2>
       <Table dataSource={getCampaignTableData(campaigns)} columns={campaignsTable} />

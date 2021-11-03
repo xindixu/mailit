@@ -1,20 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react"
-import { Spin } from "antd"
-import { useHistory, useParams } from "react-router-dom"
-import { isEmpty } from "lodash"
+import React, { useState, useCallback } from "react"
+import { useHistory } from "react-router-dom"
 import apiFetch from "../../lib/api-fetch"
 import TemplateForm from "./template-form"
 
-const TemplateShow = () => {
+const TemplateNew = () => {
   const [isSaving, setIsSaving] = useState(false)
-  const [template, setTemplate] = useState({})
-  const { id } = useParams()
-
-  useEffect(() => {
-    apiFetch({ route: `templates/${id}` }).then(({ data }) => {
-      setTemplate({ ...data.attributes })
-    })
-  }, [id])
 
   const history = useHistory()
 
@@ -27,8 +17,8 @@ const TemplateShow = () => {
       setIsSaving(true)
 
       apiFetch({
-        route: `templates/${id}`,
-        method: "patch",
+        route: `templates`,
+        method: "post",
         params: { ...values, user_id: 1, collaborator_ids: [1] },
       }).then(({ status }) => {
         if (status === 200) {
@@ -37,20 +27,18 @@ const TemplateShow = () => {
         }
       })
     },
-    [goBack, id]
+    [goBack]
   )
 
-  return isEmpty(template) ? (
-    <Spin />
-  ) : (
+  return (
     <TemplateForm
       isSaving={isSaving}
       onCancel={goBack}
       onFinish={onFinish}
-      saveText="Update"
-      template={template}
+      saveText="Create"
+      template={{}}
     />
   )
 }
 
-export default TemplateShow
+export default TemplateNew

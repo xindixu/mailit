@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard"
 import Campaigns from "./pages/campaigns"
 import Templates from "./pages/templates"
 import TemplateShow from "./pages/templates/show"
+import TemplateNew from "./pages/templates/new"
 import Login from "./pages/login"
 import Register from "./pages/register"
 
@@ -40,6 +41,9 @@ const App = () => (
           <Switch>
             <Route path="/campaigns">
               <Campaigns />
+            </Route>
+            <Route path="/templates/new">
+              <TemplateNew />
             </Route>
             <Route path="/templates/:id">
               <TemplateShow />
