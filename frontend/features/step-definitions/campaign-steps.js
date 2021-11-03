@@ -37,3 +37,13 @@ When(/user click the Create Campaign button/, async () => {
   await button.click()
 })
 
+When("user clicks the {string} button for campaign {string}", async (buttonText, name) => {
+  await driver.sleep(1000)
+  const button = await driver.findElement(By.id(`${removeQuotations(buttonText)} email ${removeQuotations(name)}`))
+  await button.click()
+})
+
+Then("user should see {string}", async (text) => {
+  expect(await driver.getPageSource()).to.contain(`${removeQuotations(text)}`)
+})
+
