@@ -11,7 +11,6 @@ Feature: Create campaign
         And user add "email" tag
         And user updates the campaign recipient 1 to "Amy" "Li" "amyli@gmail.com"
         And user updates the campaign recipient 2 to "Bob" "Chen" "bobchen@gmail.com"
-        And user updates the campaign recipient 3 to "Tom" "An" "toman@gmail.com"
         And user click the Create Campaign button
         Then user should be on the Dashboard page
         
