@@ -32,6 +32,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.25.3",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.4.1",
     "selenium-webdriver": "^4.0.0"
   },
@@ -40,7 +41,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cucumber": "npx cucumber-js"
+    "cucumber": "npx cucumber-js --world-parameters '{\"appUrl\":\"http://localhost:8080/\"}'",
+    "coverage": "nyc yarn run cucumber"
   },
   "eslintConfig": {
     "extends": [
