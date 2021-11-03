@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Row, Table, Space, message, Button } from "antd"
-import { Link } from "react-router-dom"
+import { Table, Space, message, Button } from "antd"
 import apiFetch from "../lib/api-fetch"
 import TemplateIndex from "./templates"
 

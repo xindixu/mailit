@@ -8,7 +8,7 @@ Feature: Create, send, delete campaign
     Scenario: Create a new campaign
         Given user is on the Campaigns page
         When user updates the campaign name to "campaign1"
-        And user add "email" tag
+        And user add "emailtest" tag
         And user updates the campaign recipient 1 to "Amy" "Li" "qianjunc@gmail.com"
         And user updates the campaign recipient 2 to "Bob" "Chen" "holeking2016@gmail.com"
         And user click the Create Campaign button
