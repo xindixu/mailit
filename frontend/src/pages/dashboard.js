@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Row, Table, Space, message } from "antd"
+import { Card, Col, Row, Table, Space, message, Button } from "antd"
 import { Link } from "react-router-dom"
 import apiFetch from "../lib/api-fetch"
 
@@ -53,20 +53,22 @@ const Dashboard = () => {
       dataIndex: "operation",
       render: (text, record) => (
         <Space size="middle">
-          <button
-            type="button"
+          <Button
+            type="primary"
             id={`send email ${record.name}`}
+            size="small"
             onClick={() => handleSendEmail(record)}
           >
             Send
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
             id={`delete email ${record.name}`}
+            size="small"
             onClick={() => handleDeleteCampaign(record)}
+            danger
           >
             Delete
-          </button>
+          </Button>
         </Space>
       ),
     },
