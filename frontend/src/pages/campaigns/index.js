@@ -26,8 +26,8 @@ const bottomStyle = {
 }
 
 const TagsFormItem = (props) => {
-  const { onChange } = props
-  const [tags, setTags] = useState([])
+  const { value, onChange } = props
+  const [tags, setTags] = useState(value || [])
   const [inputVisible, setInputVisible] = useState(false)
   const [inputValue, setInputValue] = useState("")
   const [editInputIndex, setEditInputIndex] = useState(-1)
@@ -36,7 +36,7 @@ const TagsFormItem = (props) => {
   const handleClose = (removedTag) => {
     const ts = tags.filter((tag) => tag !== removedTag)
     console.log(ts)
-    setTags({ ts })
+    setTags(ts)
   }
 
   useEffect(() => {
@@ -140,19 +140,6 @@ const TagsFormItem = (props) => {
 const Setting = (props) => {
   const { form } = props
 
-  useEffect(() => {
-    form.setFieldsValue({
-      campaign_name: "",
-      tags: [],
-      first_name1: "",
-      last_name1: "",
-      email1: "",
-      first_name2: "",
-      last_name2: "",
-      email2: "",
-    })
-  }, [form])
-
   return (
     <Form
       labelCol={{ span: 8 }}
@@ -161,7 +148,11 @@ const Setting = (props) => {
       size="default"
       form={form}
     >
-      <Form.Item label="Name" name="campaign_name">
+      <Form.Item
+        label="Name"
+        name="campaign_name"
+        rules={[{ required: true, message: "Please input campaign name!" }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item label="Tags" name="tags">
@@ -173,7 +164,11 @@ const Setting = (props) => {
       <Form.Item label="Last Name" name="last_name1">
         <Input />
       </Form.Item>
-      <Form.Item label="Email" name="email1">
+      <Form.Item
+        label="Email"
+        name="email1"
+        rules={[{ required: true, message: "Please input email!" }, { type: "email" }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item label="First Name" name="first_name2">
@@ -182,7 +177,11 @@ const Setting = (props) => {
       <Form.Item label="Last Name" name="last_name2">
         <Input />
       </Form.Item>
-      <Form.Item label="Email" name="email2">
+      <Form.Item
+        label="Email"
+        name="email2"
+        rules={[{ required: true, message: "Please input email!" }, { type: "email" }]}
+      >
         <Input />
       </Form.Item>
     </Form>
@@ -204,7 +203,20 @@ const Campaigns = () => {
   const user_id = 1
 
   useEffect(() => {
-    apiFetch({ route: "campaigns" }).then((res) => {
+    form.setFieldsValue({
+      campaign_name: "",
+      tags: [],
+      first_name1: "",
+      last_name1: "",
+      email1: "",
+      first_name2: "",
+      last_name2: "",
+      email2: "",
+    })
+  }, [])
+
+  useEffect(() => {
+    apiFetch({ route: "templates" }).then((res) => {
       const ts = res.data
       const data = []
       for (let i = 0; i < ts.length; i++) {
@@ -248,7 +260,7 @@ const Campaigns = () => {
         apiFetch({ route: "recipients", method: "post", params: recipient })
         history.push("/")
       })
-      .catch((errorInfo) => {})
+      .catch(() => {})
   }
 
   return (
@@ -280,6 +292,7 @@ const Campaigns = () => {
           icon={<PlusSquareOutlined />}
           onClick={handleCreate}
           size="large"
+          disabled={templates.length === 0}
         >
           Create Campaign
         </Button>
