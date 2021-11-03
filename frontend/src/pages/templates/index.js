@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { Card } from "antd"
+import { Card, Col, Row } from "antd"
+import { Link } from "react-router-dom"
 import apiFetch from "../../lib/api-fetch"
 
 const TemplateIndex = () => {
@@ -9,12 +10,21 @@ const TemplateIndex = () => {
       setTemplates(data)
     })
   }, [])
+
   return (
     <div>
       <h2>All Templates</h2>
-      {templates.map(({ id, attributes: { name } }) => (
-        <Card key={id}>{name} </Card>
-      ))}
+      <Row gutter={16}>
+        {templates.map(({ id, attributes: { name } }) => (
+          <Col key={id} span={6}>
+            <Link to={`/templates/${id}`}>
+              <Card style={{}}>
+                <p>{name}</p>
+              </Card>
+            </Link>
+          </Col>
+        ))}
+      </Row>
     </div>
   )
 }

@@ -26,11 +26,6 @@ const getCampaignTableData = (data) =>
     templateId,
   }))
 
-const gridStyle = {
-  width: "25%",
-  textAlign: "center",
-}
-
 const Dashboard = () => {
   const [templates, setTemplates] = useState([])
   const [campaigns, setCampaigns] = useState([])
@@ -48,17 +43,17 @@ const Dashboard = () => {
     <div>
       <h2>Featured Templates</h2>
 
-      <Card title="">
+      <Row gutter={16}>
         {templates.map(({ id, attributes: { name } }) => (
-          <Col span={8}>
+          <Col key={id} span={6}>
             <Link to={`/templates/${id}`}>
-              <Card.Grid key={id} style={gridStyle}>
-                {name}
-              </Card.Grid>
+              <Card style={{}}>
+                <p>{name}</p>
+              </Card>
             </Link>
           </Col>
         ))}
-      </Card>
+      </Row>
 
       <h2>Campaigns</h2>
       <Table dataSource={getCampaignTableData(campaigns)} columns={campaignsTable} />
