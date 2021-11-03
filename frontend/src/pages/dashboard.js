@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Row, Table } from "antd"
+import { Card, Col, Row, Table, Button } from "antd"
 import { Link } from "react-router-dom"
 import apiFetch from "../lib/api-fetch"
 
@@ -54,6 +54,9 @@ const Dashboard = () => {
           </Col>
         ))}
       </Row>
+      <Button type="primary">
+        <Link to="/templates/new">Create A Template</Link>
+      </Button>
 
       <h2>Campaigns</h2>
       <Table dataSource={getCampaignTableData(campaigns)} columns={campaignsTable} />

@@ -5,16 +5,9 @@ import { isEmpty } from "lodash"
 import apiFetch from "../../lib/api-fetch"
 import TemplateForm from "./template-form"
 
-const TemplateShow = () => {
+const TemplateNew = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [template, setTemplate] = useState({})
-  const { id } = useParams()
-
-  useEffect(() => {
-    apiFetch({ route: `templates/${id}` }).then(({ data }) => {
-      setTemplate({ ...data.attributes })
-    })
-  }, [id])
 
   const history = useHistory()
 
@@ -27,8 +20,8 @@ const TemplateShow = () => {
       setIsSaving(true)
 
       apiFetch({
-        route: `templates/${id}`,
-        method: "patch",
+        route: `templates`,
+        method: "post",
         params: { ...values, user_id: 1, collaborator_ids: [1] },
       }).then(({ status }) => {
         if (status === 200) {
@@ -37,14 +30,12 @@ const TemplateShow = () => {
         }
       })
     },
-    [goBack, id]
+    [goBack]
   )
 
-  return isEmpty(template) ? (
-    <Spin />
-  ) : (
+  return (
     <TemplateForm onFinish={onFinish} template={template} onCancel={goBack} isSaving={isSaving} />
   )
 }
 
-export default TemplateShow
+export default TemplateNew
