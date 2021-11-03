@@ -7,7 +7,7 @@ class Api::V1::RecipientsController < ApplicationController
     def show
         recipient = Recipient.find_by(id: params[:id])
         if recipient == nil
-			render json:{status: 400 , error: "Invalid Id Passed"}
+	    render json:{status: 400 , error: "Invalid Id Passed"}
         else
             render json: RecipientSerializer.new(recipient).serialized_json
         end
@@ -18,9 +18,7 @@ class Api::V1::RecipientsController < ApplicationController
         if recipient_params['email'] == nil || recipient_params['user_id'] == nil
             render json:{status: 400 , error: "Bad Request"}
         elsif recipient.save
-            render json: {status: 200, data: recipient.as_json }
-        else
-            render json: {status: 422, error: recipient.errors.messages }
+            render json: {status: 200, message: "Success"}
         end
     end
 
@@ -30,25 +28,21 @@ class Api::V1::RecipientsController < ApplicationController
             render json:{status: 400 , error: "Bad Request"}
         elsif recipient.update(recipient_params)
             render json: {status: 200, message: "Success"}
-        else
-            render json: {status: 422, error: recipient.errors.messages }
         end
     end
 
     def destroy
         recipient = Recipient.find_by(id: params[:id])
         if recipient == nil
-            render json:{status: 400 , error: "Bad Request"}
+            render json:{status: 400 , error: "Invalid Id Passed"}
         elsif recipient.destroy
             render json: {status: 200, message: "Success"}
-        else
-            render json: {status: 422, error: recipient.errors.messages }
         end
     end
 
     private
 
     def recipient_params
-        params.require(:recipient).permit(:email,:tags,:user_id)
+        params.require(:recipient).permit(:email,:user_id,tags: [])
     end
 end 
