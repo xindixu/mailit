@@ -13,7 +13,7 @@ const routes = [
   },
   {
     text: "TemplateShow",
-    link: "/templates/123",
+    link: "/templates/2",
   },
 ]
 

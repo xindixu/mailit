@@ -9,3 +9,5 @@ Feature: Edit template
         Given user is on the TemplateShow page
         When user updates the template name to "Merry Christmas"
         Then user can see the template name to be "Merry Christmas"
+        When user click the Update button
+        Then user should be on the Dashboard page

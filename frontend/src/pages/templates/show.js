@@ -65,7 +65,7 @@ const TemplateShow = () => {
             Cancel
           </Button>
           <Button type="primary" htmlType="submit" loading={isSaving} icon={<SaveOutlined />}>
-            Submit
+            Update
           </Button>
         </Space>
       </Form.Item>
