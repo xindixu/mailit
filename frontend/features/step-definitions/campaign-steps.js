@@ -1,5 +1,5 @@
 const { expect } = require("chai")
-const { When, Then, BeforeAll, AfterAll, Before, After } = require("@cucumber/cucumber")
+const { When, Then, Before, After } = require("@cucumber/cucumber")
 const { By } = require("selenium-webdriver")
 const { removeQuotations } = require("../support")
 const { driver } = require("./stepdefs")
