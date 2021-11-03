@@ -19,7 +19,7 @@ class Api::V1::TemplatesController < ApplicationController
     if template_params['name'].nil? || template_params['user_id'].nil? || template_params['collaborator_ids'].length == 0
       render json: { status: 400, error: 'Bad Request' }
     elsif template.save
-      render json: TemplateSerializer.new(template).serialized_json
+      render json: { status: 200, data: template.as_json }
     else
       render json: { status: 422, error: template.errors.messages }
     end
@@ -43,7 +43,7 @@ class Api::V1::TemplatesController < ApplicationController
     elsif template.destroy
       render json: { status: 200, message: 'Success' }
     else
-      render json: { status: 422, error: user.errors.messages }
+      render json: { status: 422, error: template.errors.messages }
     end
   end
 
