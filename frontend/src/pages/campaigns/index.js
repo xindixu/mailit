@@ -213,18 +213,10 @@ const Campaigns = () => {
       last_name2: "",
       email2: "",
     })
-  }, [])
 
-  useEffect(() => {
     apiFetch({ route: "templates" }).then((res) => {
       const ts = res.data
-      const data = []
-      for (let i = 0; i < ts.length; i++) {
-        data.push({
-          ...ts[i],
-          key: i,
-        })
-      }
+      const data = ts.map((value, index) => ({ ...value, key: index }))
       setTemplates(data)
     })
   }, [])

@@ -1,20 +1,7 @@
 import { useEffect, useState } from "react"
-import { Card, Col, Row, Table } from "antd"
+import { Card, Col, Row, Table, Popconfirm, Space } from "antd"
 import { Link } from "react-router-dom"
 import apiFetch from "../lib/api-fetch"
-
-const campaignsTable = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Tag",
-    dataIndex: "tag",
-    key: "tag",
-  },
-]
 
 const getCampaignTableData = (data) =>
   data.map(({ id, attributes: { name, tag, user_id: userId, template_id: templateId } }) => ({
@@ -38,6 +25,41 @@ const Dashboard = () => {
       setCampaigns(data)
     })
   }, [])
+
+  const handleDeleteCampaign = (record) => {
+    apiFetch({ route: `campaigns/${record.id}`, method: "delete" })
+    setCampaigns(campaigns.filter((item) => item.id !== record.id))
+  }
+
+  const campaignsTable = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Tag",
+      dataIndex: "tag",
+      key: "tag",
+    },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (text, record) => (
+        <Space size="middle">
+          <Popconfirm
+            title="Sure to Send?"
+            onConfirm={() => apiFetch({ route: `campaigns/${record.id}/deliver`, method: "post" })}
+          >
+            <a>Send</a>
+          </Popconfirm>
+          <Popconfirm title="Sure to Delete?" onConfirm={() => handleDeleteCampaign(record)}>
+            <a>Delete</a>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ]
 
   return (
     <div>
