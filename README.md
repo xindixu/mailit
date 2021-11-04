@@ -38,8 +38,8 @@ We use cucumber.js to test our frontend
 6. Run `yarn run coverage` to generate cucumber coverage report
 
 ### RSpec Tests
-1.`cd backend`
-2.`bundle exec rspec spec`
+1. `cd backend`
+2. `bundle exec rspec spec`
 
 ## Deploy
 We choose to deploy the frontend and the backend separately
