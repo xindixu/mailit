@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -52,7 +52,6 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
@@ -66,18 +65,18 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  config.action_mailer.delivery_method= :smtp
-  config.action_mailer.default_url_options = { 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = {
     host: 'http://localhost:3000',
     from: 'mailitproject2021@gmail.com'
   }
   config.action_mailer.smtp_settings = {
-    :address        => "smtp.gmail.com",
-    :port           => 587,
-    :domain         => 'gmail.com',
-    :user_name      => 'mailitproject2021',
-    :password       => 'sognmzybnarfdrdz',
-    :authentication => 'plain',
-    :enable_starttls_auto => true
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    user_name: 'mailitproject2021',
+    password: 'sognmzybnarfdrdz',
+    authentication: 'plain',
+    enable_starttls_auto: true
   }
 end
