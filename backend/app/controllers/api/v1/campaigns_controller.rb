@@ -20,8 +20,6 @@ class Api::V1::CampaignsController < ApplicationController
             render json:{status: 400 , error: "Bad Request"}
         elsif campaign.save
             render json: {status: 200, data: campaign.as_json}
-        else
-            render json: {status: 422, error: campaign.errors.messages }
         end
     end
 
@@ -31,8 +29,6 @@ class Api::V1::CampaignsController < ApplicationController
             render json:{status: 400 , error: "Bad Request"}
         elsif campaign.update(campaign_params)
             render json: {status: 200, message: "Success"}
-        else
-            render json: {status: 422, error: campaign.errors.messages }
         end
     end
 
@@ -42,8 +38,6 @@ class Api::V1::CampaignsController < ApplicationController
 			render json:{status: 400 , error: "Invalid Id Passed"}
         elsif campaign.destroy
             render json: {status: 200, message: "Success"}
-        else
-            render json: {status: 422, error: campaign.errors.messages }
         end
     end
 
@@ -68,6 +62,6 @@ class Api::V1::CampaignsController < ApplicationController
 
     private
     def campaign_params
-        params.require(:campaign).permit(:name,:tags,:user_id,:template_id)
+        params.require(:campaign).permit(:name,:user_id,:template_id,tags: [])
     end
 end 
