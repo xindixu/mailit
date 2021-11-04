@@ -19,7 +19,7 @@ class Api::V1::CampaignsController < ApplicationController
         if campaign_params['name'] == nil || campaign_params['user_id'] == nil || campaign_params['template_id'] == nil
             render json:{status: 400 , error: "Bad Request"}
         elsif campaign.save
-            render json: {status: 200, message: "Success"}
+            render json: {status: 200, data: campaign.as_json}
         end
     end
 
