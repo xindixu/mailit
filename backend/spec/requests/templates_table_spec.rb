@@ -144,4 +144,3 @@ describe 'TEMPLATES API' , type: :request do
 		end
 	end
 end
-
