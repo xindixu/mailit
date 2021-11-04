@@ -18,6 +18,11 @@
 1. Create a terminal window, `cd frontend`
 2. Run `yarn install` to install all dependencies
 3. Run `yarn start` to start the React server. Frontend application should be running at http://localhost:8080
+4. Create an `.env` file in `/frontend` contains:
+```
+ESLINT_NO_DEV_ERRORS=true
+REACT_APP_BASE_URL=http://localhost:3000
+```
 
 ## Project structure
 1. Ruby on Rails API mode:
