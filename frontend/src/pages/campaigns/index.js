@@ -155,7 +155,11 @@ const Setting = (props) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item label="Tags" name="tags">
+      <Form.Item
+        label="Tags"
+        name="tags"
+        rules={[{ required: true, message: "Please input at least one tag!" }]}
+      >
         <TagsFormItem />
       </Form.Item>
       <Form.Item label="First Name" name="first_name1">
