@@ -7,7 +7,7 @@ const { Dragger } = Upload
 const uploadProps = {
   name: "file",
   multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+  action: "http://localhost:3000/api/v1/recipients/import",
   onChange(info) {
     const { status } = info.file
     if (status !== "uploading") {
