@@ -194,8 +194,8 @@ const Setting = (props) => {
 
 const columns = [
   {
-    title: "Template id",
-    dataIndex: "id",
+    title: "Template Name",
+    dataIndex: "name",
   },
 ]
 
@@ -220,7 +220,11 @@ const Campaigns = () => {
 
     apiFetch({ route: "templates" }).then((res) => {
       const ts = res.data
-      const data = ts.map((value, index) => ({ ...value, key: index }))
+      const data = ts.map((value, index) => ({
+        id: value.id,
+        name: value.attributes.name,
+        key: index,
+      }))
       setTemplates(data)
     })
   }, [])
