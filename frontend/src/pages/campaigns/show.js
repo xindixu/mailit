@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { Card, Form, Button } from "antd"
 import { PlusSquareOutlined } from "@ant-design/icons"
 import Csv from "../../components/csv"
@@ -33,43 +33,48 @@ const columns = [
   },
 ]
 
-const Campaigns = () => {
+const CampaignShow = () => {
   const [form] = Form.useForm()
   const history = useHistory()
   const [templates, setTemplates] = useState([])
   const [template, setTemplate] = useState([0])
   const user_id = 1
+  const { id } = useParams()
 
   useEffect(() => {
-    form.setFieldsValue({
-      campaign_name: "",
-      tags: [],
+    apiFetch({ route: `campaigns/${id}` }).then(({ data }) => {
+      form.setFieldsValue({
+        campaign_name: data.attributes.name,
+        tags: data.attributes.tags,
+      })
+      apiFetch({ route: "templates" }).then((res) => {
+        const ts = res.data
+        const tdata = ts.map((value, index) => ({
+          id: value.id,
+          name: value.attributes.name,
+          key: index,
+        }))
+        let i = 0
+        for (i = 0; i < ts.length; i += 1) {
+          if (ts[i].id === data.attributes.template_id.toString()) {
+            setTemplate([i])
+          }
+        }
+        setTemplates(tdata)
+      })
     })
+  }, [id])
 
-    apiFetch({ route: "templates" }).then((res) => {
-      const ts = res.data
-      const data = ts.map((value, index) => ({
-        id: value.id,
-        name: value.attributes.name,
-        key: index,
-      }))
-      setTemplates(data)
-    })
-  }, [])
-
-  const handleCreate = () => {
+  const handleSave = () => {
     form
       .validateFields()
       .then((values) => {
-        // add select template before submit
         // Submit values
-        const param = {
-          name: values.campaign_name,
-          user_id,
-          template_id: templates[template[0]].id,
-          tags: values.tags,
-        }
-        apiFetch({ route: "campaigns", method: "post", params: param }).then(({ status }) => {
+        apiFetch({
+          route: `campaigns/${id}`,
+          method: "patch",
+          params: { ...values, template_id: templates[template[0]].id, user_id },
+        }).then(({ status }) => {
           if (status === 200) {
             history.push("/")
           }
@@ -105,15 +110,15 @@ const Campaigns = () => {
           id="create_campaign"
           type="primary"
           icon={<PlusSquareOutlined />}
-          onClick={handleCreate}
+          onClick={handleSave}
           size="large"
           disabled={templates.length === 0}
         >
-          Create Campaign
+          Save Campaign
         </Button>
       </div>
     </div>
   )
 }
 
-export default Campaigns
+export default CampaignShow
