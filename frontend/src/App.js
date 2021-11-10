@@ -9,6 +9,7 @@ import TemplateShow from "./pages/templates/show"
 import TemplateNew from "./pages/templates/new"
 import Login from "./pages/login"
 import Register from "./pages/register"
+import CampaignShow from "./pages/campaigns/show"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
@@ -39,6 +40,9 @@ const App = () => (
         </StyledSider>
         <StyledContent>
           <Switch>
+            <Route path="/campaigns/:id">
+              <CampaignShow />
+            </Route>
             <Route path="/campaigns">
               <Campaigns />
             </Route>
