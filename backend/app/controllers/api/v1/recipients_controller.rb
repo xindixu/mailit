@@ -45,6 +45,10 @@ class Api::V1::RecipientsController < ApplicationController
         render json: {status: 200, message: "Success"}
     end 
 
+    def export
+        send_data Recipient.export, filename: 'recipient-template.csv', status: 200 
+    end 
+
     private
 
     def recipient_params

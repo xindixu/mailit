@@ -9,4 +9,13 @@ class Recipient < ApplicationRecord
             Recipient.create(data)
         end 
     end 
+
+    def self.export
+        attributes = %w{firstname lastname email}
+        example_data = %w{Jane Doe jane.doe@example.com}
+        CSV.generate(headers: true) do |csv|
+            csv << attributes
+            csv << example_data
+        end 
+    end 
 end

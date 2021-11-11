@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :templates
       resources :recipients do 
         collection {post :import}
+        collection {get :export}
       end 
       resources :campaigns do 
         member do 
