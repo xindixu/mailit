@@ -288,6 +288,7 @@ const Campaigns = () => {
         >
           Create Campaign
         </Button>
+        <a href='/somefile.txt' download>Download Template</a>
       </div>
     </div>
   )
