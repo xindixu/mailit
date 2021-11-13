@@ -13,6 +13,7 @@ Rails.application.routes.draw do
           post 'deliver'
         end 
       end 
+      post 'login', to: 'authentication#login'
     end
   end
 
