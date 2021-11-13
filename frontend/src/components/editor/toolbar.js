@@ -31,36 +31,28 @@ const toolbarItems = [
         attrs: { level: 2 },
       },
       {
-        type: ComponentItem.ToolbarMenu,
-
-        items: [
-          {
-            type: ComponentItem.MenuGroup,
-            role: "radio",
-            items: [
-              {
-                type: ComponentItem.MenuCommandPane,
-                commandName: "toggleHeading",
-                attrs: { level: 3 },
-              },
-              {
-                type: ComponentItem.MenuCommandPane,
-                commandName: "toggleHeading",
-                attrs: { level: 4 },
-              },
-              {
-                type: ComponentItem.MenuCommandPane,
-                commandName: "toggleHeading",
-                attrs: { level: 5 },
-              },
-              {
-                type: ComponentItem.MenuCommandPane,
-                commandName: "toggleHeading",
-                attrs: { level: 6 },
-              },
-            ],
-          },
-        ],
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: "toggleHeading",
+        display: "icon",
+        attrs: { level: 3 },
+      },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: "toggleHeading",
+        display: "icon",
+        attrs: { level: 4 },
+      },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: "toggleHeading",
+        display: "icon",
+        attrs: { level: 5 },
+      },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: "toggleHeading",
+        display: "icon",
+        attrs: { level: 6 },
       },
     ],
     separator: "end",

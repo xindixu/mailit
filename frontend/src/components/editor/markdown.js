@@ -1,8 +1,5 @@
-import "@remirror/styles/all.css"
-
 import { ExtensionPriority } from "remirror"
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from "@remirror/react"
-
 import {
   // Markdown
   BlockquoteExtension,
@@ -26,6 +23,7 @@ import {
   YjsExtension,
 } from "remirror/extensions"
 import { AllStyledComponent } from "@remirror/styles/emotion"
+import { EditorWrapper } from "./styles"
 import { provider } from "./collaboration"
 import Toolbar from "./toolbar"
 
@@ -68,7 +66,7 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
   })
 
   return (
-    <div className="remirror-theme">
+    <EditorWrapper>
       <AllStyledComponent>
         <ThemeProvider>
           <Remirror
@@ -102,7 +100,7 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
           </Remirror>
         </ThemeProvider>
       </AllStyledComponent>
-    </div>
+    </EditorWrapper>
   )
 }
 
