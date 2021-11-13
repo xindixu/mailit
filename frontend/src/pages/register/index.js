@@ -1,6 +1,8 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 import { Form, Input, Button, Typography } from "antd"
 import styled from "styled-components"
+import apiFetch from "../../lib/api-fetch"
 
 const Main = styled.div`
   width: 40%;
@@ -10,9 +12,17 @@ const Main = styled.div`
 
 const Register = () => {
   const { Title } = Typography
+  const history = useHistory()
 
   const onFinish = (values) => {
-    console.log("Success:", values)
+    apiFetch({ route: "users", method: "post", params: {name: values.username, email: values.email, password: values.password} }).then((res) => {
+      if (res.status === 200) {
+        // get and store token
+        console.log("Success:", res)
+
+        history.push("/")
+      }
+    })
   }
 
   const onFinishFailed = (errorInfo) => {
