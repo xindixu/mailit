@@ -89,7 +89,7 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
 
             {showImageModal && (
               <ImageModal
-                onOk={(src) => {
+                onInsertImage={(src) => {
                   manager.store.commands.insertImage({
                     src,
                     width: 640,
