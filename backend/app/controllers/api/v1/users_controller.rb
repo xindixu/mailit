@@ -20,7 +20,9 @@ class Api::V1::UsersController < ApplicationController
 		if user_params['name'] == nil || user_params['email'] == nil
 			render json:{status: 400 , error: "Bad Request"}
 		elsif user.save
-			render json: {status: 200, message: "Success"}
+			payload = {user_id: user.id}
+			# token = create_token(payload)
+			# render json: {status: 200, message: "Success", token: token}
 		else
 			render json: {status: 422, error: user.errors.messages }
 		end
