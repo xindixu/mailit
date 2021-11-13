@@ -24,7 +24,9 @@
     "react-use": "^17.3.1",
     "remirror": "^1.0.40",
     "styled-components": "^5.3.3",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "y-webrtc": "^10.2.2",
+    "yjs": "^13.5.20"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0-rc.1",

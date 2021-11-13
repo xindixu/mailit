@@ -1,7 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Remirror, useRemirror } from "@remirror/react"
-import { MarkdownExtension, BoldExtension, ItalicExtension } from "remirror/extensions"
 
 import MarkdownEditor from "./markdown"
 import "remirror/styles/all.css"
@@ -12,7 +10,7 @@ const Base = ({ value, onChange }) => (
   <div className="remirror-theme">
     {/* the className is used to define css variables necessary for the editor */}
 
-    <MarkdownEditor initialContent={value}>
+    <MarkdownEditor value={value} onChange={onChange}>
       <Preview />
     </MarkdownEditor>
   </div>
