@@ -92,8 +92,6 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
                 onInsertImage={(src) => {
                   manager.store.commands.insertImage({
                     src,
-                    width: 640,
-                    height: 360,
                   })
                   setShowImageModal(false)
                 }}
