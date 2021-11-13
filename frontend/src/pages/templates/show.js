@@ -3,7 +3,7 @@ import { Spin } from "antd"
 import { useHistory, useParams } from "react-router-dom"
 import { isEmpty } from "lodash"
 import apiFetch from "../../lib/api-fetch"
-import TemplateForm from "./template-form"
+import TemplateForm from "./form"
 
 const TemplateShow = () => {
   const [isSaving, setIsSaving] = useState(false)
@@ -12,7 +12,7 @@ const TemplateShow = () => {
 
   useEffect(() => {
     apiFetch({ route: `templates/${id}` }).then(({ data }) => {
-      setTemplate({ ...data.attributes })
+      setTemplate({ ...data.attributes, id })
     })
   }, [id])
 
