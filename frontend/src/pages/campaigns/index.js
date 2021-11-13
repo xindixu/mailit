@@ -42,7 +42,7 @@ const Campaigns = () => {
 
   useEffect(() => {
     form.setFieldsValue({
-      campaign_name: "",
+      name: "",
       tags: [],
     })
 
@@ -64,7 +64,7 @@ const Campaigns = () => {
         // add select template before submit
         // Submit values
         const param = {
-          name: values.campaign_name,
+          name: values.name,
           user_id,
           template_id: templates[template[0]].id,
           tags: values.tags,

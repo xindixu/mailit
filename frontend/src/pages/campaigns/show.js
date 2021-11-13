@@ -44,7 +44,7 @@ const CampaignShow = () => {
   useEffect(() => {
     apiFetch({ route: `campaigns/${id}` }).then(({ data }) => {
       form.setFieldsValue({
-        campaign_name: data.attributes.name,
+        name: data.attributes.name,
         tags: data.attributes.tags,
       })
       apiFetch({ route: "templates" }).then((res) => {

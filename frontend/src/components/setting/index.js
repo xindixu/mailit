@@ -125,7 +125,7 @@ const Setting = (props) => {
     >
       <Form.Item
         label="Name"
-        name="campaign_name"
+        name="name"
         rules={[{ required: true, message: "Please input campaign name!" }]}
       >
         <Input />
