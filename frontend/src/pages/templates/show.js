@@ -25,7 +25,6 @@ const TemplateShow = () => {
   const onFinish = useCallback(
     (values) => {
       setIsSaving(true)
-      console.log("finish", values)
 
       apiFetch({
         route: `templates/${id}`,

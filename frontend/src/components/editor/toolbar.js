@@ -97,6 +97,8 @@ const Toolbar = ({ onClickInsertImage }) => (
   <BaseToolbar items={toolbarItems({ onClickInsertImage })} refocusEditor label="Top Toolbar" />
 )
 
-Toolbar.propTypes = {}
+Toolbar.propTypes = {
+  onClickInsertImage: PropTypes.func.isRequired,
+}
 
 export default Toolbar
