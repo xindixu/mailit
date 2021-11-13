@@ -107,7 +107,7 @@ const CampaignShow = () => {
       </div>
       <div style={bottomStyle}>
         <Button
-          id="create_campaign"
+          id="save_campaign"
           type="primary"
           icon={<PlusSquareOutlined />}
           onClick={handleSave}

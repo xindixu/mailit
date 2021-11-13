@@ -39,7 +39,11 @@ const Dashboard = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text, record) => <Link to={`/campaigns/${record.id}`}>{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/campaigns/${record.id}`} id={`${text}`}>
+          {text}
+        </Link>
+      ),
     },
     {
       title: "Tag",

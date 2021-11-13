@@ -9,13 +9,22 @@ Feature: Create, send, delete campaign
         Given user is on the Campaigns page
         When user updates the campaign name to "campaign1"
         And user add "emailtest" tag
-        And user click the Create Campaign button
+        And user clicks the Create Campaign button
         Then user should be on the Dashboard page
 
     Scenario: Send a campaign
         Given user is on the Dashboard page
         When user clicks the "send" button for campaign "testcampaign"
         Then user should see "Email sent!"
+    
+    Scenario: Edit a campaign
+        Given user is on the Dashboard page
+        When user clicks the "testcampaign" campaign button
+        Then user should be on CampaignShow like page
+        When user updates the campaign name to "test2campaign"
+        And user clicks the Save Campaign button
+        Then user should be on the Dashboard page
+        And user should see "test2campaign"
     
     Scenario: delete a campaign
         Given user is on the Dashboard page

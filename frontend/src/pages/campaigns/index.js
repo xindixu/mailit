@@ -111,7 +111,10 @@ const Campaigns = () => {
         >
           Create Campaign
         </Button>
-        <a href='http://127.0.0.1:3000/api/v1/recipients/export' download>Download Template</a>
+        <br />
+        <a href="http://127.0.0.1:3000/api/v1/recipients/export" download>
+          Download CSV Template
+        </a>
       </div>
     </div>
   )
