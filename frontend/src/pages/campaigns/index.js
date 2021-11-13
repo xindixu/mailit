@@ -37,7 +37,7 @@ const Campaigns = () => {
   const [form] = Form.useForm()
   const history = useHistory()
   const [templates, setTemplates] = useState([])
-  const [template, setTemplate] = useState([0])
+  const [selectedTemplateIndex, setSelectedTemplateIndex] = useState(0)
   const user_id = 1
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const Campaigns = () => {
         const param = {
           name: values.name,
           user_id,
-          template_id: templates[template[0]].id,
+          template_id: templates[selectedTemplateIndex].id,
           tags: values.tags,
         }
         apiFetch({ route: "campaigns", method: "post", params: param }).then(({ status }) => {
@@ -84,8 +84,8 @@ const Campaigns = () => {
         <div style={sectionStyle}>
           <Card title="Choose A Template">
             <Selection
-              selectedRowKeys={template}
-              setSelectedRowKeys={setTemplate}
+              selectedRowKeys={[selectedTemplateIndex]}
+              setSelectedRowKeys={(array) => setSelectedTemplateIndex(array[0])}
               columns={columns}
               data={templates}
             />
@@ -112,7 +112,7 @@ const Campaigns = () => {
           Create Campaign
         </Button>
         <br />
-        <a href="http://127.0.0.1:3000/api/v1/recipients/export" download>
+        <a href={`${process.env.REACT_APP_BASE_URL}/api/v1/recipients/export`} download>
           Download CSV Template
         </a>
       </div>

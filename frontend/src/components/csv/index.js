@@ -7,7 +7,7 @@ const { Dragger } = Upload
 const uploadProps = {
   name: "file",
   multiple: true,
-  action: "http://localhost:3000/api/v1/recipients/import",
+  action: `${process.env.REACT_APP_BASE_URL}/api/v1/recipients/import`,
   onChange(info) {
     const { status } = info.file
     if (status !== "uploading") {

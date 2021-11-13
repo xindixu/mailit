@@ -37,7 +37,7 @@ const CampaignShow = () => {
   const [form] = Form.useForm()
   const history = useHistory()
   const [templates, setTemplates] = useState([])
-  const [template, setTemplate] = useState([0])
+  const [selectedTemplateIndex, setSelectedTemplateIndex] = useState(0)
   const user_id = 1
   const { id } = useParams()
 
@@ -54,12 +54,8 @@ const CampaignShow = () => {
           name: value.attributes.name,
           key: index,
         }))
-        let i = 0
-        for (i = 0; i < ts.length; i += 1) {
-          if (ts[i].id === data.attributes.template_id.toString()) {
-            setTemplate([i])
-          }
-        }
+
+        setSelectedTemplateIndex(ts.findIndex((t) => t.id === `${data.attributes.template_id}`))
         setTemplates(tdata)
       })
     })
@@ -73,7 +69,7 @@ const CampaignShow = () => {
         apiFetch({
           route: `campaigns/${id}`,
           method: "patch",
-          params: { ...values, template_id: templates[template[0]].id, user_id },
+          params: { ...values, template_id: templates[selectedTemplateIndex].id, user_id },
         }).then(({ status }) => {
           if (status === 200) {
             history.push("/")
@@ -89,8 +85,8 @@ const CampaignShow = () => {
         <div style={sectionStyle}>
           <Card title="Choose A Template">
             <Selection
-              selectedRowKeys={template}
-              setSelectedRowKeys={setTemplate}
+              selectedRowKeys={[selectedTemplateIndex]}
+              setSelectedRowKeys={(array) => setSelectedTemplateIndex(array[0])}
               columns={columns}
               data={templates}
             />
