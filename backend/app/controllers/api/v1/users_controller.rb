@@ -21,8 +21,8 @@ class Api::V1::UsersController < ApplicationController
 			render json:{status: 400 , error: "Bad Request"}
 		elsif user.save
 			payload = {user_id: user.id}
-			# token = create_token(payload)
-			# render json: {status: 200, message: "Success", token: token}
+			token = create_token(payload)
+			render json: {status: 200, message: "Success", token: token}
 		else
 			render json: {status: 422, error: user.errors.messages }
 		end
