@@ -24,7 +24,7 @@ class Api::V1::UsersController < ApplicationController
 			token = create_token(payload)
 			render json: {status: 200, message: "Success", token: token}
 		else
-			render json: {status: 422, error: user.errors.messages }
+			render json: {status: 422, error: user.errors.messages}
 		end
 	end
 
