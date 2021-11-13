@@ -1386,7 +1386,7 @@
   resolved "https://registry.yarnpkg.com/@cucumber/tag-expressions/-/tag-expressions-4.1.0.tgz#9a91b0e0dd2f2ba703e3038c52b49b9ac06c2c6f"
   integrity sha512-chTnjxV3vryL75N90wJIMdMafXmZoO2JgNJLYpsfcALL2/IQrRiny3vM9DgD5RDCSt1LNloMtb7rGey9YWxCsA==
 
-"@emotion/babel-plugin@^11.0.0":
+"@emotion/babel-plugin@^11.0.0", "@emotion/babel-plugin@^11.3.0":
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.3.0.tgz#3a16850ba04d8d9651f07f3fb674b3436a4fb9d7"
   integrity sha512-UZKwBV2rADuhRp+ZOGgNWg2eYgbzKzQXfQPtJbu/PLy8onurxlNCLvxMQEvlr1/GudguPI5IU9qIY1+2z1M5bA==
@@ -1438,6 +1438,13 @@
   dependencies:
     "@emotion/memoize" "0.7.4"
 
+"@emotion/is-prop-valid@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-1.1.0.tgz#29ef6be1e946fb4739f9707def860f316f668cde"
+  integrity sha512-9RkilvXAufQHsSsjQ3PIzSns+pxuX4EW8EbGeSPjZMHuMx6z/MOzb9LpqNieQX4F3mre3NWS2+X3JNRHTQztUQ==
+  dependencies:
+    "@emotion/memoize" "^0.7.4"
+
 "@emotion/memoize@0.7.4":
   version "0.7.4"
   resolved "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.4.tgz"
@@ -1447,6 +1454,19 @@
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
   integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
+
+"@emotion/react@^11.5.0":
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.5.0.tgz#19b5771bbfbda5e8517e948a2d9064810f0022bd"
+  integrity sha512-MYq/bzp3rYbee4EMBORCn4duPQfgpiEB5XzrZEBnUZAL80Qdfr7CEv/T80jwaTl/dnZmt9SnTa8NkTrwFNpLlw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@emotion/cache" "^11.5.0"
+    "@emotion/serialize" "^1.0.2"
+    "@emotion/sheet" "^1.0.3"
+    "@emotion/utils" "^1.0.0"
+    "@emotion/weak-memoize" "^0.2.5"
+    hoist-non-react-statics "^3.3.1"
 
 "@emotion/serialize@^1.0.0", "@emotion/serialize@^1.0.2":
   version "1.0.2"
@@ -1463,6 +1483,17 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@emotion/sheet/-/sheet-1.0.3.tgz#00c326cd7985c5ccb8fe2c1b592886579dcfab8f"
   integrity sha512-YoX5GyQ4db7LpbmXHMuc8kebtBGP6nZfRC5Z13OKJMixBEwdZrJ914D6yJv/P+ZH/YY3F5s89NYX2hlZAf3SRQ==
+
+"@emotion/styled@^11.3.0":
+  version "11.3.0"
+  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.3.0.tgz#d63ee00537dfb6ff612e31b0e915c5cf9925a207"
+  integrity sha512-fUoLcN3BfMiLlRhJ8CuPUMEyKkLEoM+n+UyAbnqGEsCd5IzKQ7VQFLtzpJOaCD2/VR2+1hXQTnSZXVJeiTNltA==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@emotion/babel-plugin" "^11.3.0"
+    "@emotion/is-prop-valid" "^1.1.0"
+    "@emotion/serialize" "^1.0.2"
+    "@emotion/utils" "^1.0.0"
 
 "@emotion/stylis@^0.8.4":
   version "0.8.5"
@@ -2650,6 +2681,24 @@
     use-isomorphic-layout-effect "^1.1.1"
     use-previous "^1.1.0"
 
+"@remirror/react-editors@^0.1.27":
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/@remirror/react-editors/-/react-editors-0.1.27.tgz#caa5279638f15a4f019c5822b4f905ea32330d9a"
+  integrity sha512-a5FNf9EFmpmNF9v4kcTzQOkiQqkNickPFWR/mz11lG4Kso3VydgwJsnhy3XMBcJ5smcukHKsTRu/1y1Umz5K8Q==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@remirror/core-helpers" "^1.0.4"
+    "@remirror/extension-react-tables" "^1.0.15"
+    "@remirror/pm" "^1.0.6"
+    "@remirror/react" "^1.0.15"
+    "@remirror/styles" "^1.1.2"
+    "@svgmoji/noto" "^3.2.0"
+    "@types/refractor" "^3.0.2"
+    create-context-state "^1.0.1"
+    refractor "^3.3.1"
+    remirror "1.0.40"
+    svgmoji "^3.2.0"
+
 "@remirror/react-hooks@^1.0.14":
   version "1.0.14"
   resolved "https://registry.yarnpkg.com/@remirror/react-hooks/-/react-hooks-1.0.14.tgz#ade3296380452b0336ef505f124fd835a196f493"
@@ -2715,6 +2764,13 @@
     "@remirror/react-renderer" "^1.0.12"
     "@remirror/react-ssr" "^1.0.11"
     "@remirror/react-utils" "^1.0.5"
+
+"@remirror/styles@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@remirror/styles/-/styles-1.1.2.tgz#ef9a4dc94dfbff3fd2c85b0d00f32aec21a3cfd3"
+  integrity sha512-G1euW1dJpPC+T7v2EvySe/9BWWYXi5U9abyJfF8Ms+gJJME3rZYbiixrIP7++WMGQP1Ac93CuQws4nZPd9nSGw==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
 
 "@remirror/theme@^1.1.4":
   version "1.1.4"
@@ -8168,7 +8224,7 @@ hmac-drbg@^1.0.1:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0:
+hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -14077,7 +14133,7 @@ remark-rehype@^9.0.0:
     mdast-util-to-hast "^11.0.0"
     unified "^10.0.0"
 
-remirror@^1.0.40:
+remirror@1.0.40, remirror@^1.0.40:
   version "1.0.40"
   resolved "https://registry.yarnpkg.com/remirror/-/remirror-1.0.40.tgz#b88d6875ebe8c67cafffdaa18b913c5c8779eed8"
   integrity sha512-gJ03Uj03VCQg6eFOWj/Q/UGK0UsXoZCFtiIhbS8m975a2g09QDnyghWLvCNYvT5WNJiufCFagUOKbh8w+XC7VQ==
