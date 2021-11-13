@@ -12,7 +12,7 @@ const TemplateShow = () => {
 
   useEffect(() => {
     apiFetch({ route: `templates/${id}` }).then(({ data }) => {
-      setTemplate({ ...data.attributes })
+      setTemplate({ ...data.attributes, id })
     })
   }, [id])
 

@@ -25,11 +25,11 @@ import {
 } from "remirror/extensions"
 import { AllStyledComponent } from "@remirror/styles/emotion"
 import { EditorWrapper } from "./styles"
-import { provider } from "./collaboration"
+import { getProvider } from "./collaboration"
 import Toolbar from "./toolbar"
 import ImageModal from "./image-modal"
 
-const getExtensions = ({ placeholder }) => [
+const getExtensions = ({ placeholder, collaborationId }) => [
   new PlaceholderExtension({ placeholder }),
   new BlockquoteExtension(),
   new BoldExtension(),
@@ -52,15 +52,15 @@ const getExtensions = ({ placeholder }) => [
    */
   new HardBreakExtension(),
   new ImageExtension(),
-  new YjsExtension({ getProvider: () => provider }),
+  new YjsExtension({ getProvider: () => getProvider(collaborationId) }),
 ]
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
  */
-const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
+const MarkdownEditor = ({ placeholder, value, children, onChange, id }) => {
   const [showImageModal, setShowImageModal] = useState(false)
-  const extensions = getExtensions({ placeholder })
+  const extensions = getExtensions({ placeholder, collaborationId: id })
 
   const { manager, state, setState } = useRemirror({
     extensions,

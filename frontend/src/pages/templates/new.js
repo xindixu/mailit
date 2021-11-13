@@ -36,7 +36,7 @@ const TemplateNew = () => {
       onCancel={goBack}
       onFinish={onFinish}
       saveText="Create"
-      template={{}}
+      template={{ id: "new" }}
     />
   )
 }
