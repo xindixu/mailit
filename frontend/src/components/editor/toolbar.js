@@ -2,7 +2,22 @@ import React from "react"
 import PropTypes from "prop-types"
 import { ComponentItem, Toolbar as BaseToolbar } from "@remirror/react"
 
-const toolbarItems = [
+const toolbarItems = ({ onClickInsertImage }) => [
+  {
+    type: ComponentItem.ToolbarGroup,
+    label: "History",
+    items: [
+      { type: ComponentItem.ToolbarCommandButton, commandName: "undo", display: "icon" },
+      { type: ComponentItem.ToolbarCommandButton, commandName: "redo", display: "icon" },
+      {
+        type: ComponentItem.ToolbarCommandButton,
+        commandName: "toggleColumns",
+        display: "icon",
+        attrs: { count: 2 },
+      },
+    ],
+    separator: "end",
+  },
   {
     type: ComponentItem.ToolbarGroup,
     label: "Simple Formatting",
@@ -67,27 +82,20 @@ const toolbarItems = [
         display: "icon",
       },
       { type: ComponentItem.ToolbarCommandButton, commandName: "toggleCodeBlock", display: "icon" },
-    ],
-    separator: "end",
-  },
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: "History",
-    items: [
-      { type: ComponentItem.ToolbarCommandButton, commandName: "undo", display: "icon" },
-      { type: ComponentItem.ToolbarCommandButton, commandName: "redo", display: "icon" },
       {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: "toggleColumns",
+        type: ComponentItem.ToolbarButton,
         display: "icon",
-        attrs: { count: 2 },
+        onClick: onClickInsertImage,
+        icon: "imageAddLine",
       },
     ],
     separator: "none",
   },
 ]
 
-const Toolbar = (props) => <BaseToolbar items={toolbarItems} refocusEditor label="Top Toolbar" />
+const Toolbar = ({ onClickInsertImage }) => (
+  <BaseToolbar items={toolbarItems({ onClickInsertImage })} refocusEditor label="Top Toolbar" />
+)
 
 Toolbar.propTypes = {}
 

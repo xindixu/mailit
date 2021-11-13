@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { ExtensionPriority } from "remirror"
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from "@remirror/react"
 import {
@@ -26,6 +27,7 @@ import { AllStyledComponent } from "@remirror/styles/emotion"
 import { EditorWrapper } from "./styles"
 import { provider } from "./collaboration"
 import Toolbar from "./toolbar"
+import ImageModal from "./image-modal"
 
 const getExtensions = ({ placeholder }) => [
   new PlaceholderExtension({ placeholder }),
@@ -57,6 +59,7 @@ const getExtensions = ({ placeholder }) => [
  * The editor which is used to create the annotation. Supports formatting.
  */
 const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
+  const [showImageModal, setShowImageModal] = useState(false)
   const extensions = getExtensions({ placeholder })
 
   const { manager, state, setState } = useRemirror({
@@ -80,23 +83,23 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
               }
             }}
           >
-            <Toolbar />
+            <Toolbar onClickInsertImage={() => setShowImageModal(true)} />
             <EditorComponent />
             {children}
 
-            {/* TODO: image uploader */}
-            <button
-              type="button"
-              onClick={() => {
-                manager.store.commands.insertImage({
-                  src: "https://loremflickr.com/640/360",
-                  width: 640,
-                  height: 360,
-                })
-              }}
-            >
-              Add Image
-            </button>
+            {showImageModal && (
+              <ImageModal
+                onOk={(src) => {
+                  manager.store.commands.insertImage({
+                    src,
+                    width: 640,
+                    height: 360,
+                  })
+                  setShowImageModal(false)
+                }}
+                onCancel={() => setShowImageModal(false)}
+              />
+            )}
           </Remirror>
         </ThemeProvider>
       </AllStyledComponent>
