@@ -2,6 +2,7 @@ import "@remirror/styles/all.css"
 
 import { ExtensionPriority } from "remirror"
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from "@remirror/react"
+
 import {
   // Markdown
   BlockquoteExtension,
@@ -36,7 +37,6 @@ const getExtensions = ({ placeholder }) => [
   new CodeBlockExtension(),
   new CodeExtension(),
   new HeadingExtension(),
-  new ImageExtension(),
   new ItalicExtension(),
   new LinkExtension(),
   new LinkExtension({ autoLink: true }),
@@ -51,6 +51,7 @@ const getExtensions = ({ placeholder }) => [
    * e.g. in a list item
    */
   new HardBreakExtension(),
+  new ImageExtension(),
   new YjsExtension({ getProvider: () => provider }),
 ]
 
@@ -84,6 +85,20 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
             <Toolbar />
             <EditorComponent />
             {children}
+
+            {/* TODO: image uploader */}
+            <button
+              type="button"
+              onClick={() => {
+                manager.store.commands.insertImage({
+                  src: "https://loremflickr.com/640/360",
+                  width: 640,
+                  height: 360,
+                })
+              }}
+            >
+              Add Image
+            </button>
           </Remirror>
         </ThemeProvider>
       </AllStyledComponent>
