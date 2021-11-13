@@ -1,16 +1,17 @@
 import PropTypes from "prop-types"
 import { useWindowSize } from "react-use"
-import Base from "./base"
+import MarkdownEditor from "./markdown"
 
 const HEIGHT_OFFSET = 300
-const MarkdownEditor = ({ value, onChange }) => {
+
+const Editor = ({ value, onChange }) => {
   const { height } = useWindowSize()
 
-  return <Base value={value} onChange={onChange} height={height - HEIGHT_OFFSET} id="content" />
+  return <Editor value={value} onChange={onChange} id="content" />
 }
 
-MarkdownEditor.propTypes = {
-  value: PropTypes.string,
+Editor.propTypes = {
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 }
 

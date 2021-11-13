@@ -1,9 +1,9 @@
 import "@remirror/styles/all.css"
 
-import { useCallback } from "react"
 import { ExtensionPriority } from "remirror"
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from "@remirror/react"
 import {
+  // Markdown
   BlockquoteExtension,
   BoldExtension,
   BulletListExtension,
@@ -11,6 +11,7 @@ import {
   CodeExtension,
   HardBreakExtension,
   HeadingExtension,
+  ImageExtension,
   ItalicExtension,
   LinkExtension,
   ListItemExtension,
@@ -20,6 +21,7 @@ import {
   StrikeExtension,
   TableExtension,
   TrailingNodeExtension,
+  // Real time collaboration
   YjsExtension,
 } from "remirror/extensions"
 import { AllStyledComponent } from "@remirror/styles/emotion"
@@ -28,20 +30,21 @@ import Toolbar from "./toolbar"
 
 const getExtensions = ({ placeholder }) => [
   new PlaceholderExtension({ placeholder }),
-  new LinkExtension({ autoLink: true }),
-  new BoldExtension(),
-  new StrikeExtension(),
-  new ItalicExtension(),
-  new HeadingExtension(),
-  new LinkExtension(),
   new BlockquoteExtension(),
+  new BoldExtension(),
   new BulletListExtension({ enableSpine: true }),
-  new OrderedListExtension(),
-  new ListItemExtension({ priority: ExtensionPriority.High, enableCollapsible: true }),
-  new CodeExtension(),
   new CodeBlockExtension(),
-  new TrailingNodeExtension(),
+  new CodeExtension(),
+  new HeadingExtension(),
+  new ImageExtension(),
+  new ItalicExtension(),
+  new LinkExtension(),
+  new LinkExtension({ autoLink: true }),
+  new ListItemExtension({ priority: ExtensionPriority.High, enableCollapsible: true }),
+  new OrderedListExtension(),
+  new StrikeExtension(),
   new TableExtension(),
+  new TrailingNodeExtension(),
   new MarkdownExtension({ copyAsMarkdown: false }),
   /**
    * `HardBreakExtension` allows us to create a newline inside paragraphs.
@@ -64,25 +67,27 @@ const MarkdownEditor = ({ placeholder, value, children, onChange }) => {
   })
 
   return (
-    <AllStyledComponent>
-      <ThemeProvider>
-        <Remirror
-          manager={manager}
-          autoFocus
-          state={state}
-          onChange={({ state: newState, helpers }) => {
-            setState(newState)
-            if (newState) {
-              onChange(helpers.getMarkdown(newState))
-            }
-          }}
-        >
-          <Toolbar />
-          <EditorComponent />
-          {children}
-        </Remirror>
-      </ThemeProvider>
-    </AllStyledComponent>
+    <div className="remirror-theme">
+      <AllStyledComponent>
+        <ThemeProvider>
+          <Remirror
+            manager={manager}
+            autoFocus
+            state={state}
+            onChange={({ state: newState, helpers }) => {
+              setState(newState)
+              if (newState) {
+                onChange(helpers.getMarkdown(newState))
+              }
+            }}
+          >
+            <Toolbar />
+            <EditorComponent />
+            {children}
+          </Remirror>
+        </ThemeProvider>
+      </AllStyledComponent>
+    </div>
   )
 }
 
