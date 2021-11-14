@@ -25,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
 		elsif user.save
 			payload = {user_id: user.id}
 			token = create_token(payload)
-			render json: {status: 200, message: "Success", token: token}
+			render json: {status: 200, message: "Success", token: token, user_id: user.id}
 		else
 			render json: {status: 422, error: user.errors.messages}
 		end
