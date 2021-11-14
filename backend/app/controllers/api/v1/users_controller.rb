@@ -1,4 +1,7 @@
 class Api::V1::UsersController < ApplicationController
+
+	skip_before_action :authenticate, only: [:create, :index]
+	
 	def index
 		users = User.all
 		render json: UserSerializer.new(users).serialized_json
@@ -20,9 +23,11 @@ class Api::V1::UsersController < ApplicationController
 		if user_params['name'] == nil || user_params['email'] == nil
 			render json:{status: 400 , error: "Bad Request"}
 		elsif user.save
-			render json: {status: 200, message: "Success"}
+			payload = {user_id: user.id}
+			token = create_token(payload)
+			render json: {status: 200, message: "Success", token: token}
 		else
-			render json: {status: 422, error: user.errors.messages }
+			render json: {status: 422, error: user.errors.messages}
 		end
 	end
 

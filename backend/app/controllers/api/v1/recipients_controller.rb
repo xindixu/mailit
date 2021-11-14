@@ -1,4 +1,6 @@
 class Api::V1::RecipientsController < ApplicationController
+    skip_before_action :authenticate, only: [:index]
+    
     def index
         recipients = Recipient.all
         render json: RecipientSerializer.new(recipients).serialized_json
