@@ -1,4 +1,5 @@
 class Api::V1::TemplatesController < ApplicationController
+  skip_before_action :authenticate, only: [:index]
   def index
     templates = Template.all
     render json: TemplateSerializer.new(templates).serialized_json

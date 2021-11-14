@@ -1,6 +1,8 @@
 require 'redcarpet'
 
 class Api::V1::CampaignsController < ApplicationController
+    skip_before_action :authenticate, only: [:index]
+    
     def index
         campaigns = Campaign.all
         render json: CampaignSerializer.new(campaigns).serialized_json

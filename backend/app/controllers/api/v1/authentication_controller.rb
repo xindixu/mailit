@@ -1,17 +1,17 @@
 class Api::V1::AuthenticationController < ApplicationController 
-    skip_before_action :authenticate, only: [:login]
+    skip_before_action :authenticate, only: [:login, :signup]
     def login
         @user = User.find_by(email: params[:email])
         if @user
             if(@user.authenticate(params[:password]))
                 payload = {user_id: @user.id}
                 token = create_token(payload)
-                render json: {token: token}
+                render json: {status: 200, token: token}
             else
-                render json: {message: "Authentication Failed"}
+                render json: {status: 401, message: "Authentication Failed"}
             end 
         else
-            render json: {message: "could not find user"}
+            render json: {status: 404, message: "could not find user"}
         end 
     end 
 end 

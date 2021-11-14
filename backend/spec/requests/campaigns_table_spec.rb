@@ -1,12 +1,19 @@
 require 'rails_helper'
 
 describe 'CAMPAIGNS API' ,type: :request do
+    before(:each) do 
+        @user = User.new(name: "John Doe", email: "john@email_provider.com", password: "hello1")
+		@user.save
+		@token = JWT.encode({user_id: @user.id}, Rails.application.secrets.secret_key_base, 'HS256')
+        @campaign = Campaign.new(name: "Test", tags:['test'], user_id: @user.id, template_id: 1)
+        @campaign.save
+    end 
     let(:valid_params) do
         {
             campaign:{
                 name: 'Test',
                 tags: ['test'],
-                user_id: 1, 
+                user_id: @user.id, 
                 template_id: 1
             }
             
@@ -15,7 +22,7 @@ describe 'CAMPAIGNS API' ,type: :request do
     let(:update_params) do
         {
             campaign:{
-                id:1, name: 'Test2', tags: ['test2'], user_id: 2, template_id: 1
+                id:@campaign.id, name: 'Test', tags: ['test2'], user_id: @user.id, template_id: 1
             }
             
         }
@@ -29,28 +36,19 @@ describe 'CAMPAIGNS API' ,type: :request do
     end
     describe 'GET /campaigns' do
         it 'returns all the campaigns' do
-            c = Campaign.new(valid_params['campaign'])
-            c.save
-            expect(Campaign.count).to eq(1)
             get '/api/v1/campaigns'
 			expect(response).to have_http_status(:success)
 			expect(JSON.parse(response.body).size).to eq(1)
         end
 
         it 'returns a specific entry for specified id' do
-            c = Campaign.new(valid_params['campaign'])
-            c.save
-            expect(Campaign.count).to eq(1)
-            get "/api/v1/campaigns/#{c.id}"
+            get "/api/v1/campaigns/#{@campaign.id}", headers: {"Authorization" => "Bearer #{@token}"}
             expect(response).to have_http_status(:success)
         end
 
         it 'is invalid if id passed is invalid' do
-            c = Campaign.new(name: 'Test', tags: ['test'], user_id: 1, template_id: 1)
-            c.save
-            expect(Campaign.count).to eq(1)
-            i = 2
-            get "/api/v1/campaigns/#{i}"
+            i = @campaign.id + 1
+            get "/api/v1/campaigns/#{i}", headers: {"Authorization" => "Bearer #{@token}"}
             expect(JSON.parse(response.body)['data']).to be nil
 			expect(JSON.parse(response.body)['status']).to eq(400)
 			expect(JSON.parse(response.body)['error']).to eq("Invalid Id Passed")
@@ -59,34 +57,30 @@ describe 'CAMPAIGNS API' ,type: :request do
 
     describe 'POST /campaigns' do
         it 'creates a new campaign' do
-			post '/api/v1/campaigns', params: valid_params
+			post '/api/v1/campaigns', params: valid_params, headers: {"Authorization" => "Bearer #{@token}"}
 			expect(response).to have_http_status(:success)
+            expect(Campaign.count).to be 2
         end
 
         it 'is invalid for invalid parameters' do
-            post '/api/v1/campaigns', params: invalid_params
+            post '/api/v1/campaigns', params: invalid_params, headers: {"Authorization" => "Bearer #{@token}"}
             expect(JSON.parse(response.body)['status']).to eq(400)
             expect(JSON.parse(response.body)['error']).to eq("Bad Request")
-            expect(Campaign.count).to be 0
+            expect(Campaign.count).to be 1
         end
     end
 
     describe 'DELETE /campaigns' do
         it 'deletes an entry in campaigns table' do
-            c = Campaign.new(valid_params['campaign'])
-            c.save
-            expect(Campaign.count).to eq(1)
-            delete "/api/v1/campaigns/#{c.id}"
+            delete "/api/v1/campaigns/#{@campaign.id}", headers: {"Authorization" => "Bearer #{@token}"}
             expect(response).to have_http_status(:success)
             expect(Campaign.count).to eq(0)
         end
 
         it 'is invalid if id is not correct' do 
-            c = Campaign.new(valid_params['campaign'])
-            c.save
-            i = c.id + 1
+            i = @campaign.id + 1
             expect(Campaign.count).to eq(1)
-            delete "/api/v1/campaigns/#{i}"
+            delete "/api/v1/campaigns/#{i}", headers: {"Authorization" => "Bearer #{@token}"}
             expect(JSON.parse(response.body)['status']).to eq(400)
             expect(JSON.parse(response.body)['error']).to eq("Invalid Id Passed")
         end
@@ -94,23 +88,16 @@ describe 'CAMPAIGNS API' ,type: :request do
 
     describe 'UPDATE /campaigns' do
         it 'updates the entry for given ID' do
-            c = Campaign.new(name: 'Test1', tags: ['test1'], user_id: 1, template_id: 1
-            )
-            c.save
-            expect(Campaign.count).to eq(1)
-            patch "/api/v1/campaigns/#{c.id}", params: update_params
+            patch "/api/v1/campaigns/#{@campaign.id}", params: update_params, headers: {"Authorization" => "Bearer #{@token}"}
             expect(response).to have_http_status(:success)
             expect(JSON.parse(response.body)['status']).to eq(200)
             expect(JSON.parse(response.body)['message']).to eq("Success")
+            expect(Campaign.first.tags).to eq(['test2'])
         end
 
         it 'is invalid if id not correct' do
-            c = Campaign.new(name: 'Test1', tags: ['test1'], user_id: 1, template_id: 1
-            )
-            c.save
-            i = c.id + 1
-            expect(Campaign.count).to eq(1)
-            patch "/api/v1/campaigns/#{i}", params: update_params
+            i = @campaign.id + 1
+            patch "/api/v1/campaigns/#{i}", params: update_params, headers: {"Authorization" => "Bearer #{@token}"}
             expect(response).to have_http_status(:success)
             expect(JSON.parse(response.body)['status']).to eq(400)
             expect(JSON.parse(response.body)['error']).to eq("Bad Request")
