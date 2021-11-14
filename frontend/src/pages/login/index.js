@@ -1,6 +1,8 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 import { Form, Input, Button, Checkbox, Typography } from "antd"
 import styled from "styled-components"
+import apiFetch from "../../lib/api-fetch"
 
 const Main = styled.div`
   width: 40%;
@@ -10,13 +12,21 @@ const Main = styled.div`
 
 const Login = () => {
   const { Title } = Typography
+  const history = useHistory()
 
   const onFinish = (values) => {
-    console.log("Success:", values)
-  }
+    apiFetch({
+      route: "login",
+      method: "post",
+      params: { email: values.email, password: values.password },
+    }).then((res) => {
+      if (res.status === 200) {
+        // get and store token
+        console.log("Success:", res)
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo)
+        history.push("/")
+      }
+    })
   }
 
   return (
@@ -28,7 +38,6 @@ const Login = () => {
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
