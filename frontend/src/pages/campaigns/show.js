@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { Card, Form, Button } from "antd"
 import { PlusSquareOutlined } from "@ant-design/icons"
 import Csv from "../../components/csv"
@@ -33,43 +33,44 @@ const columns = [
   },
 ]
 
-const Campaigns = () => {
+const CampaignShow = () => {
   const [form] = Form.useForm()
   const history = useHistory()
   const [templates, setTemplates] = useState([])
   const [selectedTemplateIndex, setSelectedTemplateIndex] = useState(0)
   const user_id = 1
+  const { id } = useParams()
 
   useEffect(() => {
-    form.setFieldsValue({
-      name: "",
-      tags: [],
-    })
+    apiFetch({ route: `campaigns/${id}` }).then(({ data }) => {
+      form.setFieldsValue({
+        name: data.attributes.name,
+        tags: data.attributes.tags,
+      })
+      apiFetch({ route: "templates" }).then((res) => {
+        const ts = res.data
+        const tdata = ts.map((value, index) => ({
+          id: value.id,
+          name: value.attributes.name,
+          key: index,
+        }))
 
-    apiFetch({ route: "templates" }).then((res) => {
-      const ts = res.data
-      const data = ts.map((value, index) => ({
-        id: value.id,
-        name: value.attributes.name,
-        key: index,
-      }))
-      setTemplates(data)
+        setSelectedTemplateIndex(ts.findIndex((t) => t.id === `${data.attributes.template_id}`))
+        setTemplates(tdata)
+      })
     })
-  }, [])
+  }, [id])
 
-  const handleCreate = () => {
+  const handleSave = () => {
     form
       .validateFields()
       .then((values) => {
-        // add select template before submit
         // Submit values
-        const param = {
-          name: values.name,
-          user_id,
-          template_id: templates[selectedTemplateIndex].id,
-          tags: values.tags,
-        }
-        apiFetch({ route: "campaigns", method: "post", params: param }).then(({ status }) => {
+        apiFetch({
+          route: `campaigns/${id}`,
+          method: "patch",
+          params: { ...values, template_id: templates[selectedTemplateIndex].id, user_id },
+        }).then(({ status }) => {
           if (status === 200) {
             history.push("/")
           }
@@ -102,22 +103,18 @@ const Campaigns = () => {
       </div>
       <div style={bottomStyle}>
         <Button
-          id="create_campaign"
+          id="save_campaign"
           type="primary"
           icon={<PlusSquareOutlined />}
-          onClick={handleCreate}
+          onClick={handleSave}
           size="large"
           disabled={templates.length === 0}
         >
-          Create Campaign
+          Save Campaign
         </Button>
-        <br />
-        <a href={`${process.env.REACT_APP_BASE_URL}/api/v1/recipients/export`} download>
-          Download CSV Template
-        </a>
       </div>
     </div>
   )
 }
 
-export default Campaigns
+export default CampaignShow

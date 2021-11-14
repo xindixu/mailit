@@ -4,7 +4,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users 
       resources :templates
-      resources :recipients
+      resources :recipients do 
+        collection {post :import}
+        collection {get :export}
+      end 
       resources :campaigns do 
         member do 
           post 'deliver'

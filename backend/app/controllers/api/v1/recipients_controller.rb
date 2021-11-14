@@ -40,9 +40,18 @@ class Api::V1::RecipientsController < ApplicationController
         end
     end
 
+    def import 
+        Recipient.import(params[:file], params[:user_id])
+        render json: {status: 200, message: "Success"}
+    end 
+
+    def export
+        send_data Recipient.export, filename: 'recipient-template.csv', status: 200 
+    end 
+
     private
 
     def recipient_params
-        params.require(:recipient).permit(:email,:user_id,tags: [])
+        params.require(:recipient).permit(:email,:user_id, :firstname, :lastname, tags: [])
     end
 end 

@@ -56,8 +56,8 @@ Then(/user can see the Create Campaign button/, async () => {
 })
 
 When("user updates the campaign name to {string}", async (value) => {
-  const nameInput = await driver.findElement(By.id("campaign_name"))
-
+  const nameInput = await driver.findElement(By.id("name"))
+  await nameInput.clear()
   await nameInput.sendKeys(removeQuotations(value))
 })
 
@@ -81,14 +81,26 @@ When(
   }
 )
 
-When(/user click the Create Campaign button/, async () => {
+When(/user clicks the Create Campaign button/, async () => {
   const button = await driver.findElement(By.id("create_campaign"))
   await button.click()
+  await driver.sleep(3000)
+})
+
+When(/user clicks the Save Campaign button/, async () => {
+  const button = await driver.findElement(By.id("save_campaign"))
+  await button.click()
+  await driver.sleep(3000)
 })
 
 When("user clicks the {string} button for campaign {string}", async (buttonText, name) => {
   await driver.sleep(1000)
   const button = await driver.findElement(By.id(`${removeQuotations(buttonText)} email ${removeQuotations(name)}`))
+  await button.click()
+})
+
+When("user clicks the {string} campaign button", async (buttonText) => {
+  const button = await driver.findElement(By.id(`${removeQuotations(buttonText)}`))
   await button.click()
 })
 
