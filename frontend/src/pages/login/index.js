@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import { Form, Input, Button, Checkbox, Typography } from "antd"
 import styled from "styled-components"
 import apiFetch from "../../lib/api-fetch"
@@ -66,6 +66,9 @@ const Login = ({ setAuth }) => {
           <Button type="primary" htmlType="submit">
             Login
           </Button>
+        </Form.Item>
+        <Form.Item>
+          <Link to="/register">Create A New Account</Link>
         </Form.Item>
       </Form>
     </Main>
