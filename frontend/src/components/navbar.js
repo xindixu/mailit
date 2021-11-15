@@ -20,6 +20,10 @@ const AvatarWrapper = styled.div`
 const Navbar = () => {
   const location = useLocation()
 
+  const handleClick = () => {
+    sessionStorage.clear()
+  }
+
   return (
     <Menu
       theme="dark"
@@ -43,7 +47,7 @@ const Navbar = () => {
         </Menu.Item>
       ))}
 
-      <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} disabled>
+      <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} onClick={handleClick}>
         Sign Out
       </Menu.Item>
     </Menu>

@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useHistory } from "react-router-dom"
 import { Form, Input, Button, Checkbox, Typography } from "antd"
 import styled from "styled-components"
 import apiFetch from "../../lib/api-fetch"
+import { AuthContext } from "../../globalState"
 
 const Main = styled.div`
   width: 40%;
@@ -10,20 +11,21 @@ const Main = styled.div`
   padding-top: 30px;
 `
 
-const Login = () => {
+const Login = ({ setAuth }) => {
   const { Title } = Typography
   const history = useHistory()
+  const [authState, setAuthState] = useContext(AuthContext)
 
   const onFinish = (values) => {
     apiFetch({
       route: "login",
       method: "post",
       params: { email: values.email, password: values.password },
-    }).then((res) => {
-      if (res.status === 200) {
+    }).then(({ status, data }) => {
+      if (status === 200) {
         // get and store token
-        console.log("Success:", res)
-
+        setAuthState({ ...authState, token: data.token, user_id: data.user_id })
+        setAuth(data.token, data.user_id)
         history.push("/")
       }
     })
