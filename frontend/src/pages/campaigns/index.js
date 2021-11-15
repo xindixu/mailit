@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { useHistory } from "react-router-dom"
 import { Card, Form, Button } from "antd"
 import { PlusSquareOutlined } from "@ant-design/icons"
@@ -6,6 +6,7 @@ import Csv from "../../components/csv"
 import Selection from "../../components/selection"
 import Setting from "../../components/setting"
 import apiFetch from "../../lib/api-fetch"
+import { AuthContext } from "../../global-state"
 
 const mainStyle = {
   width: "100%",
@@ -38,7 +39,7 @@ const Campaigns = () => {
   const history = useHistory()
   const [templates, setTemplates] = useState([])
   const [selectedTemplateIndex, setSelectedTemplateIndex] = useState(0)
-  const user_id = sessionStorage.getItem("user_id")
+  const [authState, setAuthState] = useContext(AuthContext)
 
   useEffect(() => {
     form.setFieldsValue({
@@ -65,7 +66,7 @@ const Campaigns = () => {
         // Submit values
         const param = {
           name: values.name,
-          user_id,
+          user_id: authState.user_id,
           template_id: templates[selectedTemplateIndex].id,
           tags: values.tags,
         }
