@@ -8,7 +8,7 @@ RSpec.describe 'AUTHENTICATION API', type: :request do
             post '/api/v1/login', params: {email: 'test@example.com', password: 'hello1'}
             expect(response).to have_http_status(:success)
             expect(JSON.parse(response.body)['status']).to eq(200)
-            expect(JSON.parse(response.body)['token']).to eq(expected_token)
+            expect(JSON.parse(response.body)['body']['token']).to eq(expected_token)
         end
 
         it 'returns error when user does not exist' do 
