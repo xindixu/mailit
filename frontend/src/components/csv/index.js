@@ -22,6 +22,7 @@ const uploadProps = {
   onDrop(e) {
     console.log("Dropped files", e.dataTransfer.files)
   },
+  headers: { Authorization: `Bearer ${sessionStorage.getItem("user_id")}` },
 }
 
 const UploadCSV = () => (
