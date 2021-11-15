@@ -38,7 +38,7 @@ const CampaignShow = () => {
   const history = useHistory()
   const [templates, setTemplates] = useState([])
   const [selectedTemplateIndex, setSelectedTemplateIndex] = useState(0)
-  const user_id = 1
+  const user_id = sessionStorage.getItem("user_id")
   const { id } = useParams()
 
   useEffect(() => {

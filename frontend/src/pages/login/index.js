@@ -11,7 +11,7 @@ const Main = styled.div`
   padding-top: 30px;
 `
 
-const Login = ({ setAuth }) => {
+const Login = () => {
   const { Title } = Typography
   const history = useHistory()
   const [authState, setAuthState] = useContext(AuthContext)
@@ -25,7 +25,6 @@ const Login = ({ setAuth }) => {
       if (status === 200) {
         // get and store token
         setAuthState({ ...authState, token: data.token, user_id: data.user_id })
-        setAuth(data.token, data.user_id)
         history.push("/")
       }
     })

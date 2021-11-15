@@ -52,13 +52,13 @@ const Navbar = () => {
         </Menu.Item>
       ))}
 
-      {authState.token ? (
-        <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} onClick={handleClick}>
-          Sign Out
-        </Menu.Item>
-      ) : (
+      {authState.token === "" ? (
         <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }}>
           <Link to="/login">Login</Link>
+        </Menu.Item>
+      ) : (
+        <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} onClick={handleClick}>
+          Sign Out
         </Menu.Item>
       )}
     </Menu>
