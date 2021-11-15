@@ -1,3 +1,4 @@
+import { useEffect, useContext } from "react"
 import { Layout } from "antd"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import styled from "styled-components"
@@ -13,6 +14,7 @@ import CampaignShow from "./pages/campaigns/show"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
+import { AuthContext } from "./globalState"
 
 const { spacerMd } = styleSettings
 
@@ -30,46 +32,64 @@ const StyledSider = styled(Sider)`
   position: fixed;
   height: 100%;
 `
+const setAuth = (token, id) => {
+  sessionStorage.setItem("token", token)
+  sessionStorage.setItem("user_id", id)
+}
 
-const App = () => (
-  <Layout style={{ height: "100vh" }}>
-    <Router>
-      <Layout>
-        <StyledSider>
-          <Navbar />
-        </StyledSider>
-        <StyledContent>
-          <Switch>
-            <Route path="/campaigns/:id">
-              <CampaignShow />
-            </Route>
-            <Route path="/campaigns">
-              <Campaigns />
-            </Route>
-            <Route path="/templates/new">
-              <TemplateNew />
-            </Route>
-            <Route path="/templates/:id">
-              <TemplateShow />
-            </Route>
-            <Route path="/templates">
-              <Templates />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/">
-              <Dashboard />
-            </Route>
-          </Switch>
-        </StyledContent>
-      </Layout>
-      <Footer style={{ textAlign: "center" }}>Mailit @ 2021</Footer>
-    </Router>
-  </Layout>
-)
+const App = () => {
+  const [authState, setAuthState] = useContext(AuthContext)
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token") !== authState.token) {
+      setAuthState({
+        ...authState,
+        token: sessionStorage.getItem("token"),
+        user_id: sessionStorage.getItem("user_id"),
+      })
+    }
+  }, [])
+
+  return (
+    <Layout style={{ height: "100vh" }}>
+      <Router>
+        <Layout>
+          <StyledSider>
+            <Navbar />
+          </StyledSider>
+          <StyledContent>
+            <Switch>
+              <Route path="/campaigns/:id">
+                <CampaignShow />
+              </Route>
+              <Route path="/campaigns">
+                <Campaigns />
+              </Route>
+              <Route path="/templates/new">
+                <TemplateNew />
+              </Route>
+              <Route path="/templates/:id">
+                <TemplateShow />
+              </Route>
+              <Route path="/templates">
+                <Templates />
+              </Route>
+              <Route path="/login">
+                <Login setAuth={setAuth} />
+              </Route>
+              <Route path="/register">
+                <Register setAuth={setAuth} />
+              </Route>
+              <Route path="/">
+                <Dashboard />
+              </Route>
+            </Switch>
+          </StyledContent>
+        </Layout>
+        <Footer style={{ textAlign: "center" }}>Mailit @ 2021</Footer>
+      </Router>
+    </Layout>
+  )
+}
 
 export default App
