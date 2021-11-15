@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Avatar, Menu } from "antd"
 import { UserOutlined } from "@ant-design/icons"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useHistory } from "react-router-dom"
 import styled from "styled-components"
 import routes, { getTextByLink } from "../lib/routes"
 import styleSettings from "../styles"
+import { AuthContext } from "../globalState"
 
 const SIZE = 124
 
@@ -19,9 +20,13 @@ const AvatarWrapper = styled.div`
 
 const Navbar = () => {
   const location = useLocation()
+  const history = useHistory()
+  const [authState, setAuthState] = useContext(AuthContext)
 
   const handleClick = () => {
     sessionStorage.clear()
+    setAuthState({ token: "", user_id: "" })
+    history.push("/login")
   }
 
   return (
@@ -47,9 +52,15 @@ const Navbar = () => {
         </Menu.Item>
       ))}
 
-      <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} onClick={handleClick}>
-        Sign Out
-      </Menu.Item>
+      {authState.token ? (
+        <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }} onClick={handleClick}>
+          Sign Out
+        </Menu.Item>
+      ) : (
+        <Menu.Item style={{ marginTop: "auto", marginBottom: spacerLg }}>
+          <Link to="/login">Login</Link>
+        </Menu.Item>
+      )}
     </Menu>
   )
 }
