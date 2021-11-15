@@ -1,3 +1,5 @@
+require 'csv'
+
 class Api::V1::RecipientsController < ApplicationController
     skip_before_action :authenticate, only: [:index, :export]
     
@@ -43,7 +45,11 @@ class Api::V1::RecipientsController < ApplicationController
     end
 
     def import 
-        Recipient.import(params[:file], params[:user_id])
+        token = request.headers['Authorization'].split(' ')[1]
+        decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, 'HS256')
+        payload = decoded_token.first
+        user_id = payload["user_id"]
+        Recipient.import(params[:file], user_id)
         render json: {status: 200, message: "Success"}
     end 
 
