@@ -1,5 +1,5 @@
 class Api::V1::RecipientsController < ApplicationController
-    skip_before_action :authenticate, only: [:index]
+    skip_before_action :authenticate, only: [:index, :export]
     
     def index
         recipients = Recipient.all

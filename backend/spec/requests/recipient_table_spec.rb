@@ -121,9 +121,9 @@ describe 'RECIPIENT API' do
 
     describe 'GET /recipients/export' do 
         it 'returns the csv file' do 
-            get '/api/v1/recipients/export', headers: {"Authorization" => "Bearer #{@token}"}
-            expect(CSV.parse(response.body)[0]).to eq(["firstname", "lastname", "email"])
-            expect(CSV.parse(response.body)[1]).to eq(["Jane", "Doe", "jane.doe@example.com"])
+            get '/api/v1/recipients/export'
+            expect(CSV.parse(response.body)[0]).to eq(["firstname", "lastname", "email", "tags"])
+            expect(CSV.parse(response.body)[1]).to eq(["Jane", "Doe", "jane.doe@example.com", "test|random"])
         end 
     end 
 end
