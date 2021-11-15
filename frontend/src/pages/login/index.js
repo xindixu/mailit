@@ -3,7 +3,7 @@ import { useHistory, Link } from "react-router-dom"
 import { Form, Input, Button, Checkbox, Typography } from "antd"
 import styled from "styled-components"
 import apiFetch from "../../lib/api-fetch"
-import { AuthContext } from "../../globalState"
+import { AuthContext } from "../../global-state"
 
 const Main = styled.div`
   width: 40%;

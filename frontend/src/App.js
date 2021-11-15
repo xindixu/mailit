@@ -14,7 +14,7 @@ import CampaignShow from "./pages/campaigns/show"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
-import { AuthContext } from "./globalState"
+import { AuthContext } from "./global-state"
 
 const { spacerMd } = styleSettings
 

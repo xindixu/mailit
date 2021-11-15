@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import "antd/dist/antd.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-import { AuthProvider } from "./globalState"
+import { AuthProvider } from "./global-state"
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import { Upload, message, Card } from "antd"
 import { InboxOutlined } from "@ant-design/icons"
-import { AuthContext } from "../../globalState"
+import { AuthContext } from "../../global-state"
 
 const { Dragger } = Upload
 

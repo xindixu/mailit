@@ -5,7 +5,7 @@ import { Link, useLocation, useHistory } from "react-router-dom"
 import styled from "styled-components"
 import routes, { getTextByLink } from "../lib/routes"
 import styleSettings from "../styles"
-import { AuthContext } from "../globalState"
+import { AuthContext } from "../global-state"
 
 const SIZE = 124
 
