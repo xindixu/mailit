@@ -19,6 +19,14 @@ const routes = [
     text: "TemplateShow",
     link: /\/templates\/\d+/,
   },
+  {
+    text: "Login",
+    link: "/login",
+  },
+  {
+    text: "Register",
+    link: "/register",
+  },
 ]
 
 const getTextByLink = (link) => routes.find((route) => route.link === link)?.text
