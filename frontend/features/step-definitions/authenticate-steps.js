@@ -3,7 +3,6 @@ const { When, Then, Given } = require("@cucumber/cucumber")
 const { By } = require("selenium-webdriver")
 const { removeQuotations } = require("../support")
 const { driver } = require("./stepdefs")
-const { apiFetch } = require("../api-fetch")
 
 Given("user is logged in with email {string} and password {string}", async (email, pw) => {
     const emailInput = await driver.findElement(By.id("basic_email"))
