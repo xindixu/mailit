@@ -12,13 +12,14 @@ Feature: User authentication
 
     Scenario: Login with an existing account
         Given user is on the Login page
-        When user fill in the email to "kgp2111@columbia.edu"
+        When user fill in the email to "testing@columbia.edu"
         And user fill in the password to "hello1"
         And user clicks the login button
         Then user should be on the Dashboard page
         And user can see Sign Out button
 
     Scenario: Sign out when logged in
-        Given user is logged in with email "kgp2111@columbia.edu" and password "hello1"
+        Given user is on the Login page
+        And user is logged in with email "testing@columbia.edu" and password "hello1"
         When user clicks the sign out button
         Then user should be on the Login page
