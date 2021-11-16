@@ -67,6 +67,25 @@ AfterAll(async () => {
   })
 })
 
+AfterAll(async () => {
+  apiFetch({
+    route: "login",
+    method: "post",
+    params: {
+      email: "random@columbia.edu",
+      password: "hello1"
+    },
+  }).then(({ status, data }) => {
+    if (status == 200) {
+      apiFetch({
+        route: `users/${data.user_id}`,
+        method: "delete",
+        token: data.token,
+      })
+    }
+  })
+})
+
 Given(/user have all data ready/, async ()=> {
   while (!token) {
     console.log(token)
