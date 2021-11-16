@@ -1,6 +1,11 @@
 Feature: Create, send, delete campaign
     User should be able to create, send, and delete a campaign
 
+    Background: user should be logged in
+        Given user is on the Login page
+        And user is logged in with email "testing@columbia.edu" and password "hello1"
+        And user have all data ready
+
     Scenario: See a new campaign
         Given user is on the Campaigns page
         Then user can see the Create Campaign button
@@ -30,3 +35,4 @@ Feature: Create, send, delete campaign
         Given user is on the Dashboard page
         When user clicks the "delete" button for campaign "testcampaign"
         Then user should see "Campaign deleted!"
+        And user should sign out

@@ -1,6 +1,11 @@
 Feature: Template
     User should be able to CRUD a template
 
+    Background: user should be logged in
+        Given user is on the Login page
+        And user is logged in with email "testing@columbia.edu" and password "hello1"
+        And user have all data ready
+
     Scenario: Create a template
         Given user is on the TemplateIndex page
         When user clicks the "Create A Template" button
@@ -28,3 +33,4 @@ Feature: Template
     Scenario: Delete a template
         Given user is on the TemplateIndex page
         When user deletes "Merry Christmas"
+        Then user should sign out

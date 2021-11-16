@@ -1,6 +1,6 @@
-const { Given, Then, BeforeAll, AfterAll } = require("@cucumber/cucumber")
+const { Given, Then, BeforeAll, AfterAll, Before, After } = require("@cucumber/cucumber")
 const { expect } = require("chai")
-const { Builder, Capabilities } = require("selenium-webdriver")
+const { Builder, Capabilities, By } = require("selenium-webdriver")
 const { apiFetch } = require("../api-fetch")
 
 const { getLinkByText } = require("../routes")
@@ -11,7 +11,7 @@ const capabilities = Capabilities.safari()
 capabilities.set("chromeOptions", { w3c: false })
 const driver = new Builder().withCapabilities(capabilities).build()
 
-let token, id
+let token, user_id
 BeforeAll(async () => {
   apiFetch({
     route: "users",
@@ -24,18 +24,92 @@ BeforeAll(async () => {
   }).then(({ status, data }) => {
     if (status == 200) {
       token = data.token
-      id = data.user_id
+      user_id = data.user_id
     }
+  })
+})
+
+let id
+
+let rid
+
+let tid
+
+After(async () => {
+  apiFetch({
+    route: `/templates/${tid}`,
+    token: token,
+    method: "delete",
+  })
+})
+
+After(async () => {
+  apiFetch({
+    route: `/campaigns/${id}`,
+    token: token,
+    method: "delete",
+  })
+})
+
+After(async () => {
+  apiFetch({
+    route: `/recipients/${rid}`,
+    token: token,
+    method: "delete",
   })
 })
 
 AfterAll(async () => {
   apiFetch({
-    route: `users/${id}`,
+    route: `users/${user_id}`,
     method: "delete",
     token: token,
-  }).then(({status}) => {
-    console.log(status)
+  })
+})
+
+Given(/user have all data ready/, async ()=> {
+  while (!token) {
+    console.log(token)
+  }
+  
+  apiFetch({
+    route: "/templates",
+    method: "post",
+    token: token,
+    params: {
+      name: "Merry Christmas",
+      markdown: "Wish you a Merry Christmas",
+      user_id: 1,
+      collaborator_ids: [1],
+    },
+  }).then(({ data }) => {
+    tid = data.id
+  })
+  apiFetch({
+    route: "/campaigns",
+    method: "post",
+    token: token,
+    params: {
+      name: "testcampaign",
+      tags: ["testcampaign"],
+      user_id: 1,
+      template_id: 1,
+    },
+  }).then(({ data }) => {
+    id = data.id
+  })
+  apiFetch({
+    route: "/recipients",
+    method: "post",
+    token: token,
+    params: {
+      "email": "qianjunc@gmail.com",
+      "tags": ["testcampaign"],
+      "user_id": 1
+    },
+  }).then(({ data }) => {
+    console.log(token)
+    rid = data.id
   })
 })
 
@@ -58,6 +132,14 @@ Then(/user should be on (\w+) like page/, async (pageName) => {
   expect(await driver.getCurrentUrl()).to.match(regex)
 })
 
+Then(/user should sign out/, async () => {
+  const button = await driver.findElement(By.id("sign-out"))
+    await button.click()
+    await driver.sleep(3000)
+})
+
 module.exports = {
   driver,
+  token, 
+  user_id
 }
