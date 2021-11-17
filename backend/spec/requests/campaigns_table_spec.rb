@@ -1,11 +1,14 @@
 require 'rails_helper'
+require 'redcarpet'
 
 describe 'CAMPAIGNS API' ,type: :request do
     before(:each) do 
         @user = User.new(name: "John Doe", email: "john@email_provider.com", password: "hello1")
 		@user.save
+        @template = Template.new(markdown: "**Hi**", collaborator_ids: [], user_id: @user.id, name: 'Test Template')
+        @template.save
 		@token = JWT.encode({user_id: @user.id}, Rails.application.secrets.secret_key_base, 'HS256')
-        @campaign = Campaign.new(name: "Test", tags:['test'], user_id: @user.id, template_id: 1)
+        @campaign = Campaign.new(name: "Test", tags:['test'], user_id: @user.id, template_id: @template.id)
         @campaign.save
     end 
     let(:valid_params) do
@@ -103,4 +106,16 @@ describe 'CAMPAIGNS API' ,type: :request do
             expect(JSON.parse(response.body)['error']).to eq("Bad Request")
         end
     end
+
+    describe 'POST /campaigns/deliver' do 
+        before(:each) do 
+            @recipient = Recipient.new(firstname: 'Jane', lastname: 'Doe', email: 'jane.doe@example.com', user_id: @user.id, tags: ['test'])
+            @recipient.save
+        end 
+        it 'sends eamils to all the recipients' do 
+            expect {
+                post "/api/v1/campaigns/#{@campaign.id}/deliver", headers: {"Authorization" => "Bearer #{@token}"}
+            }.to change {ActionMailer::Base.deliveries.count}.by(1)    
+        end 
+    end 
 end

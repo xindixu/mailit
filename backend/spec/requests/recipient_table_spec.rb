@@ -126,4 +126,13 @@ describe 'RECIPIENT API' do
             expect(CSV.parse(response.body)[1]).to eq(["Jane", "Doe", "jane.doe@example.com", "test|random"])
         end 
     end 
+
+    describe 'POST /recipients/import' do 
+        it 'successfully imports recipients from csv' do 
+            @file = fixture_file_upload('sample-recipients.csv', 'text/csv')
+            post "/api/v1/recipients/import", params: {file: @file}, headers: {"Authorization" => "Bearer #{@token}"}
+            expect(JSON.parse(response.body)['status']).to eq(200)
+            expect(Recipient.count).to eq(3)
+        end 
+    end 
 end

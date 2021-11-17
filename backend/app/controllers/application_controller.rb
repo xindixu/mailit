@@ -10,7 +10,10 @@ class ApplicationController < ActionController::API
                 decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, 'HS256')
                 payload = decoded_token.first
                 user_id = payload["user_id"]
-                @user = User.find(user_id)
+                @user = User.find_by(id: user_id)
+                if @user == nil 
+                    render json: {status: 404, message: "User not found"}
+                end 
 
             rescue => exception
                 render json: {message: "Error #{exception}"}, status: :forbidden

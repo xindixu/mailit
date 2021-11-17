@@ -25,7 +25,7 @@ RSpec.describe 'AUTHENTICATION API', type: :request do
             post '/api/v1/login', params: {email: 'test3@example.com', password: 'hello1'}
             expect(JSON.parse(response.body)['status']).to eq(404)
             expect(JSON.parse(response.body)['message']).to eq("could not find user")
-
+            
         end 
     end 
 end 
