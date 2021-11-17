@@ -3,30 +3,32 @@ const { When, Then, Before, After } = require("@cucumber/cucumber")
 const { By, until } = require("selenium-webdriver")
 const { removeQuotations } = require("../support")
 const { apiFetch } = require("../api-fetch")
-const { driver } = require("./stepdefs")
+const { driver, token } = require("./stepdefs")
 
-let id
-Before(async () => {
-  apiFetch({
-    route: "/templates",
-    method: "post",
-    params: {
-      name: "Merry Christmas",
-      markdown: "Wish you a Merry Christmas",
-      user_id: 1,
-      collaborator_ids: [1],
-    },
-  }).then(({ data }) => {
-    id = data.id
-  })
-})
+// let id
+// Before(async () => {
+//   apiFetch({
+//     route: "/templates",
+//     method: "post",
+//     token: token,
+//     params: {
+//       name: "Merry Christmas",
+//       markdown: "Wish you a Merry Christmas",
+//       user_id: 1,
+//       collaborator_ids: [1],
+//     },
+//   }).then(({ data }) => {
+//     id = data.id
+//   })
+// })
 
-After(async () => {
-  apiFetch({
-    route: `/templates/${id}`,
-    method: "delete",
-  })
-})
+// After(async () => {
+//   apiFetch({
+//     route: `/templates/${id}`,
+//     token: token,
+//     method: "delete",
+//   })
+// })
 
 Then(/user can see the template name and content/, async () => {
   // wait until data is fetched

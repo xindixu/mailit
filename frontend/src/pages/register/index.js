@@ -70,7 +70,7 @@ const Register = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" id="register-button">
             Register
           </Button>
         </Form.Item>

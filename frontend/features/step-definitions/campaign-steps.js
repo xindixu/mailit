@@ -3,52 +3,57 @@ const { When, Then, Before, After } = require("@cucumber/cucumber")
 const { By } = require("selenium-webdriver")
 const { removeQuotations } = require("../support")
 const { driver } = require("./stepdefs")
-const { apiFetch } = require("../api-fetch")
+const { apiFetch, token } = require("../api-fetch")
 
-let id
-Before(async () => {
-  apiFetch({
-    route: "/campaigns",
-    method: "post",
-    params: {
-      name: "testcampaign",
-      tags: ["testcampaign"],
-      user_id: 1,
-      template_id: 1,
-    },
-  }).then(({ data }) => {
-    id = data.id
-  })
-})
+// let id
+// Before(async () => {
+//   apiFetch({
+//     route: "/campaigns",
+//     method: "post",
+//     token: token,
+//     params: {
+//       name: "testcampaign",
+//       tags: ["testcampaign"],
+//       user_id: 1,
+//       template_id: 1,
+//     },
+//   }).then(({ data }) => {
+//     id = data.id
+//   })
+// })
 
-let rid
-Before(async () => {
-  apiFetch({
-    route: "/recipients",
-    method: "post",
-    params: {
-      "email": "qianjunc@gmail.com",
-      "tags": ["testcampaign"],
-      "user_id": 1
-    },
-  }).then(({ data }) => {
-    rid = data.id
-  })
-})
+// let rid
+// Before(async () => {
+//   apiFetch({
+//     route: "/recipients",
+//     method: "post",
+//     token: token,
+//     params: {
+//       "email": "qianjunc@gmail.com",
+//       "tags": ["testcampaign"],
+//       "user_id": 1
+//     },
+//   }).then(({ data }) => {
+//     console.log(token)
+//     rid = data.id
+//   })
+// })
 
-After(async () => {
-  apiFetch({
-    route: `/campaigns/${id}`,
-    method: "delete",
-  })
-})
+// After(async () => {
+//   apiFetch({
+//     route: `/campaigns/${id}`,
+//     token: token,
+//     method: "delete",
+//   })
+// })
 
-After(async () => {
-  apiFetch({
-    route: `/recipients/${rid}`,
-    method: "delete",
-  })
-})
+// After(async () => {
+//   apiFetch({
+//     route: `/recipients/${rid}`,
+//     token: token,
+//     method: "delete",
+//   })
+// })
 
 Then(/user can see the Create Campaign button/, async () => {
   const button = await driver.findElement(By.id("create_campaign"))
