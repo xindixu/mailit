@@ -14,7 +14,7 @@ const TemplateForm = ({ onFinish, template, onCancel, isSaving, saveText }) => (
       name="markdown"
       rules={[{ required: true, message: "Please enter markdown content!" }]}
     >
-      <Editor id={template.id} />
+      <Editor templateId={template.id} />
     </Form.Item>
     <Form.Item span={24} style={{ textAlign: "right" }}>
       <Space>

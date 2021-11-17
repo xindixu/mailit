@@ -6,7 +6,7 @@ class Api::V1::AuthenticationController < ApplicationController
             if(@user.authenticate(params[:password]))
                 payload = {user_id: @user.id}
                 token = create_token(payload)
-                render json: {status: 200, data: {token: token, user_id: @user.id}}
+                render json: {status: 200, data: {token: token, user_id: @user.id, name: @user.name}}
             else
                 render json: {status: 401, message: "Authentication Failed"}
             end 
