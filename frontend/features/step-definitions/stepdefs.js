@@ -1,4 +1,4 @@
-const { Given, Then, BeforeAll, AfterAll, Before, After } = require("@cucumber/cucumber")
+const { Given, Then, BeforeAll, AfterAll, After } = require("@cucumber/cucumber")
 const { expect } = require("chai")
 const { Builder, Capabilities, By } = require("selenium-webdriver")
 const { apiFetch } = require("../api-fetch")
