@@ -5,7 +5,7 @@ import { Link, useLocation, useHistory } from "react-router-dom"
 import styled from "styled-components"
 import routes, { getTextByLink } from "../lib/routes"
 import styleSettings from "../styles"
-import { AuthContext } from "../global-state"
+import { DEFAULT_AUTH_STATE, AuthContext } from "../global-state"
 
 const SIZE = 124
 
@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const handleClick = () => {
     sessionStorage.clear()
-    setAuthState({ token: "", user_id: "" })
+    setAuthState(DEFAULT_AUTH_STATE)
     history.push("/login")
   }
 

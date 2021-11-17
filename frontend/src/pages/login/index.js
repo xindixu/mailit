@@ -24,7 +24,7 @@ const Login = () => {
     }).then(({ status, data }) => {
       if (status === 200) {
         // get and store token
-        setAuthState({ ...authState, token: data.token, user_id: data.user_id })
+        setAuthState({ ...authState, token: data.token, user_id: data.user_id, name: data.name })
         history.push("/")
       }
     })
