@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import { ExtensionPriority } from "remirror"
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from "@remirror/react"
 import {
@@ -22,14 +22,18 @@ import {
   TrailingNodeExtension,
   // Real time collaboration
   YjsExtension,
+  AnnotationExtension,
 } from "remirror/extensions"
 import { AllStyledComponent } from "@remirror/styles/emotion"
+
 import { EditorWrapper } from "./styles"
-import { getProvider } from "./collaboration"
 import Toolbar from "./toolbar"
 import ImageModal from "./image-modal"
+import useObserver from "./hooks/useObserver"
 
-const getExtensions = ({ placeholder, collaborationId }) => [
+const DELAY = 1000
+
+const getExtensions = ({ placeholder, collaborationProvider }) => [
   new PlaceholderExtension({ placeholder }),
   new BlockquoteExtension(),
   new BoldExtension(),
@@ -52,41 +56,69 @@ const getExtensions = ({ placeholder, collaborationId }) => [
    */
   new HardBreakExtension(),
   new ImageExtension(),
-  new YjsExtension({ getProvider: () => getProvider(collaborationId) }),
+  new YjsExtension({ getProvider: () => collaborationProvider }),
+  new AnnotationExtension(),
 ]
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
  */
-const MarkdownEditor = ({ placeholder, value, children, onChange, id }) => {
+const MarkdownEditor = ({ placeholder, value, children, onChange, collaborationProvider }) => {
   const [showImageModal, setShowImageModal] = useState(false)
-  const extensions = getExtensions({ placeholder, collaborationId: id })
+  const [clientCount, setClientCount] = useState(0)
+  const usedFallbackRef = useRef(false)
 
-  const { manager, state, setState } = useRemirror({
+  const extensions = getExtensions({
+    placeholder,
+    collaborationProvider,
+  })
+
+  const { manager, getContext } = useRemirror({
     extensions,
     stringHandler: "markdown",
-    content: value,
   })
+
+  const handlePeersChange = useCallback(
+    ({ webrtcPeers }) => {
+      setClientCount(webrtcPeers.length)
+    },
+    [setClientCount]
+  )
+
+  useObserver("peers", handlePeersChange, collaborationProvider)
+
+  const handleChange = useCallback(({ state, helpers }) => {
+    if (state) {
+      onChange(helpers.getMarkdown(state))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (usedFallbackRef.current) return
+
+    const fetchFallback = () => {
+      if (clientCount === 0) {
+        getContext()?.setContent(value)
+      }
+      usedFallbackRef.current = true
+    }
+
+    const timeoutId = window.setTimeout(fetchFallback, DELAY)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+    }
+  }, [])
 
   return (
     <EditorWrapper>
       <AllStyledComponent>
         <ThemeProvider>
-          <Remirror
-            manager={manager}
-            autoFocus
-            state={state}
-            onChange={({ state: newState, helpers }) => {
-              setState(newState)
-              if (newState) {
-                onChange(helpers.getMarkdown(newState))
-              }
-            }}
-          >
+          <Remirror manager={manager} autoFocus onChange={handleChange}>
             <Toolbar onClickInsertImage={() => setShowImageModal(true)} />
             <EditorComponent />
             {children}
-
+            client online: {clientCount}
             {showImageModal && (
               <ImageModal
                 onInsertImage={(src) => {
