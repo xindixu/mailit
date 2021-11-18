@@ -1,4 +1,8 @@
+require 'csv'
+
 class Api::V1::RecipientsController < ApplicationController
+    skip_before_action :authenticate, only: [:index, :export]
+    
     def index
         recipients = Recipient.all
         render json: RecipientSerializer.new(recipients).serialized_json
@@ -40,9 +44,22 @@ class Api::V1::RecipientsController < ApplicationController
         end
     end
 
+    def import 
+        token = request.headers['Authorization'].split(' ')[1]
+        decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, 'HS256')
+        payload = decoded_token.first
+        user_id = payload["user_id"]
+        Recipient.import(params[:file], user_id)
+        render json: {status: 200, message: "Success"}
+    end 
+
+    def export
+        send_data Recipient.export, filename: 'recipient-template.csv', status: 200 
+    end 
+
     private
 
     def recipient_params
-        params.require(:recipient).permit(:email,:user_id,tags: [])
+        params.require(:recipient).permit(:email,:user_id, :firstname, :lastname, tags: [])
     end
 end 

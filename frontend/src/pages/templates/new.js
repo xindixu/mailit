@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import apiFetch from "../../lib/api-fetch"
-import TemplateForm from "./template-form"
+import TemplateForm from "./form"
 
 const TemplateNew = () => {
   const [isSaving, setIsSaving] = useState(false)
@@ -36,7 +36,7 @@ const TemplateNew = () => {
       onCancel={goBack}
       onFinish={onFinish}
       saveText="Create"
-      template={{}}
+      template={{ id: "new" }}
     />
   )
 }

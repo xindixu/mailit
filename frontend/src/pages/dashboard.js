@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Table, Space, message, Button } from "antd"
+import { Link } from "react-router-dom"
 import apiFetch from "../lib/api-fetch"
 import TemplateIndex from "./templates"
 
@@ -38,6 +39,11 @@ const Dashboard = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      render: (text, record) => (
+        <Link to={`/campaigns/${record.id}`} id={`${text}`}>
+          {text}
+        </Link>
+      ),
     },
     {
       title: "Tag",

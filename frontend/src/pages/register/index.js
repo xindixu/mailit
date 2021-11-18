@@ -1,6 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
+import { useHistory } from "react-router-dom"
 import { Form, Input, Button, Typography } from "antd"
 import styled from "styled-components"
+import apiFetch from "../../lib/api-fetch"
+import { AuthContext } from "../../global-state"
 
 const Main = styled.div`
   width: 40%;
@@ -10,9 +13,21 @@ const Main = styled.div`
 
 const Register = () => {
   const { Title } = Typography
+  const history = useHistory()
+  const [authState, setAuthState] = useContext(AuthContext)
 
   const onFinish = (values) => {
-    console.log("Success:", values)
+    apiFetch({
+      route: "users",
+      method: "post",
+      params: { name: values.username, email: values.email, password: values.password },
+    }).then(({ status, data }) => {
+      if (status === 200) {
+        // get and store token
+        setAuthState({ ...authState, token: data.token, user_id: data.user_id })
+        history.push("/")
+      }
+    })
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -55,7 +70,7 @@ const Register = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" id="register-button">
             Register
           </Button>
         </Form.Item>

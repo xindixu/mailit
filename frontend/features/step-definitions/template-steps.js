@@ -1,39 +1,41 @@
 const { expect } = require("chai")
-const { When, Then, BeforeAll, AfterAll, Before, After } = require("@cucumber/cucumber")
+const { When, Then, Before, After } = require("@cucumber/cucumber")
 const { By, until } = require("selenium-webdriver")
-const { removeQuotations, clear } = require("../support")
+const { removeQuotations } = require("../support")
 const { apiFetch } = require("../api-fetch")
-const { driver } = require("./stepdefs")
+const { driver, token } = require("./stepdefs")
 
-let id
-Before(async () => {
-  apiFetch({
-    route: "/templates",
-    method: "post",
-    params: {
-      name: "Merry Christmas",
-      markdown: "Wish you a Merry Christmas",
-      user_id: 1,
-      collaborator_ids: [1],
-    },
-  }).then(({ data }) => {
-    id = data.id
-  })
-})
+// let id
+// Before(async () => {
+//   apiFetch({
+//     route: "/templates",
+//     method: "post",
+//     token: token,
+//     params: {
+//       name: "Merry Christmas",
+//       markdown: "Wish you a Merry Christmas",
+//       user_id: 1,
+//       collaborator_ids: [1],
+//     },
+//   }).then(({ data }) => {
+//     id = data.id
+//   })
+// })
 
-After(async () => {
-  apiFetch({
-    route: `/templates/${id}`,
-    method: "delete",
-  })
-})
+// After(async () => {
+//   apiFetch({
+//     route: `/templates/${id}`,
+//     token: token,
+//     method: "delete",
+//   })
+// })
 
 Then(/user can see the template name and content/, async () => {
   // wait until data is fetched
   await driver.wait(until.elementLocated(By.id("name")))
 
   const nameInput = await driver.findElement(By.id("name"))
-  const contentInput = await driver.findElement(By.css("textarea"))
+  const contentInput = await driver.findElement(By.css(".remirror-editor"))
 
   expect(await nameInput.getAttribute("value")).to.equal("Merry Christmas")
   expect(await contentInput.getText()).to.match(/^Wish you a Merry Christmas/)
@@ -49,9 +51,9 @@ When("user updates the template name to {string}", async (value) => {
 })
 
 When("user updates the template content to {string}", async (value) => {
-  await driver.wait(until.elementLocated(By.css("textarea")))
+  await driver.wait(until.elementLocated(By.css(".remirror-editor")))
 
-  const contentInput = await driver.findElement(By.css("textarea"))
+  const contentInput = await driver.findElement(By.css(".remirror-editor"))
   await contentInput.sendKeys(removeQuotations(value))
 })
 

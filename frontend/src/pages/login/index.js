@@ -1,6 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
+import { useHistory, Link } from "react-router-dom"
 import { Form, Input, Button, Checkbox, Typography } from "antd"
 import styled from "styled-components"
+import apiFetch from "../../lib/api-fetch"
+import { AuthContext } from "../../global-state"
 
 const Main = styled.div`
   width: 40%;
@@ -10,13 +13,21 @@ const Main = styled.div`
 
 const Login = () => {
   const { Title } = Typography
+  const history = useHistory()
+  const [authState, setAuthState] = useContext(AuthContext)
 
   const onFinish = (values) => {
-    console.log("Success:", values)
-  }
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo)
+    apiFetch({
+      route: "login",
+      method: "post",
+      params: { email: values.email, password: values.password },
+    }).then(({ status, data }) => {
+      if (status === 200) {
+        // get and store token
+        setAuthState({ ...authState, token: data.token, user_id: data.user_id, name: data.name })
+        history.push("/")
+      }
+    })
   }
 
   return (
@@ -28,7 +39,6 @@ const Login = () => {
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
@@ -52,9 +62,12 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" id="login-button">
             Login
           </Button>
+        </Form.Item>
+        <Form.Item>
+          <Link to="/register">Create A New Account</Link>
         </Form.Item>
       </Form>
     </Main>

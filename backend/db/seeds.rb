@@ -47,9 +47,9 @@ users = User.create([{
                        email: 'jyd2111@columbia.edu'
                      }])
 
-recipients = Recipient.create([{ email: 'xx2391@columbia.edu', tags: ['beauty'], user_id: users.last.id },
-                               { email: 'qc2300@columbia.edu', tags: ['sports'], user_id: users.last.id },
-                               { email: 'kgp2111@columbia.edu', tags: ['test'], user_id: users.first.id }])
+recipients = Recipient.create([{ firstname: 'Xindi', lastname: 'Xu', email: 'xx2391@columbia.edu', tags: ['beauty'], user_id: users.last.id },
+                               { firstname: 'Qianjun', lastname: 'Chen', email: 'qc2300@columbia.edu', tags: ['sports'], user_id: users.last.id },
+                               { firstname: 'Kenya', lastname: 'Plenty', email: 'kgp2111@columbia.edu', tags: ['test'], user_id: users.first.id }])
 
 templates = Template.create([{ markdown: 'Hi **Kenya**',
                                collaborator_ids: [users.last.id],

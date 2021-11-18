@@ -8,12 +8,24 @@ const routes = [
     link: "/campaigns",
   },
   {
+    text: "CampaignShow",
+    link: /\/campaigns\/\d+/,
+  },
+  {
     text: "TemplateIndex",
     link: "/templates",
   },
   {
     text: "TemplateShow",
     link: /\/templates\/\d+/,
+  },
+  {
+    text: "Login",
+    link: "/login",
+  },
+  {
+    text: "Register",
+    link: "/register",
   },
 ]
 

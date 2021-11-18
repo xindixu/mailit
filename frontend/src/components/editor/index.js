@@ -1,18 +1,46 @@
+import { useState, useEffect, useContext } from "react"
+import { WebrtcProvider } from "y-webrtc"
+import * as Y from "yjs"
 import PropTypes from "prop-types"
-import { useWindowSize } from "react-use"
+import { AuthContext } from "../../global-state"
+import MarkdownEditor from "./markdown"
 
-import MDEditor from "@uiw/react-md-editor"
+const Editor = ({ value, onChange, templateId }) => {
+  const [provider, setProvider] = useState(null)
+  const [authState] = useContext(AuthContext)
 
-const HEIGHT_OFFSET = 300
-const MarkdownEditor = ({ value, onChange }) => {
-  const { height } = useWindowSize()
+  const { name } = authState
 
-  return <MDEditor value={value} onChange={onChange} height={height - HEIGHT_OFFSET} id="content" />
+  useEffect(() => {
+    const newProvider = new WebrtcProvider(
+      `mailit-tests-template-editor-${templateId}`,
+      new Y.Doc()
+    )
+    newProvider.awareness.setLocalStateField("user", { name })
+    setProvider(newProvider)
+
+    return () => {
+      if (newProvider) {
+        newProvider.destroy()
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateId])
+
+  return provider ? (
+    <MarkdownEditor
+      value={value}
+      onChange={onChange}
+      id="content"
+      templateId={templateId}
+      collaborationProvider={provider}
+    />
+  ) : null
 }
 
-MarkdownEditor.propTypes = {
-  value: PropTypes.string,
+Editor.propTypes = {
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 }
 
-export default MarkdownEditor
+export default Editor

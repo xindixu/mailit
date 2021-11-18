@@ -7,7 +7,7 @@ const { Dragger } = Upload
 const uploadProps = {
   name: "file",
   multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+  action: `${process.env.REACT_APP_BASE_URL}/api/v1/recipients/import`,
   onChange(info) {
     const { status } = info.file
     if (status !== "uploading") {
@@ -22,6 +22,7 @@ const uploadProps = {
   onDrop(e) {
     console.log("Dropped files", e.dataTransfer.files)
   },
+  headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
 }
 
 const UploadCSV = () => (
