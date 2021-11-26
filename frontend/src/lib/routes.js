@@ -11,6 +11,10 @@ const routes = [
     text: "Templates",
     link: "/templates",
   },
+  {
+    text: "Recipients",
+    link: "/recipients",
+  },
 ]
 
 export const getTextByLink = (link) => routes.find((route) => route.link === link)?.text
