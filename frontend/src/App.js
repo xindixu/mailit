@@ -11,6 +11,7 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import CampaignShow from "./pages/campaigns/show"
 import Recipients from "./pages/recipients"
+import RecipientsUpload from "./pages/recipients/upload"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
@@ -55,6 +56,9 @@ const App = () => (
             </Route>
             <Route path="/templates">
               <Templates />
+            </Route>
+            <Route path="/recipients/upload">
+              <RecipientsUpload />
             </Route>
             <Route path="/recipients">
               <Recipients />

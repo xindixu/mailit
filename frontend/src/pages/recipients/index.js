@@ -1,115 +1,79 @@
-import { Card, Form, Input, Button, message } from "antd"
-import { useEffect, useContext } from "react"
-import Csv from "../../components/csv"
-import TagsFormItem from "../../components/setting/tags"
+import { Button, message, Table, Space } from "antd"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import apiFetch from "../../lib/api-fetch"
-import { AuthContext } from "../../global-state"
 
-const mainStyle = {
-  width: "100%",
+const upperStyle = {
   display: "inline-flex",
+  width: "100%",
+  justifyContent: "space-between",
 }
 
-const sectionStyle = {
-  isplay: "inline-block",
-  width: "50%",
-  marginBottom: "20px",
-  padding: "10px",
-}
+const getRecipientsTableData = (data) =>
+  data?.map(({ id, attributes: { email, tags, user_id: userId } }) => ({
+    key: id,
+    id,
+    email,
+    tags: tags.toString(),
+    userId,
+  }))
 
 const Recipients = () => {
-  const [form] = Form.useForm()
-  const [authState, setAuthState] = useContext(AuthContext)
+  const [recipients, setRecipients] = useState([])
 
   useEffect(() => {
-    form.setFieldsValue({
-      firstname: "",
-      lastname: "",
-      email: "",
-      tags: [],
+    apiFetch({ route: "recipients" }).then(({ data }) => {
+      setRecipients(data)
     })
   }, [])
 
-  const handleSubmit = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        // add select template before submit
-        // Submit values
-        const param = {
-          firstname: values.firstname,
-          lastname: values.lastname,
-          email: values.email,
-          user_id: authState.user_id,
-          tags: values.tags,
-        }
-        apiFetch({ route: "recipients", method: "post", params: param }).then(({ status }) => {
-          if (status === 200) {
-            message.success("Recipient added!", 5)
-          }
-        })
-      })
-      .catch(() => {})
+  const handleDeleteRecipient = (record) => {
+    apiFetch({ route: `recipients/${record.id}`, method: "delete" }).then(({ status }) => {
+      if (status === 200) {
+        setRecipients(recipients.filter((item) => item.id !== record.id))
+        message.success("Recipient deleted!", 5)
+      }
+    })
   }
+
+  const recipientsTable = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Tags",
+      dataIndex: "tags",
+      key: "tags",
+    },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            id={`delete recipient ${record.name}`}
+            size="small"
+            onClick={() => handleDeleteRecipient(record)}
+            danger
+          >
+            Delete
+          </Button>
+        </Space>
+      ),
+    },
+  ]
 
   return (
     <>
-      <div style={mainStyle}>
-        <div style={sectionStyle}>
-          <Csv />
-        </div>
-        <div style={sectionStyle}>
-          <Card title="Add A Recipient">
-            <Form
-              labelCol={{ span: 8 }}
-              wrapperCol={{ span: 14 }}
-              layout="horizontal"
-              size="default"
-              form={form}
-            >
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    types: "email",
-                    message: "The input is not valid E-mail!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="First Name"
-                name="firstname"
-                rules={[{ required: true, message: "Please input first name!" }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Last Name"
-                name="lastname"
-                rules={[{ required: true, message: "Please input last name!" }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Tags"
-                name="tags"
-                rules={[{ required: true, message: "Please input at least one tag!" }]}
-              >
-                <TagsFormItem />
-              </Form.Item>
-              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button htmlType="submit" type="primary" onClick={handleSubmit}>
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
-        </div>
+      <div style={upperStyle}>
+        <h2>Recipients</h2>
+        <Button type="primary">
+          <Link to="/recipients/upload">Upload Recipients</Link>
+        </Button>
       </div>
+      <Table dataSource={getRecipientsTableData(recipients)} columns={recipientsTable} />
     </>
   )
 }
