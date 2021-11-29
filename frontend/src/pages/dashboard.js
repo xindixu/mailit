@@ -24,9 +24,12 @@ const Dashboard = () => {
   }, [])
 
   const handleDeleteCampaign = (record) => {
-    apiFetch({ route: `campaigns/${record.id}`, method: "delete" })
-    setCampaigns(campaigns.filter((item) => item.id !== record.id))
-    message.success("Campaign deleted!", 5)
+    apiFetch({ route: `campaigns/${record.id}`, method: "delete" }).then(({ status }) => {
+      if (status === 200) {
+        setCampaigns(campaigns.filter((item) => item.id !== record.id))
+        message.success("Campaign deleted!", 5)
+      }
+    })
   }
 
   const handleSendEmail = (record) => {
