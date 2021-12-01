@@ -46,6 +46,7 @@ class Api::V1::CampaignsController < ApplicationController
     def deliver 
         markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions={})
         @campaign = Campaign.find params[:id]
+        @owner = User.find_by(id: @campaign.user_id)
         @template = Template.find_by_id(@campaign.template_id)
         @recipients = []
         temp_recipients = Recipient.all.where(:user_id => @campaign.user_id)
@@ -56,7 +57,7 @@ class Api::V1::CampaignsController < ApplicationController
         }
         @email_body = markdown.render(@template.markdown)
         @recipients.each do |r|
-            TestMailer.with(recipient: r, email_body: @email_body).test_email.deliver_now 
+            TestMailer.with(recipient: r, email_body: @email_body, owner: @owner).test_email.deliver_now 
         
         render json:{status: 200 , message:"Success"}
         end 
