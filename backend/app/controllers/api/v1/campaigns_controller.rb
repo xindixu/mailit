@@ -66,6 +66,6 @@ class Api::V1::CampaignsController < ApplicationController
 
     private
     def campaign_params
-        params.require(:campaign).permit(:name,:user_id,:template_id,tags: [])
+        params.require(:campaign).permit(:name,:user_id,:template_id,:subject,tags: [])
     end
 end 
