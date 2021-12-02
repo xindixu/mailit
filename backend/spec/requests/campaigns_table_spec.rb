@@ -8,7 +8,7 @@ describe 'CAMPAIGNS API' ,type: :request do
         @template = Template.new(markdown: "**Hi**", collaborator_ids: [], user_id: @user.id, name: 'Test Template')
         @template.save
 		@token = JWT.encode({user_id: @user.id}, Rails.application.secrets.secret_key_base, 'HS256')
-        @campaign = Campaign.new(name: "Test", tags:['test'], user_id: @user.id, template_id: @template.id)
+        @campaign = Campaign.new(name: "Test", tags:['test'], user_id: @user.id, template_id: @template.id, subject: 'Test Campaign')
         @campaign.save
     end 
     let(:valid_params) do

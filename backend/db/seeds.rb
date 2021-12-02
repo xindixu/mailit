@@ -64,4 +64,4 @@ templates = Template.create([{ markdown: 'Hi **Kenya**',
                                user_id: users.first.id,
                                name: 'Product Launch' }])
 
-campaign = Campaign.create(name: 'Test', tags: ['test'], user_id: users.first.id, template_id: templates[0].id)
+campaign = Campaign.create(name: 'Test', tags: ['test'], user_id: users.first.id, template_id: templates[0].id, subject: 'Test Campaign')
