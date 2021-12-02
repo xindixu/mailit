@@ -31,7 +31,7 @@ const ResetPassword = () => {
 
   return (
     <Main>
-      <Title level={3}>Please input your account&apos;s email</Title>
+      <Title level={3}>Please input your new password</Title>
       <br />
       <Form
         name="basic"
