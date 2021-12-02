@@ -1,5 +1,3 @@
-require 'redcarpet'
-
 class Api::V1::CampaignsController < ApplicationController
     skip_before_action :authenticate, only: [:index]
     
@@ -56,7 +54,7 @@ class Api::V1::CampaignsController < ApplicationController
                 @recipients.push(x)
             end 
         }
-        @email_body = markdown.render(@template.markdown)
+        @email_body =@template.markdown
         @recipients.each do |r|
             TestMailer.with(recipient: r, email_body: @email_body, owner: @owner, subject: @subject).test_email.deliver_now 
         
