@@ -5,11 +5,11 @@ import apiFetch from "../lib/api-fetch"
 import TemplateIndex from "./templates"
 
 const getCampaignTableData = (data) =>
-  data?.map(({ id, attributes: { name, tag, user_id: userId, template_id: templateId } }) => ({
+  data?.map(({ id, attributes: { name, tags, user_id: userId, template_id: templateId } }) => ({
     key: id,
     id,
     name,
-    tag,
+    tags: tags.toString(),
     userId,
     templateId,
   }))
@@ -49,9 +49,9 @@ const Dashboard = () => {
       ),
     },
     {
-      title: "Tag",
-      dataIndex: "tag",
-      key: "tag",
+      title: "Tags",
+      dataIndex: "tags",
+      key: "tags",
     },
     {
       title: "operation",
