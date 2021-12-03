@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useMemo, useContext } from "react"
 import { WebrtcProvider } from "y-webrtc"
 import * as Y from "yjs"
 import PropTypes from "prop-types"
@@ -6,25 +6,19 @@ import { AuthContext } from "../../global-state"
 import MarkdownEditor from "./markdown"
 
 const Editor = ({ value, onChange, templateId }) => {
-  const [provider, setProvider] = useState(null)
   const [authState] = useContext(AuthContext)
 
   const { name } = authState
 
-  useEffect(() => {
-    const newProvider = new WebrtcProvider(
-      `mailit-tests-template-editor-${templateId}`,
-      new Y.Doc()
-    )
-    newProvider.awareness.setLocalStateField("user", { name })
-    setProvider(newProvider)
+  const { sharedType, provider } = useMemo(() => {
+    const doc = new Y.Doc()
+    const sharedType = doc.getText("content")
+    const provider = new WebrtcProvider(`mailit-tests-template-editor-${templateId}`, doc, {
+      connect: false,
+    })
 
-    return () => {
-      if (newProvider) {
-        newProvider.destroy()
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    provider.awareness.setLocalStateField("user", { name })
+    return { doc, sharedType, provider }
   }, [templateId])
 
   return provider ? (
@@ -34,6 +28,7 @@ const Editor = ({ value, onChange, templateId }) => {
       id="content"
       templateId={templateId}
       collaborationProvider={provider}
+      sharedType={sharedType}
     />
   ) : null
 }

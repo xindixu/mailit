@@ -31,8 +31,6 @@ import Toolbar from "./toolbar"
 import ImageModal from "./image-modal"
 import useObserver from "./hooks/useObserver"
 
-const DELAY = 1000
-
 const getExtensions = ({ placeholder, collaborationProvider }) => [
   new PlaceholderExtension({ placeholder }),
   new BlockquoteExtension(),
@@ -63,10 +61,15 @@ const getExtensions = ({ placeholder, collaborationProvider }) => [
 /**
  * The editor which is used to create the annotation. Supports formatting.
  */
-const MarkdownEditor = ({ placeholder, value, children, onChange, collaborationProvider }) => {
+const MarkdownEditor = ({
+  placeholder,
+  value,
+  children,
+  onChange,
+  collaborationProvider,
+  sharedType,
+}) => {
   const [showImageModal, setShowImageModal] = useState(false)
-  const [clientCount, setClientCount] = useState(0)
-  const usedFallbackRef = useRef(false)
 
   const extensions = getExtensions({
     placeholder,
@@ -78,14 +81,17 @@ const MarkdownEditor = ({ placeholder, value, children, onChange, collaborationP
     stringHandler: "markdown",
   })
 
-  const handlePeersChange = useCallback(
-    ({ webrtcPeers }) => {
-      setClientCount(webrtcPeers.length)
-    },
-    [setClientCount]
-  )
+  // Only called at the initial connection when other users present
+  // Super hacky way to provide a initial value from the client
+  const handleSynced = useCallback(() => {
+    // set initial content only if the content in the server is empty
+    if (sharedType.length === 0) {
+      sharedType.insert(0, value)
+      getContext()?.setContent(value)
+    }
+  }, [])
 
-  useObserver("peers", handlePeersChange, collaborationProvider)
+  useObserver("synced", handleSynced, collaborationProvider)
 
   const handleChange = useCallback(({ state, helpers }) => {
     if (state) {
@@ -94,21 +100,13 @@ const MarkdownEditor = ({ placeholder, value, children, onChange, collaborationP
   }, [])
 
   useEffect(() => {
-    if (usedFallbackRef.current) return
-
-    const fetchFallback = () => {
-      if (clientCount === 0) {
-        getContext()?.setContent(value)
-      }
-      usedFallbackRef.current = true
-    }
-
-    const timeoutId = window.setTimeout(fetchFallback, DELAY)
+    collaborationProvider.connect()
 
     return () => {
-      window.clearTimeout(timeoutId)
+      collaborationProvider.disconnect()
+      collaborationProvider.destroy()
     }
-  }, [])
+  }, [collaborationProvider])
 
   return (
     <EditorWrapper>
@@ -118,7 +116,6 @@ const MarkdownEditor = ({ placeholder, value, children, onChange, collaborationP
             <Toolbar onClickInsertImage={() => setShowImageModal(true)} />
             <EditorComponent />
             {children}
-            client online: {clientCount}
             {showImageModal && (
               <ImageModal
                 onInsertImage={(src) => {
