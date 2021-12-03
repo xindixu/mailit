@@ -1,4 +1,4 @@
-import { useMemo, useContext } from "react"
+import { useMemo, useContext, useEffect } from "react"
 import { WebrtcProvider } from "y-webrtc"
 import * as Y from "yjs"
 import PropTypes from "prop-types"
@@ -13,7 +13,7 @@ const Editor = ({ value, onChange, templateId }) => {
   const { sharedType, provider } = useMemo(() => {
     const doc = new Y.Doc()
     const sharedType = doc.getText("content")
-    const provider = new WebrtcProvider(`mailit-tests-template-editor-${templateId}`, doc, {
+    const provider = new WebrtcProvider(`mailit-template-collaboration-editor-${templateId}`, doc, {
       connect: false,
     })
 

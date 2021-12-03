@@ -29,7 +29,7 @@ import { AllStyledComponent } from "@remirror/styles/emotion"
 import { EditorWrapper } from "./styles"
 import Toolbar from "./toolbar"
 import ImageModal from "./image-modal"
-import useObserver from "./hooks/useObserver"
+import useObserver from "./hooks/use-observer"
 
 const getExtensions = ({ placeholder, collaborationProvider }) => [
   new PlaceholderExtension({ placeholder }),
