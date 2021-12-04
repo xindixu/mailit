@@ -14,19 +14,16 @@ const ResetPassEmail = () => {
   const history = useHistory()
 
   const onFinish = (values) => {
-    message.success("Email for reset password was sent!", 5)
-    history.push("/login")
-    // apiFetch({
-    //   route: "login",
-    //   method: "post",
-    //   params: { email: values.email, password: values.password },
-    // }).then(({ status, data }) => {
-    //   if (status === 200) {
-    //     // get and store token
-    //     setAuthState({ ...authState, token: data.token, user_id: data.user_id, name: data.name })
-    //     history.push("/")
-    //   }
-    // })
+    apiFetch({
+      route: "password/forgot",
+      method: "post",
+      params: { email: values.email },
+    }).then(({ status }) => {
+      if (status === 200) {
+        message.success("Email for reset password was sent!", 5)
+        history.push("/login")
+      }
+    })
   }
 
   return (

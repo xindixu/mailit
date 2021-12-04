@@ -65,7 +65,7 @@ const App = () => (
             <Route path="/recipients">
               <Recipients />
             </Route>
-            <Route path="/login/password">
+            <Route path="/password-reset/:token">
               <ResetPassword />
             </Route>
             <Route path="/login/reset">

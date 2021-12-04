@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { Form, Input, Button, Typography, message } from "antd"
 import styled from "styled-components"
 import apiFetch from "../../lib/api-fetch"
@@ -10,23 +10,21 @@ const Main = styled.div`
 `
 
 const ResetPassword = () => {
+  const { token } = useParams()
   const { Title } = Typography
   const history = useHistory()
 
   const onFinish = (values) => {
-    message.success("Your password was reset!", 5)
-    history.push("/login")
-    // apiFetch({
-    //   route: "login",
-    //   method: "post",
-    //   params: { email: values.email, password: values.password },
-    // }).then(({ status, data }) => {
-    //   if (status === 200) {
-    //     // get and store token
-    //     setAuthState({ ...authState, token: data.token, user_id: data.user_id, name: data.name })
-    //     history.push("/")
-    //   }
-    // })
+    apiFetch({
+      route: "password/reset",
+      method: "post",
+      params: { password: values.password, token },
+    }).then(({ status }) => {
+      if (status === 200) {
+        message.success("Your password was reset!", 5)
+        history.push("/login")
+      }
+    })
   }
 
   return (
