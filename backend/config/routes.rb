@@ -14,6 +14,8 @@ Rails.application.routes.draw do
         end 
       end 
       post 'login', to: 'authentication#login'
+      post 'password/forgot', to: 'passwords#forgot'
+      post 'password/reset', to: 'passwords#reset'
     end
   end
 
