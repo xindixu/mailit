@@ -12,6 +12,8 @@ import Register from "./pages/register"
 import CampaignShow from "./pages/campaigns/show"
 import Recipients from "./pages/recipients"
 import RecipientsUpload from "./pages/recipients/upload"
+import ResetPassEmail from "./pages/login/reset-pass-email"
+import ResetPassword from "./pages/login/reset-password"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
@@ -62,6 +64,12 @@ const App = () => (
             </Route>
             <Route path="/recipients">
               <Recipients />
+            </Route>
+            <Route path="/password-reset/:token">
+              <ResetPassword />
+            </Route>
+            <Route path="/login/reset">
+              <ResetPassEmail />
             </Route>
             <Route path="/login">
               <Login />

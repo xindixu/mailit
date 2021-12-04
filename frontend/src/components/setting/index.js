@@ -21,6 +21,13 @@ const Setting = (props) => {
         <Input />
       </Form.Item>
       <Form.Item
+        label="Subject"
+        name="subject"
+        rules={[{ required: true, message: "Please input email subject!" }]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
         label="Tags"
         name="tags"
         rules={[{ required: true, message: "Please input at least one tag!" }]}

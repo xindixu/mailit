@@ -102,11 +102,13 @@ When("user clicks the {string} button for campaign {string}", async (buttonText,
   await driver.sleep(1000)
   const button = await driver.findElement(By.id(`${removeQuotations(buttonText)} email ${removeQuotations(name)}`))
   await button.click()
+  await driver.sleep(1000)
 })
 
 When("user clicks the {string} campaign button", async (buttonText) => {
   const button = await driver.findElement(By.id(`${removeQuotations(buttonText)}`))
   await button.click()
+  await driver.sleep(1000)
 })
 
 Then("user should see {string}", async (text) => {

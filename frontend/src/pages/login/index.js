@@ -67,7 +67,13 @@ const Login = () => {
           </Button>
         </Form.Item>
         <Form.Item>
-          <Link to="/register">Create A New Account</Link>
+          <Link to="/register" id="register-link">
+            Create A New Account
+          </Link>
+          <br />
+          <Link to="/login/reset" id="reset-link">
+            Forget your password?
+          </Link>
         </Form.Item>
       </Form>
     </Main>
