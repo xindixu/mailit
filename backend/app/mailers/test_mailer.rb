@@ -16,6 +16,6 @@ class TestMailer < ActionMailer::Base
              reply_to: @owner.email,
              subject: @subject,
              content_type: 'text/html',
-             body: @email_body)     
+             body: @body)     
     end 
 end
