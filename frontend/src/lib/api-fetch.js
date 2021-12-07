@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const apiFetch = ({ route, method = "get", params }) => {
-  const token = sessionStorage.getItem("token")
+  const token = localStorage.getItem("token")
   const headers = token ? { Authorization: `Bearer ${token}` } : {}
   return axios({
     url: `${process.env.REACT_APP_BASE_URL}/api/v1/${route}`,
