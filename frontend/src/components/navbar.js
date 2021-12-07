@@ -1,22 +1,11 @@
 import React, { useContext } from "react"
-import { Avatar, Menu } from "antd"
-import { UserOutlined } from "@ant-design/icons"
+import { Menu } from "antd"
 import { Link, useLocation, useHistory } from "react-router-dom"
-import styled from "styled-components"
 import routes, { getTextByLink } from "../lib/routes"
 import styleSettings from "../styles"
 import { DEFAULT_AUTH_STATE, AuthContext } from "../global-state"
 
-const SIZE = 124
-
 const { spacerLg } = styleSettings
-
-const AvatarWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: ${spacerLg};
-`
 
 const Navbar = () => {
   const location = useLocation()
@@ -42,10 +31,6 @@ const Navbar = () => {
         justifyContent: "center",
       }}
     >
-      <AvatarWrapper>
-        <Avatar size={SIZE} icon={<UserOutlined />} />
-      </AvatarWrapper>
-
       {routes.map(({ text, link }) => (
         <Menu.Item key={text}>
           <Link to={link}>{text}</Link>
