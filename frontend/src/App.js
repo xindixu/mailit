@@ -52,7 +52,7 @@ const App = () => (
             <GuardedRoute path="/templates" component={Templates} />
             <GuardedRoute path="/recipients/upload" component={RecipientsUpload} />
             <GuardedRoute path="/recipients" component={Recipients} />
-            <GuardedRoute path="/password-reset/:token" component={ResetPassword} />
+            <Route path="/password-reset/:token" component={ResetPassword} />
             <Route path="/login/reset" component={ResetPassEmail} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
