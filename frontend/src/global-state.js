@@ -3,22 +3,35 @@ import React, { useState, createContext, useEffect } from "react"
 export const AuthContext = createContext()
 export const DEFAULT_AUTH_STATE = { user_id: "", token: "", name: "" }
 
+const getLocalStorageItem = (key) => {
+  const value = localStorage.getItem(key)
+  if (value === "null") {
+    return null
+  }
+  return value
+}
+
+const initAuthState = () => {
+  if (getLocalStorageItem("token") && getLocalStorageItem("user_id")) {
+    return {
+      token: localStorage.getItem("token"),
+      user_id: localStorage.getItem("user_id"),
+      name: localStorage.getItem("name"),
+    }
+  }
+
+  return DEFAULT_AUTH_STATE
+}
 export const AuthProvider = (props) => {
-  const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE)
+  const [authState, setAuthState] = useState(() => initAuthState())
 
   useEffect(() => {
-    // check if token in sessionStorage is the same
+    // check if token in localStorage is the same
     // if not, update
     if (authState.token !== "") {
-      sessionStorage.setItem("token", authState.token)
-      sessionStorage.setItem("user_id", authState.user_id)
-      sessionStorage.setItem("name", authState.name)
-    } else if (sessionStorage.getItem("token") && sessionStorage.getItem("user_id")) {
-      setAuthState({
-        token: sessionStorage.getItem("token"),
-        user_id: sessionStorage.getItem("user_id"),
-        name: sessionStorage.getItem("name"),
-      })
+      localStorage.setItem("token", authState.token)
+      localStorage.setItem("user_id", authState.user_id)
+      localStorage.setItem("name", authState.name)
     }
     return () => {}
   }, [authState])
