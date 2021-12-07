@@ -17,6 +17,7 @@ import ResetPassword from "./pages/login/reset-password"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
+import GuardedRoute from "./components/guarded-route"
 
 const { spacerMd } = styleSettings
 
@@ -44,42 +45,18 @@ const App = () => (
         </StyledSider>
         <StyledContent>
           <Switch>
-            <Route path="/campaigns/:id">
-              <CampaignShow />
-            </Route>
-            <Route path="/campaigns">
-              <Campaigns />
-            </Route>
-            <Route path="/templates/new">
-              <TemplateNew />
-            </Route>
-            <Route path="/templates/:id">
-              <TemplateShow />
-            </Route>
-            <Route path="/templates">
-              <Templates />
-            </Route>
-            <Route path="/recipients/upload">
-              <RecipientsUpload />
-            </Route>
-            <Route path="/recipients">
-              <Recipients />
-            </Route>
-            <Route path="/password-reset/:token">
-              <ResetPassword />
-            </Route>
-            <Route path="/login/reset">
-              <ResetPassEmail />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/">
-              <Dashboard />
-            </Route>
+            <GuardedRoute path="/campaigns/:id" component={CampaignShow} />
+            <GuardedRoute path="/campaigns" component={Campaigns} />
+            <GuardedRoute path="/templates/new" component={TemplateNew} />
+            <GuardedRoute path="/templates/:id" component={TemplateShow} />
+            <GuardedRoute path="/templates" component={Templates} />
+            <GuardedRoute path="/recipients/upload" component={RecipientsUpload} />
+            <GuardedRoute path="/recipients" component={Recipients} />
+            <GuardedRoute path="/password-reset/:token" component={ResetPassword} />
+            <Route path="/login/reset" component={ResetPassEmail} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <GuardedRoute exact path="/" component={Dashboard} />
           </Switch>
         </StyledContent>
       </Layout>

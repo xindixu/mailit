@@ -13,7 +13,7 @@ const Navbar = () => {
   const [authState, setAuthState] = useContext(AuthContext)
 
   const handleClick = () => {
-    sessionStorage.clear()
+    localStorage.clear()
     setAuthState(DEFAULT_AUTH_STATE)
     history.push("/login")
   }
