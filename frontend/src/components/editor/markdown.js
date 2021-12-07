@@ -31,6 +31,7 @@ import Toolbar from "./toolbar"
 import ImageModal from "./image-modal"
 import useObserver from "./hooks/use-observer"
 
+const INITIAL_DELAY = 1000
 const getExtensions = ({ placeholder, collaborationProvider }) => [
   new PlaceholderExtension({ placeholder }),
   new BlockquoteExtension(),
@@ -70,6 +71,7 @@ const MarkdownEditor = ({
   sharedType,
 }) => {
   const [showImageModal, setShowImageModal] = useState(false)
+  const fallbackRef = useRef(false)
 
   const extensions = getExtensions({
     placeholder,
@@ -107,6 +109,23 @@ const MarkdownEditor = ({
       collaborationProvider.destroy()
     }
   }, [collaborationProvider])
+
+  useEffect(() => {
+    const handleSingleUser = () => {
+      if (fallbackRef.current) {
+        return
+      }
+
+      handleSynced()
+      fallbackRef.current = true
+    }
+    const timer = setTimeout(handleSingleUser, INITIAL_DELAY)
+    return () => {
+      clearTimeout(timer)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <EditorWrapper>
