@@ -13,6 +13,7 @@ Feature: Create, send, delete campaign
     Scenario: Create a new campaign
         Given user is on the Campaigns page
         When user updates the campaign name to "campaign1"
+        And user updates the campaign subject to "This is a test campaign"
         And user add "emailtest" tag
         And user clicks the Create Campaign button
         Then user should be on the Dashboard page
