@@ -53,7 +53,7 @@ const Recipients = () => {
       render: (text, record) => (
         <Space size="middle">
           <Button
-            id={`delete recipient ${record.name}`}
+            id={`delete recipient ${record.email}`}
             size="small"
             onClick={() => handleDeleteRecipient(record)}
             danger
