@@ -102,7 +102,7 @@ const RecipientsUpload = () => {
                 <TagsFormItem />
               </Form.Item>
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button htmlType="submit" type="primary" onClick={handleSubmit}>
+                <Button htmlType="submit" type="primary" onClick={handleSubmit} id="submit">
                   Submit
                 </Button>
               </Form.Item>
