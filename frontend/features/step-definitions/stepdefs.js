@@ -111,6 +111,7 @@ Given(/user have all data ready/, async () => {
     token,
     params: {
       name: "testcampaign",
+      subject: "This is the subject of test campaign",
       tags: ["testcampaign"],
       user_id: 1,
       template_id: 1,

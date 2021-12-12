@@ -79,19 +79,6 @@ When("user add {string} tag", async (value) => {
   await tagInput.sendKeys(removeQuotations(value))
 })
 
-When(
-  "user updates the campaign recipient {int} to {string} {string} {string}",
-  async (num, fn, ln, em) => {
-    const fnInput = await driver.findElement(By.id(`first_name${num}`))
-    const lnInput = await driver.findElement(By.id(`last_name${num}`))
-    const emailInput = await driver.findElement(By.id(`email${num}`))
-
-    await fnInput.sendKeys(removeQuotations(fn))
-    await lnInput.sendKeys(removeQuotations(ln))
-    await emailInput.sendKeys(removeQuotations(em))
-  }
-)
-
 When(/user clicks the Create Campaign button/, async () => {
   const button = await driver.findElement(By.id("create_campaign"))
   await button.click()
