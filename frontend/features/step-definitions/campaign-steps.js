@@ -66,6 +66,12 @@ When("user updates the campaign name to {string}", async (value) => {
   await nameInput.sendKeys(removeQuotations(value))
 })
 
+When("user updates the campaign subject to {string}", async (value) => {
+  const nameInput = await driver.findElement(By.id("subject"))
+  await nameInput.clear()
+  await nameInput.sendKeys(removeQuotations(value))
+})
+
 When("user add {string} tag", async (value) => {
   const addTag = await driver.findElement(By.id("add_tag"))
   await addTag.click()
