@@ -10,9 +10,14 @@ import TemplateNew from "./pages/templates/new"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import CampaignShow from "./pages/campaigns/show"
+import Recipients from "./pages/recipients"
+import RecipientsUpload from "./pages/recipients/upload"
+import ResetPassEmail from "./pages/login/reset-pass-email"
+import ResetPassword from "./pages/login/reset-password"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
+import GuardedRoute from "./components/guarded-route"
 
 const { spacerMd } = styleSettings
 
@@ -40,30 +45,18 @@ const App = () => (
         </StyledSider>
         <StyledContent>
           <Switch>
-            <Route path="/campaigns/:id">
-              <CampaignShow />
-            </Route>
-            <Route path="/campaigns">
-              <Campaigns />
-            </Route>
-            <Route path="/templates/new">
-              <TemplateNew />
-            </Route>
-            <Route path="/templates/:id">
-              <TemplateShow />
-            </Route>
-            <Route path="/templates">
-              <Templates />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/">
-              <Dashboard />
-            </Route>
+            <GuardedRoute path="/campaigns/:id" component={CampaignShow} />
+            <GuardedRoute path="/campaigns" component={Campaigns} />
+            <GuardedRoute path="/templates/new" component={TemplateNew} />
+            <GuardedRoute path="/templates/:id" component={TemplateShow} />
+            <GuardedRoute path="/templates" component={Templates} />
+            <GuardedRoute path="/recipients/upload" component={RecipientsUpload} />
+            <GuardedRoute path="/recipients" component={Recipients} />
+            <Route path="/password-reset/:token" component={ResetPassword} />
+            <Route path="/login/reset" component={ResetPassEmail} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <GuardedRoute exact path="/" component={Dashboard} />
           </Switch>
         </StyledContent>
       </Layout>

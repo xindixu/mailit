@@ -37,6 +37,7 @@ describe 'CAMPAIGNS API', type: :request do
       }
     }
   end
+  
   describe 'GET /campaigns' do
     it 'returns all the campaigns' do
       get '/api/v1/campaigns'
@@ -107,17 +108,25 @@ describe 'CAMPAIGNS API', type: :request do
       expect(JSON.parse(response.body)['error']).to eq('Bad Request')
     end
   end
+  
+    describe 'POST /campaigns/deliver' do 
+        before(:each) do 
+            @recipient = Recipient.new(firstname: 'Jane', lastname: 'Doe', email: 'jane.doe@example.com', user_id: @user.id, tags: ['test'])
+            @recipient.save
+        end 
+        it 'sends eamils to all the recipients' do 
+            expect {
+                post "/api/v1/campaigns/#{@campaign.id}/deliver", headers: {"Authorization" => "Bearer #{@token}"}
+            }.to change {ActionMailer::Base.deliveries.count}.by(1)    
+        end 
 
-  describe 'POST /campaigns/deliver' do
-    before(:each) do
-      @recipient = Recipient.new(firstname: 'Jane', lastname: 'Doe', email: 'jane.doe@example.com',
-                                 user_id: @user.id, tags: ['test'])
-      @recipient.save
-    end
-    it 'sends eamils to all the recipients' do
-      expect do
-        post "/api/v1/campaigns/#{@campaign.id}/deliver", headers: { 'Authorization' => "Bearer #{@token}" }
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
-  end
+        it 'properly increments number of emails sent' do 
+            post "/api/v1/campaigns/#{@campaign.id}/deliver", headers: {"Authorization" => "Bearer #{@token}"}
+            get "/api/v1/campaigns/#{@campaign.id}/analytics", headers: {"Authorization" => "Bearer #{@token}"}
+            expect(JSON.parse(response.body)['status']).to eq(200)
+            expect(JSON.parse(response.body)['emails_sent']).to eq(1)
+            expect(JSON.parse(response.body)['emails_not_sent']).to eq(0)
+        end 
+
+    end 
 end

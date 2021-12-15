@@ -1,5 +1,3 @@
-require 'redcarpet'
-
 class Api::V1::CampaignsController < ApplicationController
     skip_before_action :authenticate, only: [:index]
     
@@ -45,7 +43,12 @@ class Api::V1::CampaignsController < ApplicationController
 
     def deliver 
         markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions={})
-        @campaign = Campaign.find params[:id]
+        @campaign = Campaign.find_by(id: params[:id])
+        if @campaign == nil
+            return render json: {status: 404, message: "Cannot send emails for a campaign that does not exist"}
+        end 
+        @subject = @campaign.subject
+        @owner = User.find_by(id: @campaign.user_id)
         @template = Template.find_by_id(@campaign.template_id)
         @recipients = []
         temp_recipients = Recipient.all.where(:user_id => @campaign.user_id)
@@ -54,16 +57,35 @@ class Api::V1::CampaignsController < ApplicationController
                 @recipients.push(x)
             end 
         }
-        @email_body = markdown.render(@template.markdown)
+        @email_body =@template.markdown
         @recipients.each do |r|
-            TestMailer.with(recipient: r, email_body: @email_body).test_email.deliver_now 
-        
+            begin
+                CampaignMailer.with(recipient: r, email_body: @email_body, owner: @owner, subject: @subject, campaign_id: @campaign.id).send_email.deliver_now 
+                @campaign.update_number_emails_sent(true)
+            rescue 
+                @campaign.update_number_emails_sent(false)   
+            end 
         render json:{status: 200 , message:"Success"}
         end 
+    end
+
+    def email_opened
+        @campaign = Campaign.find_by(id:params[:id])
+        @campaign.update_emails_opened
+        send_file Rails.root.join("public", "tracking.png"), type: "image/gif", disposition: "inline"
     end 
+    
+    def analytics
+        @campaign = Campaign.find_by(id:params[:id])
+        if @campaign == nil
+            return render json: {status: 404, message: "Cannot provide analytics for an email that does not exist"}
+        else 
+            return render json: {status: 200, emails_sent:  @campaign.no_emails_sent, emails_not_sent: @campaign.no_emails_not_sent, emails_opened: @campaign.no_emails_opened} 
+        end 
+    end
 
     private
     def campaign_params
-        params.require(:campaign).permit(:name,:user_id,:template_id,tags: [])
+        params.require(:campaign).permit(:name,:user_id,:template_id,:subject,tags: [])
     end
 end 

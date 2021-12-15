@@ -11,18 +11,19 @@ const capabilities = Capabilities.safari()
 capabilities.set("chromeOptions", { w3c: false })
 const driver = new Builder().withCapabilities(capabilities).build()
 
-let token, user_id
+let token
+let user_id
 BeforeAll(async () => {
   apiFetch({
-    route: "users",
+    route: "/users",
     method: "post",
     params: {
       email: "testing@columbia.edu",
       name: "user2",
-      password: "hello1"
+      password: "hello1",
     },
   }).then(({ status, data }) => {
-    if (status == 200) {
+    if (status === 200) {
       token = data.token
       user_id = data.user_id
     }
@@ -38,7 +39,7 @@ let tid
 After(async () => {
   apiFetch({
     route: `/templates/${tid}`,
-    token: token,
+    token,
     method: "delete",
   })
 })
@@ -46,7 +47,7 @@ After(async () => {
 After(async () => {
   apiFetch({
     route: `/campaigns/${id}`,
-    token: token,
+    token,
     method: "delete",
   })
 })
@@ -54,31 +55,31 @@ After(async () => {
 After(async () => {
   apiFetch({
     route: `/recipients/${rid}`,
-    token: token,
+    token,
     method: "delete",
   })
 })
 
 AfterAll(async () => {
   apiFetch({
-    route: `users/${user_id}`,
+    route: `/users/${user_id}`,
     method: "delete",
-    token: token,
+    token,
   })
 })
 
 AfterAll(async () => {
   apiFetch({
-    route: "login",
+    route: "/login",
     method: "post",
     params: {
       email: "random@columbia.edu",
-      password: "hello1"
+      password: "hello1",
     },
   }).then(({ status, data }) => {
-    if (status == 200) {
+    if (status === 200) {
       apiFetch({
-        route: `users/${data.user_id}`,
+        route: `/users/${data.user_id}`,
         method: "delete",
         token: data.token,
       })
@@ -86,15 +87,15 @@ AfterAll(async () => {
   })
 })
 
-Given(/user have all data ready/, async ()=> {
+Given(/user have all data ready/, async () => {
   while (!token) {
-    console.log(token)
+    console.log("token", token)
   }
-  
+
   apiFetch({
     route: "/templates",
     method: "post",
-    token: token,
+    token,
     params: {
       name: "Merry Christmas",
       markdown: "Wish you a Merry Christmas",
@@ -107,9 +108,10 @@ Given(/user have all data ready/, async ()=> {
   apiFetch({
     route: "/campaigns",
     method: "post",
-    token: token,
+    token,
     params: {
       name: "testcampaign",
+      subject: "This is the subject of test campaign",
       tags: ["testcampaign"],
       user_id: 1,
       template_id: 1,
@@ -120,14 +122,13 @@ Given(/user have all data ready/, async ()=> {
   apiFetch({
     route: "/recipients",
     method: "post",
-    token: token,
+    token,
     params: {
-      "email": "qianjunc@gmail.com",
-      "tags": ["testcampaign"],
-      "user_id": 1
+      email: "qianjunc@gmail.com",
+      tags: ["testcampaign"],
+      user_id: 1,
     },
   }).then(({ data }) => {
-    console.log(token)
     rid = data.id
   })
 })
@@ -153,12 +154,12 @@ Then(/user should be on (\w+) like page/, async (pageName) => {
 
 Then(/user should sign out/, async () => {
   const button = await driver.findElement(By.id("sign-out"))
-    await button.click()
-    await driver.sleep(3000)
+  await button.click()
+  await driver.sleep(3000)
 })
 
 module.exports = {
   driver,
-  token, 
-  user_id
+  token,
+  user_id,
 }

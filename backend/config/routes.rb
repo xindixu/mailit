@@ -11,9 +11,13 @@ Rails.application.routes.draw do
       resources :campaigns do 
         member do 
           post 'deliver'
+          get 'analytics'
+          get 'email_opened'
         end 
       end 
       post 'login', to: 'authentication#login'
+      post 'password/forgot', to: 'passwords#forgot'
+      post 'password/reset', to: 'passwords#reset'
     end
   end
 
