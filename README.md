@@ -21,10 +21,15 @@
 ```
 development:
    frontend_url: "http://localhost:8080"
+   backend_url:  "http://localhost:3000"
+
 production:
    frontend_url: "https://mailit-app.herokuapp.com"
+   backend_url:  "https://mailit-api.herokuapp.com"
+
 test:
    frontend_url: "http://localhost:8080"
+   backend_url: "http://localhost:3000"
 ```
 
 ### Setup client
