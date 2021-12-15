@@ -1,7 +1,7 @@
 require 'redcarpet'
-class TestMailer < ActionMailer::Base
+class CampaignMailer < ActionMailer::Base
 
-    def test_email
+    def send_email
         @recipient = params[:recipient]
         @email_body = params[:email_body]
         @email_body = @email_body.gsub("{{first_name}}", @recipient.firstname)

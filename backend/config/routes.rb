@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :campaigns do 
         member do 
           post 'deliver'
+          get 'analytics'
         end 
       end 
       post 'login', to: 'authentication#login'
