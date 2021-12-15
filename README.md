@@ -14,6 +14,19 @@
 6. Seed your db: `rails db:seed`
 7. Reset your db: `rake db:drop db:create db:migrate`
 
+#Setup environment secrets
+1. Run `bundle exec figaro install`
+2. Navigate to `/config/application.yml`
+3. Add the following to the file:
+```
+development:
+   frontend_url: "http://localhost:8080"
+production:
+   frontend_url: "https://mailit-app.herokuapp.com"
+test:
+   frontend_url: "http://localhost:8080"
+```
+
 ### Setup client
 1. Create a terminal window, `cd frontend`
 2. Run `yarn install` to install all dependencies
@@ -50,9 +63,10 @@ We use cucumber.js to test our frontend
 We choose to deploy the frontend and the backend separately
 ### Deploy the backend
 1. `cd backend`
-2. `git push heroku main`
-3. `heroku run rake db:migrate`
-4. `heroku run rake db:seed`
+2. `figaro heroku:set -e production` (sets the environment variables)
+3. `git push heroku main`
+4. `heroku run rake db:migrate`
+5. `heroku run rake db:seed`
 
 ### Deploy the frontend
 1. `cd frontend`
