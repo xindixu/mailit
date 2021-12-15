@@ -20,6 +20,8 @@ gem 'redcarpet'
 
 gem 'time_difference'
 
+gem 'figaro'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
