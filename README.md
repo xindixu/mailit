@@ -68,10 +68,10 @@ We use cucumber.js to test our frontend
 We choose to deploy the frontend and the backend separately
 ### Deploy the backend
 1. `cd backend`
-2. `figaro heroku:set -e production` (sets the environment variables)
 3. `git push heroku main`
-4. `heroku run rake db:migrate`
-5. `heroku run rake db:seed`
+4. `figaro heroku:set -a mailit-api -e production` (sets the environment variables)
+5. `heroku run rake db:migrate`
+6. `heroku run rake db:seed`
 
 ### Deploy the frontend
 1. `cd frontend`
