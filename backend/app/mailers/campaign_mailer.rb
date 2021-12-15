@@ -9,6 +9,9 @@ class CampaignMailer < ActionMailer::Base
         @email_body = @email_body.gsub('{{email}}', @recipient.email)
         markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions={})
         @body= markdown.render(@email_body)
+        @link = "#{ENV['backend_url']}/api/v1/campaigns/#{params[:campaign_id]}/email_opened"
+        @tag = "<img src='#{@link}', 'width=\'1\', height=\'1\'>"
+        @body = @body + @tag
         @owner = params[:owner]
         @subject = params[:subject]
         mail(to: @recipient.email,

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         member do 
           post 'deliver'
           get 'analytics'
+          get 'email_opened'
         end 
       end 
       post 'login', to: 'authentication#login'

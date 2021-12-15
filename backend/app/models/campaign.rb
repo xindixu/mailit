@@ -10,4 +10,9 @@ class Campaign < ApplicationRecord
         end 
         self.save!
     end 
+
+    def update_emails_opened()
+        self.no_emails_opened = self.no_emails_opened + 1
+        self.save!
+    end 
 end

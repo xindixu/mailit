@@ -60,7 +60,7 @@ class Api::V1::CampaignsController < ApplicationController
         @email_body =@template.markdown
         @recipients.each do |r|
             begin
-                CampaignMailer.with(recipient: r, email_body: @email_body, owner: @owner, subject: @subject).send_email.deliver_now 
+                CampaignMailer.with(recipient: r, email_body: @email_body, owner: @owner, subject: @subject, campaign_id: @campaign.id).send_email.deliver_now 
                 @campaign.update_number_emails_sent(true)
             rescue 
                 @campaign.update_number_emails_sent(false)   
@@ -68,13 +68,19 @@ class Api::V1::CampaignsController < ApplicationController
         render json:{status: 200 , message:"Success"}
         end 
     end
+
+    def email_opened
+        @campaign = Campaign.find_by(id:params[:id])
+        @campaign.update_emails_opened
+        send_file Rails.root.join("public", "tracking.png"), type: "image/gif", disposition: "inline"
+    end 
     
     def analytics
         @campaign = Campaign.find_by(id:params[:id])
         if @campaign == nil
             return render json: {status: 404, message: "Cannot provide analytics for an email that does not exist"}
         else 
-            return render json: {status: 200, emails_sent:  @campaign.no_emails_sent, emails_not_sent: @campaign.no_emails_not_sent} 
+            return render json: {status: 200, emails_sent:  @campaign.no_emails_sent, emails_not_sent: @campaign.no_emails_not_sent, emails_opened: @campaign.no_emails_opened} 
         end 
     end
 
