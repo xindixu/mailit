@@ -14,6 +14,7 @@ import Recipients from "./pages/recipients"
 import RecipientsUpload from "./pages/recipients/upload"
 import ResetPassEmail from "./pages/login/reset-pass-email"
 import ResetPassword from "./pages/login/reset-password"
+import Analytics from "./pages/campaigns/analytics"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
@@ -45,6 +46,7 @@ const App = () => (
         </StyledSider>
         <StyledContent>
           <Switch>
+            <GuardedRoute path="/campaigns/:id/analytics" component={Analytics} />
             <GuardedRoute path="/campaigns/:id" component={CampaignShow} />
             <GuardedRoute path="/campaigns" component={Campaigns} />
             <GuardedRoute path="/templates/new" component={TemplateNew} />
