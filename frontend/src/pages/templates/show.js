@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useContext } from "react"
 import { Spin } from "antd"
 import { useHistory, useParams } from "react-router-dom"
 import { isEmpty } from "lodash"
 import apiFetch from "../../lib/api-fetch"
+import { AuthContext } from "../../global-state"
 import TemplateForm from "./form"
 
 const TemplateShow = () => {
   const [isSaving, setIsSaving] = useState(false)
   const [template, setTemplate] = useState({})
   const { id } = useParams()
+
+  const [authState] = useContext(AuthContext)
 
   useEffect(() => {
     apiFetch({ route: `templates/${id}` }).then(({ data }) => {
@@ -29,7 +32,7 @@ const TemplateShow = () => {
       apiFetch({
         route: `templates/${id}`,
         method: "patch",
-        params: { ...values, user_id: 1, collaborator_ids: [1] },
+        params: { ...values, user_id: authState.user_id },
       }).then(({ status }) => {
         if (status === 200) {
           setIsSaving(false)

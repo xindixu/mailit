@@ -42,16 +42,17 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 1000, ...props }) => {
 }
 
 const fetchUserList = async (email) =>
-  apiFetch({ route: "/users/search", method: "POST", params: { email } }).then(
+  apiFetch({ route: "users/search", method: "POST", params: { email } }).then(
     ({ data, status }) => {
       if (status === 200) {
-        return [{ label: data.name, value: data.id }]
+        const { name, id, email } = data
+        return [{ label: `${name} (${email})`, value: id }]
       }
     }
   )
 
-const SearchUser = () => {
-  const [users, setUsers] = useState([])
+const SearchUser = ({ value, onChange }) => {
+  const [users, setUsers] = useState(value)
   return (
     <DebounceSelect
       mode="multiple"
@@ -60,6 +61,7 @@ const SearchUser = () => {
       fetchOptions={fetchUserList}
       onChange={(newUsers) => {
         setUsers(newUsers)
+        onChange(newUsers.map(({ value }) => value))
       }}
       style={{
         width: "100%",
