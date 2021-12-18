@@ -36,6 +36,36 @@ PRODUCT_LAUNCH_TEMPLATE = <<~PRODUCT
   {{sender}}
 PRODUCT
 
+CHRISTMAS_TEMPLATE = <<~CHRISTMAS
+![](https://craftygemini.com/wp-content/uploads/2015/12/fromCrafty-Gemini.png)
+
+Dear {{first_name}},
+
+May your home be filled with light and joy this Christmas and always. Happy holidays!
+
+{{sender_name}}
+
+CHRISTMAS
+
+INVITATION_TEMPLATE= <<~INVITATION
+![](https://t3.ftcdn.net/jpg/01/22/53/72/360_F_122537224_fnvt6WN2cCfaZBKFIyJVOutWrz7DnuJJ.jpg)
+
+Dear {{first_name}},
+It’s a pleasure to invite you to \\[name of event\\] to discuss the \\[describe the discussion material\\]
+
+The meeting will be held on:
+
+December 25th, 2021
+
+Columbia University
+
+For the material that will be discussed, I have attached the additional documents to provide background information of our meeting. It would be very helpful for us if you read the documents first._\n\n_Please confirm your participation as soon as possible by reaching out to {{sender\\_email}}_\n\n_I look forward to hearing from you soon!
+
+Best regards,
+
+{{sender_name}}
+INVITATION
+
 users = User.create([{
                       name: 'Kenya Plenty',
                       password: 'hello1',
@@ -54,14 +84,25 @@ recipients = Recipient.create([{ firstname: 'Xindi', lastname: 'Xu', email: 'xx2
 templates = Template.create([{ markdown: 'Hi **Kenya**',
                                collaborator_ids: [users.last.id],
                                user_id: users.first.id,
-                               name: 'Basic' },
+                               name: 'Basic', 
+                               built_in: false},
                              { markdown: MIDTERM_TEMPLATE,
                                collaborator_ids: [users.last.id],
                                user_id: users.first.id,
-                               name: 'Midterm' },
+                               name: 'Midterm', 
+                               built_in: true},
                              { markdown: PRODUCT_LAUNCH_TEMPLATE,
                                collaborator_ids: [users.last.id],
                                user_id: users.first.id,
-                               name: 'Product Launch' }])
+                               name: 'Product Launch', 
+                               built_in: true }, 
+                              { markdown: INVITATION_TEMPLATE,
+                                user_id: users.first.id,
+                                name: 'Invitation', 
+                                built_in: true}, 
+                              { markdown: CHRISTMAS_TEMPLATE, 
+                                user_id: users.first.id,
+                                name: 'Christmas', 
+                                built_in: true}])
 
 campaign = Campaign.create(name: 'Test', tags: ['test'], user_id: users.first.id, template_id: templates[0].id, subject: 'Test Campaign')

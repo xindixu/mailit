@@ -3,7 +3,13 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users
-      resources :templates
+      resources :templates do 
+        collection {get :built_in}
+        collection {get 'built_in/analytics', to: 'templates#analytics'}
+        member do 
+          post 'built_in/used', to: 'templates#used'
+        end 
+      end 
       resources :recipients do 
         collection {post :import}
         collection {get :export}

@@ -1,5 +1,6 @@
 class Api::V1::TemplatesController < ApplicationController
   skip_before_action :authenticate, only: [:index]
+ 
   def index
     templates = Template.all
     render json: TemplateSerializer.new(templates).serialized_json
@@ -47,6 +48,30 @@ class Api::V1::TemplatesController < ApplicationController
       render json: { status: 422, error: template.errors.messages }
     end
   end
+
+  def built_in
+    templates = Template.all.where(:built_in => true)
+    render json: TemplateSerializer.new(templates).serialized_json 
+  end 
+
+  def used 
+    template = Template.find_by(id: params[:id])
+    if template.nil?
+      render json: { status: 400, error: 'Invalid Id Passed' }
+    else 
+      if template.built_in 
+        template.update_no_times_used
+        render json: {status: 200, message: "Successfully incremented times used"}
+      else 
+        render json: {status: 405, error: "Method Not Allowed" }
+      end 
+    end 
+  end 
+
+  def analytics 
+    templates = Template.all.where(:built_in => true)
+    render json: TemplateSerializer.new(templates).serialized_json
+  end 
 
   private
 

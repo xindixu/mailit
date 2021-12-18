@@ -1,5 +1,5 @@
 class Api::V1::AuthenticationController < ApplicationController 
-    skip_before_action :authenticate, only: [:login, :signup]
+    skip_before_action :authenticate, only: [:login]
     def login
         @user = User.find_by(email: params[:email])
         if @user
@@ -11,7 +11,7 @@ class Api::V1::AuthenticationController < ApplicationController
                 render json: {status: 401, message: "Authentication Failed"}
             end 
         else
-            render json: {status: 404, message: "could not find user"}
+            render json: {status: 404, message: "Could not find user"}
         end 
     end 
 end 
