@@ -1,4 +1,5 @@
 class Api::V1::CampaignsController < ApplicationController
+    skip_before_action :authenticate, only: [:email_opened]
 
     def index
         auth_header = request.headers['Authorization']
@@ -74,7 +75,7 @@ class Api::V1::CampaignsController < ApplicationController
     def email_opened
         @campaign = Campaign.find_by(id:params[:id])
         @campaign.update_emails_opened
-        send_file Rails.root.join("public", "tracking.png"), type: "image/gif", disposition: "inline"
+        send_file Rails.root.join("public", "assets", "tracking.png"), type: "image/gif", disposition: "inline"
     end 
     
     def analytics
