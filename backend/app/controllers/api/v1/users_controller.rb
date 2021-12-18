@@ -60,6 +60,15 @@ class Api::V1::UsersController < ApplicationController
 		end
 
 	end
+
+	def email_lookup
+		@user = User.find_by(email: params[:email])
+		if @user.nil?
+			return render json: {status: 404, error: 'User not found'}
+		else 
+			return render json: {status: 200, data: {id: @user.id, name: @user.name, email: @user.email}}
+		end
+	end 
 	
 	private
 
