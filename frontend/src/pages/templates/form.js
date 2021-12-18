@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Form, Space, Button, Input } from "antd"
 import { SaveOutlined } from "@ant-design/icons"
 import Editor from "../../components/editor"
+import SearchUser from "../../components/search-user"
 
 const TemplateForm = ({ onFinish, template, onCancel, isSaving, saveText }) => (
   <Form onFinish={onFinish} layout="vertical" initialValues={template}>
@@ -15,6 +16,9 @@ const TemplateForm = ({ onFinish, template, onCancel, isSaving, saveText }) => (
       rules={[{ required: true, message: "Please enter markdown content!" }]}
     >
       <Editor templateId={template.id} />
+    </Form.Item>
+    <Form.Item label="Collaborators" name="collaborator_ids">
+      <SearchUser />
     </Form.Item>
     <Form.Item span={24} style={{ textAlign: "right" }}>
       <Space>

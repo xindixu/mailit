@@ -8,9 +8,10 @@ const apiFetch = ({ route, method = "get", params }) => {
     headers,
     data: params,
     method,
-  }).then(({ data, status }) => ({
+  }).then(({ data, status, error }) => ({
     data: data.data,
-    status,
+    status: data.status || status,
+    error: data.error || error,
   }))
 }
 
