@@ -8,6 +8,10 @@ const routes = [
     link: "/campaigns",
   },
   {
+    text: "Predefined Templates",
+    link: "/predefined-templates",
+  },
+  {
     text: "Templates",
     link: "/templates",
   },

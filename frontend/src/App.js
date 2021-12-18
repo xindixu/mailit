@@ -15,6 +15,8 @@ import RecipientsUpload from "./pages/recipients/upload"
 import ResetPassEmail from "./pages/login/reset-pass-email"
 import ResetPassword from "./pages/login/reset-password"
 import Analytics from "./pages/campaigns/analytics"
+import PredefinedTemplates from "./pages/templates/predefined"
+import PreTemplateNew from "./pages/templates/predefined-new"
 
 const { Sider, Footer, Content } = Layout
 import styleSettings from "./styles"
@@ -49,6 +51,8 @@ const App = () => (
             <GuardedRoute path="/campaigns/:id/analytics" component={Analytics} />
             <GuardedRoute path="/campaigns/:id" component={CampaignShow} />
             <GuardedRoute path="/campaigns" component={Campaigns} />
+            <GuardedRoute path="/predefined-templates/:id" component={PreTemplateNew} />
+            <GuardedRoute path="/predefined-templates" component={PredefinedTemplates} />
             <GuardedRoute path="/templates/new" component={TemplateNew} />
             <GuardedRoute path="/templates/:id" component={TemplateShow} />
             <GuardedRoute path="/templates" component={Templates} />
