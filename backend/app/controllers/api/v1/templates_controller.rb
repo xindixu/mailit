@@ -1,14 +1,14 @@
 class Api::V1::TemplatesController < ApplicationController
-  skip_before_action :authenticate, only: [:index]
- 
+  
   def index
-    templates = Template.all
+    auth_header = request.headers['Authorization']
+    user_id = ApplicationController.get_user_id_from_authorization_header(auth_header)
+    templates = Template.where(:user_id => user_id).or(Template.where("? = ANY(collaborator_ids)", user_id.to_s))
     render json: TemplateSerializer.new(templates).serialized_json
   end
 
   def show
     template = Template.find_by(id: params[:id])
-
     if template.nil?
       render json: { status: 400, error: 'Invalid Id Passed' }
     else
@@ -39,14 +39,22 @@ class Api::V1::TemplatesController < ApplicationController
   end
 
   def destroy
-    template = Template.find_by(id: params[:id])
-    if template.nil?
-      render json: { status: 400, error: 'Invalid Id passed' }
-    elsif template.destroy
-      render json: { status: 200, message: 'Success' }
+    @template = Template.find_by(id: params[:id])
+    if @template.nil?
+       return render json: { status: 400, error: 'Invalid Id passed' }
+    end 
+    auth_header = request.headers['Authorization']
+    @user_id = ApplicationController.get_user_id_from_authorization_header(auth_header)
+    
+    if @template.user_id == @user_id
+      if @template.destroy 
+        return render json: {status: 200, message: "Success"}
+      else 
+        return render json: {status: 422, error: @template.errors.messages}
+      end 
     else
-      render json: { status: 422, error: template.errors.messages }
-    end
+      return render json: {status: 405, error: "Unauthorized to complete operation"} 
+    end 
   end
 
   def built_in

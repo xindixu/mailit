@@ -19,6 +19,12 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def self.get_user_id_from_authorization_header(header)
+    token = header.split(' ')[1]
+    decoded_token = JWT.decode(token, Rails.application.secret_key_base, 'HS256')
+    user_id = decoded_token.first['user_id']
+  end 
+
   def create_token(payload)
     JWT.encode(payload, Rails.application.secret_key_base, 'HS256')
   end

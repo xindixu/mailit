@@ -40,7 +40,7 @@ describe 'CAMPAIGNS API', type: :request do
   
   describe 'GET /campaigns' do
     it 'returns all the campaigns' do
-      get '/api/v1/campaigns'
+      get '/api/v1/campaigns', headers: { 'Authorization' => "Bearer #{@token}" }
       expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body).size).to eq(1)
     end

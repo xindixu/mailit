@@ -1,10 +1,12 @@
 require 'csv'
 
 class Api::V1::RecipientsController < ApplicationController
-  skip_before_action :authenticate, only: %i[index export]
+  skip_before_action :authenticate, only: [:export]
 
   def index
-    recipients = Recipient.all
+    auth_header = request.headers['Authorization']
+    user_id = ApplicationController.get_user_id_from_authorization_header(auth_header)
+    recipients = Recipient.all.where(:user_id => user_id)
     render json: RecipientSerializer.new(recipients).serialized_json
   end
 

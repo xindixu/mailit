@@ -1,8 +1,10 @@
 class Api::V1::CampaignsController < ApplicationController
-    skip_before_action :authenticate, only: [:index]
-    
+
     def index
-        campaigns = Campaign.all
+        auth_header = request.headers['Authorization']
+        user_id = ApplicationController.get_user_id_from_authorization_header(auth_header)
+        user = User.find_by(id: user_id)
+        campaigns = Campaign.all.where(:user_id => user_id)
         render json: CampaignSerializer.new(campaigns).serialized_json
     end
     

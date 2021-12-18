@@ -97,12 +97,22 @@ templates = Template.create([{ markdown: 'Hi **Kenya**',
                                name: 'Product Launch', 
                                built_in: true }, 
                               { markdown: INVITATION_TEMPLATE,
-                                user_id: users.first.id,
+                                user_id: users.last.id,
                                 name: 'Invitation', 
                                 built_in: true}, 
                               { markdown: CHRISTMAS_TEMPLATE, 
-                                user_id: users.first.id,
+                                user_id: users.last.id,
                                 name: 'Christmas', 
                                 built_in: true}])
 
-campaign = Campaign.create(name: 'Test', tags: ['test'], user_id: users.first.id, template_id: templates[0].id, subject: 'Test Campaign')
+campaign = Campaign.create([{name: 'Test',
+                             tags: ['test'],
+                             user_id: users.first.id,
+                             template_id: templates[0].id,
+                             subject: 'Test Campaign'},
+                            {name: 'Invitation',
+                             tags: ['invitation'],
+                             user_id: users.last.id,
+                             template_id: templates[3].id,
+                             subject: 'Invitation'}])
+
