@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import D3Funnel from "d3-funnel"
+import { useEffect, useState, useRef } from "react"
 import { Card, Col, Row } from "antd"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
@@ -14,6 +15,7 @@ const Wrapper = styled.div`
 
 const PredefinedTemplates = () => {
   const [templates, setTemplates] = useState([])
+  const dataRef = useRef(null)
 
   useEffect(() => {
     apiFetch({ route: "templates" }).then(({ data }) => {
@@ -37,6 +39,9 @@ const PredefinedTemplates = () => {
           ))}
         </Row>
       </Wrapper>
+      <Card title="Templates Analytics">
+        <div ref={dataRef} />
+      </Card>
     </>
   )
 }
