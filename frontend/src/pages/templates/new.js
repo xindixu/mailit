@@ -40,6 +40,7 @@ const TemplateNew = () => {
       onFinish={onFinish}
       saveText="Create"
       template={{ id: "new" }}
+      currentUserId={authState.user_id}
     />
   )
 }

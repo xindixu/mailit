@@ -53,6 +53,7 @@ const TemplateShow = () => {
       onFinish={onFinish}
       saveText="Update"
       template={template}
+      currentUserId={authState.user_id}
     />
   )
 }

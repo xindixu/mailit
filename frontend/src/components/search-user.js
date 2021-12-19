@@ -10,6 +10,7 @@ const userToOption = (user) => {
 }
 
 const usersToOptions = (users) => users.map(userToOption)
+
 const DebounceSelect = ({ fetchOptions, debounceTimeout = 1000, ...props }) => {
   const [fetching, setFetching] = useState(false)
   const [options, setOptions] = useState([])
@@ -47,25 +48,26 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 1000, ...props }) => {
   )
 }
 
-const fetchUserList = async (email, currentUserId) =>
+const fetchUserList = async (email, ownerId) =>
   apiFetch({ route: "users/search", method: "POST", params: { email } }).then(
     ({ data, status }) => {
-      // current user can't be a collaborator
-      if (status === 200 && data.id !== currentUserId) {
+      // owner can't be a collaborator
+      if (status === 200 && data.id !== ownerId) {
         return [userToOption(data)]
       }
     }
   )
 
-const SearchUser = ({ value, onChange, currentUserId }) => {
+const SearchUser = ({ value, onChange, ownerId, disabled }) => {
   const [users, setUsers] = useState(() => usersToOptions(value))
 
   return (
     <DebounceSelect
+      disabled={disabled}
       mode="multiple"
       value={users}
       placeholder="Search users by email"
-      fetchOptions={(email) => fetchUserList(email, currentUserId)}
+      fetchOptions={(email) => fetchUserList(email, ownerId)}
       onChange={(newUsers) => {
         setUsers(newUsers)
         onChange(newUsers)
@@ -86,6 +88,6 @@ SearchUser.propTypes = {
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
-  currentUserId: PropTypes.number.isRequired,
+  ownerId: PropTypes.number.isRequired,
 }
 export default SearchUser
