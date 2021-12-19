@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 MIDTERM_TEMPLATE = <<~MIDTERM
-  Dear {{first_name}}:
+  Dear {{firstName}}:
 
   I hope that you can take a moment to rest as midterm season continues. Taking five minutes to stretch, breathe or get up for a short walk can make a big difference. Try setting a reminder or alarm on your phone and have a plan in place for what to do with your time to yourself.#{' '}
 
@@ -18,7 +18,7 @@ MIDTERM_TEMPLATE = <<~MIDTERM
 MIDTERM
 
 PRODUCT_LAUNCH_TEMPLATE = <<~PRODUCT
-  Hi {{first_name}},
+  Hi {{firstName}},
 
   I hope you’re having a wonderful day!
 
@@ -33,24 +33,24 @@ PRODUCT_LAUNCH_TEMPLATE = <<~PRODUCT
   ![](https://www.launch-marketing.com/wp-content/uploads/2018/07/GettyImages-1134023751.jpg)
 
   Thank you,
-  {{sender}}
+  {{senderName}}
 PRODUCT
 
 CHRISTMAS_TEMPLATE = <<~CHRISTMAS
   ![](https://craftygemini.com/wp-content/uploads/2015/12/fromCrafty-Gemini.png)
 
-  Dear {{first_name}},
+  Dear {{firstName}},
 
   May your home be filled with light and joy this Christmas and always. Happy holidays!
 
-  {{sender_name}}
+  {{senderName}}
 
 CHRISTMAS
 
 INVITATION_TEMPLATE = <<~INVITATION
   ![](https://t3.ftcdn.net/jpg/01/22/53/72/360_F_122537224_fnvt6WN2cCfaZBKFIyJVOutWrz7DnuJJ.jpg)
 
-  Dear {{first_name}},
+  Dear {{firstName}},
   It’s a pleasure to invite you to \\[name of event\\] to discuss the \\[describe the discussion material\\]
 
   The meeting will be held on:
@@ -59,11 +59,13 @@ INVITATION_TEMPLATE = <<~INVITATION
 
   Columbia University
 
-  For the material that will be discussed, I have attached the additional documents to provide background information of our meeting. It would be very helpful for us if you read the documents first._\n\n_Please confirm your participation as soon as possible by reaching out to {{sender\\_email}}_\n\n_I look forward to hearing from you soon!
+  Please confirm your participation as soon as possible by reaching out to {{senderEmail}}.
+
+  I look forward to hearing from you soon!
 
   Best regards,
 
-  {{sender_name}}
+  {{senderName}}
 INVITATION
 
 users = User.create([{
