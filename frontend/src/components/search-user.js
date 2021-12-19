@@ -4,6 +4,12 @@ import { debounce } from "lodash"
 import { Select, Spin } from "antd"
 import apiFetch from "../lib/api-fetch"
 
+const userToOption = (user) => {
+  const { name, id, email } = user
+  return { label: `${name} (${email})`, value: id }
+}
+
+const usersToOptions = (users) => users.map(userToOption)
 const DebounceSelect = ({ fetchOptions, debounceTimeout = 1000, ...props }) => {
   const [fetching, setFetching] = useState(false)
   const [options, setOptions] = useState([])
@@ -41,27 +47,28 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 1000, ...props }) => {
   )
 }
 
-const fetchUserList = async (email) =>
+const fetchUserList = async (email, currentUserId) =>
   apiFetch({ route: "users/search", method: "POST", params: { email } }).then(
     ({ data, status }) => {
-      if (status === 200) {
-        const { name, id, email } = data
-        return [{ label: `${name} (${email})`, value: id }]
+      // current user can't be a collaborator
+      if (status === 200 && data.id !== currentUserId) {
+        return [userToOption(data)]
       }
     }
   )
 
-const SearchUser = ({ value, onChange }) => {
-  const [users, setUsers] = useState(value)
+const SearchUser = ({ value, onChange, currentUserId }) => {
+  const [users, setUsers] = useState(() => usersToOptions(value))
+
   return (
     <DebounceSelect
       mode="multiple"
       value={users}
       placeholder="Search users by email"
-      fetchOptions={fetchUserList}
+      fetchOptions={(email) => fetchUserList(email, currentUserId)}
       onChange={(newUsers) => {
         setUsers(newUsers)
-        onChange(newUsers.map(({ value }) => value))
+        onChange(newUsers)
       }}
       style={{
         width: "100%",
@@ -70,5 +77,15 @@ const SearchUser = ({ value, onChange }) => {
   )
 }
 
-SearchUser.propTypes = {}
+SearchUser.propTypes = {
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  currentUserId: PropTypes.number.isRequired,
+}
 export default SearchUser

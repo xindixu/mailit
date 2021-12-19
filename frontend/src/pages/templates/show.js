@@ -5,6 +5,7 @@ import { isEmpty } from "lodash"
 import apiFetch from "../../lib/api-fetch"
 import { AuthContext } from "../../global-state"
 import TemplateForm from "./form"
+import { formValueToRequestParams } from "./utils"
 
 const TemplateShow = () => {
   const [isSaving, setIsSaving] = useState(false)
@@ -32,7 +33,7 @@ const TemplateShow = () => {
       apiFetch({
         route: `templates/${id}`,
         method: "patch",
-        params: { ...values, user_id: authState.user_id },
+        params: formValueToRequestParams(values, authState),
       }).then(({ status }) => {
         if (status === 200) {
           setIsSaving(false)
@@ -40,7 +41,7 @@ const TemplateShow = () => {
         }
       })
     },
-    [goBack, id]
+    [authState, goBack, id]
   )
 
   return isEmpty(template) ? (

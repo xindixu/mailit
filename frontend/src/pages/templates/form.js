@@ -10,15 +10,15 @@ const TemplateForm = ({ onFinish, template, onCancel, isSaving, saveText }) => (
     <Form.Item label="Name" name="name" rules={[{ required: true, message: "Please enter name!" }]}>
       <Input placeholder="Product launch template" />
     </Form.Item>
+    <Form.Item label="Collaborators" name="collaborators">
+      <SearchUser currentUserId={template.user_id} />
+    </Form.Item>
     <Form.Item
       label="Markdown"
       name="markdown"
       rules={[{ required: true, message: "Please enter markdown content!" }]}
     >
       <Editor templateId={template.id} />
-    </Form.Item>
-    <Form.Item label="Collaborators" name="collaborator_ids">
-      <SearchUser />
     </Form.Item>
     <Form.Item span={24} style={{ textAlign: "right" }}>
       <Space>

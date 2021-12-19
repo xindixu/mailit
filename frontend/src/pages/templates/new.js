@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import apiFetch from "../../lib/api-fetch"
 import { AuthContext } from "../../global-state"
 import TemplateForm from "./form"
+import { formValueToRequestParams } from "./utils"
 
 const TemplateNew = () => {
   const [isSaving, setIsSaving] = useState(false)
@@ -21,7 +22,7 @@ const TemplateNew = () => {
       apiFetch({
         route: `templates`,
         method: "post",
-        params: { ...values, user_id: authState.user_id },
+        params: formValueToRequestParams(values, authState),
       }).then(({ status }) => {
         if (status === 200) {
           setIsSaving(false)
@@ -29,7 +30,7 @@ const TemplateNew = () => {
         }
       })
     },
-    [authState.user_id, goBack]
+    [authState, goBack]
   )
 
   return (
