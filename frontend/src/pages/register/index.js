@@ -20,7 +20,7 @@ const Register = () => {
     apiFetch({
       route: "users",
       method: "post",
-      params: { name: values.username, email: values.email, password: values.password },
+      params: { name: values.name, email: values.email, password: values.password },
     }).then(({ status, data }) => {
       if (status === 200) {
         // get and store token
@@ -54,9 +54,9 @@ const Register = () => {
         </Form.Item>
 
         <Form.Item
-          label="username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          label="name"
+          name="name"
+          rules={[{ required: true, message: "Please input your full name!" }]}
         >
           <Input />
         </Form.Item>
