@@ -23,8 +23,10 @@ class Api::V1::RecipientsController < ApplicationController
     recipient = Recipient.new(recipient_params)
     if recipient_params['email'].nil? || recipient_params['user_id'].nil?
       render json: { status: 400, error: 'Bad Request' }
-    elsif recipient.save
+    elsif recipient.save!
       render json: { status: 200, data: recipient.as_json }
+    else
+      render json: {status: 422, error: 'Invalid email format for recipient'}
     end
   end
 

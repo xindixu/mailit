@@ -1,6 +1,7 @@
 require 'csv'
 class Recipient < ApplicationRecord
     belongs_to :user, optional: true
+    validates :email, format: { with: /\A(\S+)@(.+)\.(\S+)\z/ } 
 
     def self.import(file, uid)
         CSV.foreach(file.path, headers:true) do |row|
@@ -8,7 +9,11 @@ class Recipient < ApplicationRecord
             final_tags = data['tags'].split('|')
             data["tags"] = final_tags
             data["user_id"] = uid
-            Recipient.create(data)
+            begin
+                Recipient.create!(data) 
+            rescue 
+                print("Something has gone wrong!")
+            end 
         end 
     end 
 
