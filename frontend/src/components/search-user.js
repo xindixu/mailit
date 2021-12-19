@@ -9,7 +9,7 @@ const userToOption = (user) => {
   return { label: `${name} (${email})`, value: id }
 }
 
-const usersToOptions = (users) => users.map(userToOption)
+const usersToOptions = (users) => users?.map(userToOption)
 
 const DebounceSelect = ({ fetchOptions, debounceTimeout = 1000, ...props }) => {
   const [fetching, setFetching] = useState(false)

@@ -6,7 +6,7 @@ import Editor from "../../components/editor"
 import SearchUser from "../../components/search-user"
 
 const TemplateForm = ({ onFinish, template, onCancel, isSaving, saveText, currentUserId }) => {
-  const disableCollaborators = currentUserId !== `${template.user_id}`
+  const disableCollaborators = currentUserId !== `${template.user_id}` && template.id !== "new"
 
   return (
     <Form onFinish={onFinish} layout="vertical" initialValues={template}>
