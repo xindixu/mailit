@@ -51,7 +51,7 @@ const PreTemplateNew = () => {
       isSaving={isSaving}
       onCancel={goBack}
       onFinish={onFinish}
-      saveText="Update"
+      saveText="Duplicate and Update"
       template={template}
     />
   )
