@@ -51,8 +51,8 @@ function PieChart(props) {
       .append("text")
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "middle")
-      .text((d) => d.data.label)
-      .style("fill", (_, i) => colorScale(data.length - i))
+      .text((d) => `${d.data.label}: ${d.data.value}`)
+      .style("fill", "#ffffff")
       .attr("transform", (d) => {
         const [x, y] = arcGenerator.centroid(d)
         return `translate(${x}, ${y})`

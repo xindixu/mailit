@@ -15,14 +15,21 @@ const Wrapper = styled.div`
 
 const PredefinedTemplates = () => {
   const [templates, setTemplates] = useState([])
-  const templateData = [
-    { label: "Apples", value: 10 },
-    { label: "Oranges", value: 20 },
-  ]
+  const [templateData, setTemplateData] = useState([])
 
   useEffect(() => {
-    apiFetch({ route: "templates" }).then(({ data }) => {
+    apiFetch({ route: "templates/built_in" }).then(({ data }) => {
       setTemplates(data)
+    })
+    apiFetch({ route: "templates/built_in/analytics" }).then(({ data }) => {
+      const d = data
+        .filter((item) => item.attributes.no_times_used > 0)
+        .map((item) => {
+          if (item.attributes.no_times_used > 0) {
+            return { label: item.attributes.name, value: item.attributes.no_times_used }
+          }
+        })
+      setTemplateData(d)
     })
   }, [])
 

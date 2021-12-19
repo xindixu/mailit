@@ -32,6 +32,10 @@ const PreTemplateNew = () => {
         params: { ...values, user_id: 1, collaborator_ids: [1] },
       }).then(({ status }) => {
         if (status === 200) {
+          apiFetch({
+            route: `templates/${id}/built_in/used`,
+            method: "post",
+          })
           setIsSaving(false)
           goBack()
         }
