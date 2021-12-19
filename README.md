@@ -14,7 +14,7 @@
 6. Seed your db: `rails db:seed`
 7. Reset your db: `rake db:drop db:create db:migrate`
 
-#Setup environment secrets
+### Setup environment secrets
 1. Run `bundle exec figaro install`
 2. Navigate to `/config/application.yml`
 3. Add the following to the file:
