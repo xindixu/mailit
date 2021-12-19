@@ -52,13 +52,14 @@ REACT_APP_BASE_URL=http://localhost:3000
 
 ## Testing
 ### User testing with cucumber.js
-We use cucumber.js to test our frontend
+We use cucumber.js to test our frontend. Make sure you have the Firefox browser installed
 1. When running cucumber tests, make sure both the frontend and the backend of the app is running!
-2. Navigate to the /frontend folder
-3. Required packages: `@cucumber/cucumber`, `selenium-webdriver`. Install them with `yarn install`
-4. In your terminal, run `safaridriver --enable`. This will allow `selenium` to run cucumber tests on Safari
-5. Run `yarn run cucumber` to run cucumber tests
-6. Run `yarn run coverage` to generate cucumber coverage report
+2. Required packages: `@cucumber/cucumber`, `selenium-webdriver`. Install them with `yarn install` 
+3. Create two terminal windows and navigate to the /frontend folder
+4. In one terminal, run `./geckodriver`. This will run the Firefox test window
+5. In the other terminal:
+6. Run `yarn run cucumber` to run cucumber tests
+7. Run `yarn run coverage` to generate cucumber coverage report
 
 ### RSpec Tests
 1. `cd backend`
