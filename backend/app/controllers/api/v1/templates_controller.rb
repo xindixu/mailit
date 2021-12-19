@@ -17,7 +17,7 @@ class Api::V1::TemplatesController < ApplicationController
 
   def create
     template = Template.new(template_params)
-    if template_params['name'].nil? || template_params['user_id'].nil? || template_params['collaborator_ids']&.length == 0
+    if template_params['name'].nil? || template_params['user_id'].nil?
       render json: { status: 400, error: 'Bad Request' }
     elsif template.save
       render json: { status: 200, data: template.as_json }
@@ -28,7 +28,7 @@ class Api::V1::TemplatesController < ApplicationController
 
   def update
     template = Template.find_by(id: params[:id])
-    if template.nil? || template_params['name'].nil? || template_params['user_id'].nil? || template_params['collaborator_ids']&.length == 0
+    if template.nil? || template_params['name'].nil? || template_params['user_id'].nil?
       render json: { status: 400, error: 'Bad Request' }
     elsif template.update(template_params)
       render json: { status: 200, message: 'Success' }

@@ -21,7 +21,7 @@ const PredefinedTemplates = () => {
     apiFetch({ route: "templates/built_in" }).then(({ data }) => {
       setTemplates(data)
     })
-    apiFetch({ route: "templates/built_in/analytics" }).then(({ data }) => {
+    apiFetch({ route: "templates/built_in/analytics" }).then(({ data = [] }) => {
       const d = data
         .filter((item) => item.attributes.no_times_used > 0)
         .map((item) => {
@@ -38,7 +38,7 @@ const PredefinedTemplates = () => {
       <h2>Predefined Templates</h2>
       <Wrapper>
         <Row gutter={16}>
-          {templates.map(({ id, attributes: { name } }) => (
+          {templates?.map(({ id, attributes: { name } }) => (
             <Col key={id} span={6}>
               <Card>
                 <p>
