@@ -44,7 +44,7 @@ const TemplateIndex = () => {
       <h2>All Templates</h2>
       <Wrapper>
         <Row gutter={16}>
-          {templates.map(({ id, attributes: { name } }) => (
+          {templates?.map(({ id, attributes: { name } }) => (
             <Col key={id} span={6}>
               <Card>
                 <p>

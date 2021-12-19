@@ -1,10 +1,12 @@
 require 'csv'
 
 class Api::V1::RecipientsController < ApplicationController
-  skip_before_action :authenticate, only: %i[index export]
+  skip_before_action :authenticate, only: [:export]
 
   def index
-    recipients = Recipient.all
+    auth_header = request.headers['Authorization']
+    user_id = ApplicationController.get_user_id_from_authorization_header(auth_header)
+    recipients = Recipient.all.where(:user_id => user_id)
     render json: RecipientSerializer.new(recipients).serialized_json
   end
 
@@ -21,8 +23,10 @@ class Api::V1::RecipientsController < ApplicationController
     recipient = Recipient.new(recipient_params)
     if recipient_params['email'].nil? || recipient_params['user_id'].nil?
       render json: { status: 400, error: 'Bad Request' }
-    elsif recipient.save
+    elsif recipient.save!
       render json: { status: 200, data: recipient.as_json }
+    else
+      render json: {status: 422, error: 'Invalid email format for recipient'}
     end
   end
 

@@ -79,8 +79,21 @@ describe 'USERS API', type: :request do
     it 'is invalid if any field is empty' do
       patch "/api/v1/users/#{@user.id}",
             params: { user: { name: nil, email: 'john@email_provider.com', password: 'hello1' } }, headers: { 'Authorization' => "Bearer #{@user_token}" }
-      expect(response).to have_http_status(:success)
       expect(JSON.parse(response.body)['status']).to eq(400)
     end
   end
+
+  describe 'POST /search' do 
+    it 'returns appropriate user' do 
+      post '/api/v1/users/search', params: { email: 'john@email_provider.com'}, headers: { 'Authorization' => "Bearer #{@user_token}" }
+      expect(JSON.parse(response.body)['data']['name']).to eq('John Doe')
+      expect(JSON.parse(response.body)['data']['email']).to eq('john@email_provider.com')
+      expect(JSON.parse(response.body)['data']['id']).to eq(@user.id)
+    end 
+    it 'is invalid if user not found' do 
+      post '/api/v1/users/search', params: { email: 'jane@example.com'}, headers: { 'Authorization' => "Bearer #{@user_token}" }
+      expect(JSON.parse(response.body)['status']).to eq(404)
+      expect(JSON.parse(response.body)['error']).to eq('User not found')
+    end 
+  end 
 end

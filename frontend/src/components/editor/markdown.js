@@ -87,7 +87,7 @@ const MarkdownEditor = ({
   // Super hacky way to provide a initial value from the client
   const handleSynced = useCallback(() => {
     // set initial content only if the content in the server is empty
-    if (sharedType.length === 0) {
+    if (sharedType.length === 0 && value?.length > 0) {
       sharedType.insert(0, value)
       getContext()?.setContent(value)
     }
