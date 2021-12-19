@@ -70,7 +70,6 @@ We choose to deploy the frontend and the backend separately
 ### Deploy the backend
 1. `cd backend`
 3. `git push heroku main`
-4. `figaro heroku:set -a mailit-api -e production` (sets the environment variables)
 5. `heroku run rake db:migrate`
 6. `heroku run rake db:seed`
 
