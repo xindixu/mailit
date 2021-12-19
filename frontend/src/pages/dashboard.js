@@ -66,6 +66,11 @@ const Dashboard = () => {
           >
             Send
           </Button>
+          <Button size="small">
+            <Link to={`/campaigns/${record.id}/analytics`} id={`email analytics ${record.name}`}>
+              Analytics
+            </Link>
+          </Button>
           <Button
             id={`delete email ${record.name}`}
             size="small"

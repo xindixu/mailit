@@ -83,7 +83,7 @@ class Api::V1::CampaignsController < ApplicationController
         if @campaign == nil
             return render json: {status: 404, message: "Cannot provide analytics for an email that does not exist"}
         else 
-            return render json: {status: 200, emails_sent:  @campaign.no_emails_sent, emails_not_sent: @campaign.no_emails_not_sent, emails_opened: @campaign.no_emails_opened} 
+            return render json: {status: 200, data: {emails_sent:  @campaign.no_emails_sent, emails_not_sent: @campaign.no_emails_not_sent, emails_opened: @campaign.no_emails_opened}} 
         end 
     end
 

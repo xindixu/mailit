@@ -30,8 +30,8 @@ When("user fill in the password to {string}", async (value) => {
     await pwInput.sendKeys(removeQuotations(value))
 })
 
-When("user fill in the username to {string}", async (value) => {
-    const unInput = await driver.findElement(By.id("basic_username"))
+When("user fill in the name to {string}", async (value) => {
+    const unInput = await driver.findElement(By.id("basic_name"))
     await unInput.clear()
     await unInput.sendKeys(removeQuotations(value))
 })

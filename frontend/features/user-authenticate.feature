@@ -5,7 +5,7 @@ Feature: User authentication
         Given user is on the Register page
         When user fill in the email to "random@columbia.edu"
         And user fill in the password to "hello1"
-        And user fill in the username to "user1"
+        And user fill in the name to "user1"
         And user clicks the register button
         Then user should be on the Dashboard page
         And user can see Sign Out button
