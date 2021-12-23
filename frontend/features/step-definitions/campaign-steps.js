@@ -2,8 +2,8 @@ const { expect } = require("chai")
 const { When, Then, Before, After } = require("@cucumber/cucumber")
 const { By } = require("selenium-webdriver")
 const { removeQuotations } = require("../support")
-const { driver } = require("./stepdefs")
 const { apiFetch, token } = require("../api-fetch")
+const { driver } = require("./stepdefs")
 
 // let id
 // Before(async () => {
@@ -93,7 +93,9 @@ When(/user clicks the Save Campaign button/, async () => {
 
 When("user clicks the {string} button for campaign {string}", async (buttonText, name) => {
   await driver.sleep(1000)
-  const button = await driver.findElement(By.id(`${removeQuotations(buttonText)} email ${removeQuotations(name)}`))
+  const button = await driver.findElement(
+    By.id(`${removeQuotations(buttonText)} email ${removeQuotations(name)}`)
+  )
   await button.click()
   await driver.sleep(1000)
 })
@@ -107,4 +109,3 @@ When("user clicks the {string} campaign button", async (buttonText) => {
 Then("user should see {string}", async (text) => {
   expect(await driver.getPageSource()).to.contain(`${removeQuotations(text)}`)
 })
-

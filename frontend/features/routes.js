@@ -38,7 +38,7 @@ const routes = [
   {
     text: "Reset",
     link: "/login/reset",
-  }
+  },
 ]
 
 const getTextByLink = (link) => routes.find((route) => route.link === link)?.text
